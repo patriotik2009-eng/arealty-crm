@@ -4,38 +4,95 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A Realty Group - CRM</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { font-family: sans-serif; background-color: #f0f2f5; }
-        .deal-card { background: white; border-radius: 8px; padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .status-new { color: #22c55e; font-weight: bold; }
-        .status-work { color: #eab308; font-weight: bold; }
-        .status-sold { color: #3b82f6; font-weight: bold; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #f5f7fa; min-height: 100vh; }
+        
+        /* Login */
+        .login-container {
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        .login-box {
+            background: white; border-radius: 20px; padding: 40px;
+            width: 100%; max-width: 400px; box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .login-box h2 { text-align: center; margin-bottom: 30px; color: #333; }
+        .input-group { margin-bottom: 20px; }
+        .input-group input {
+            width: 100%; padding: 12px 15px; border: 1px solid #ddd;
+            border-radius: 10px; font-size: 16px;
+        }
+        .login-btn {
+            width: 100%; padding: 12px; background: #667eea;
+            color: white; border: none; border-radius: 10px;
+            font-size: 16px; cursor: pointer; transition: background 0.3s;
+        }
+        .login-btn:hover { background: #5a6fd6; }
+        #loginError { color: red; text-align: center; margin-top: 10px; display: none; }
+
+        /* Dashboard */
+        .dashboard { display: none; padding: 20px; }
+        .header {
+            display: flex; justify-content: space-between; align-items: center;
+            background: white; padding: 15px 25px; border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px;
+        }
+        .user-info { font-weight: 500; display: flex; align-items: center; gap: 10px; }
+        .logout-btn {
+            background: #ff4757; color: white; border: none;
+            padding: 8px 15px; border-radius: 8px; cursor: pointer;
+        }
+
+        /* Deals Grid */
+        .deals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .deal-card {
+            background: white; border-radius: 15px; padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+        .deal-card:hover { transform: translateY(-5px); }
+        .deal-card h3 { margin-bottom: 10px; color: #333; font-size: 18px; }
+        .deal-price { font-size: 20px; font-weight: 700; color: #2ecc71; margin-bottom: 10px; }
+        .deal-info { font-size: 14px; color: #666; margin-bottom: 5px; }
+        .status-badge {
+            display: inline-block; padding: 5px 10px; border-radius: 20px;
+            font-size: 12px; font-weight: 600;
+        }
+        .status-new { background: #e8f5e9; color: #2e7d32; }
+        .status-work { background: #fff3e0; color: #ef6c00; }
+        .status-sold { background: #e3f2fd; color: #1565c0; }
     </style>
 </head>
 <body>
 
-<div id="app" class="p-4">
-    <div class="flex justify-between items-center mb-6 bg-white p-4 rounded shadow">
-        <h1 class="text-xl font-bold">A REALTY GROUP</h1>
-        <div>
-            <span id="userName" class="mr-2 font-medium"></span>
-            <button onclick="logout()" class="text-red-500"><i class="fa-solid fa-sign-out-alt"></i></button>
+<div id="loginPage" class="login-container">
+    <div class="login-box">
+        <h2>A Realty Group CRM</h2>
+        <div class="input-group">
+            <input type="text" id="loginId" placeholder="ID сотрудника (Крыша)">
         </div>
+        <button class="login-btn" onclick="login()">Войти</button>
+        <p id="loginError">Неверный ID</p>
     </div>
+</div>
 
-    <div id="loginPage" class="max-w-md mx-auto bg-white p-6 rounded shadow">
-        <h2 class="text-lg font-bold mb-4">Вход</h2>
-        <input type="text" id="loginId" placeholder="ID сотрудника (Крыша)" class="w-full p-2 border rounded mb-3">
-        <button onclick="login()" class="w-full bg-blue-600 text-white p-2 rounded">Войти</button>
-        <p id="loginError" class="text-red-500 mt-2 hidden">Неверный ID</p>
+<div id="dashboard" class="dashboard">
+    <div class="header">
+        <div class="user-info">
+            <i class="fas fa-user-circle"></i>
+            <span id="userName"></span>
+        </div>
+        <button class="logout-btn" onclick="logout()">Выйти</button>
     </div>
-
-    <div id="objectsPage" class="hidden">
-        <h2 class="text-lg font-bold mb-4">Мои объекты и Свободные</h2>
-        <div id="dealsList">Загрузка...</div>
-    </div>
+    <div id="dealsGrid" class="deals-grid"></div>
 </div>
 
 <script>
@@ -43,7 +100,7 @@
 const WEBHOOK = 'https://b24-6mcve5.bitrix24.kz/rest/1/0bcsjte5yrhzozk4/';
 const CAT_ID = 8; // Алатауский район
 
-// --- СПИСОК СОТРУДНИКОВ (ID из Крыши -> ID в Битрикс) ---
+// --- СПИСОК СОТРУДНИКОВ ---
 const STAFF = {
     "5969819": { name: "Тампиева Жанат", role: "admin", bId: [10, 5969819] },
     "127611": { name: "Пірназарова Әсел", role: "admin", bId: [12] },
@@ -70,12 +127,12 @@ function login() {
     const id = document.getElementById('loginId').value;
     if (STAFF[id]) {
         currentUser = { ...STAFF[id], id: id };
-        document.getElementById('loginPage').classList.add('hidden');
-        document.getElementById('objectsPage').classList.remove('hidden');
+        document.getElementById('loginPage').style.display = 'none';
+        document.getElementById('dashboard').style.display = 'block';
         document.getElementById('userName').innerText = currentUser.name;
         loadDeals();
     } else {
-        document.getElementById('loginError').classList.remove('hidden');
+        document.getElementById('loginError').style.display = 'block';
     }
 }
 
@@ -86,22 +143,22 @@ async function loadDeals() {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
                 filter: { "CATEGORY_ID": CAT_ID },
-                select: ["ID", "TITLE", "STAGE_ID", "ASSIGNED_BY_ID", "OPPORTUNITY"]
+                select: ["ID", "TITLE", "STAGE_ID", "ASSIGNED_BY_ID", "OPPORTUNITY", "UF_*"]
             })
         });
         const data = await res.json();
         renderDeals(data.result);
     } catch (e) {
-        document.getElementById('dealsList').innerText = "Ошибка загрузки";
+        document.getElementById('dealsGrid').innerText = "Ошибка загрузки";
     }
 }
 
 function renderDeals(deals) {
-    const list = document.getElementById('dealsList');
-    list.innerHTML = '';
+    const grid = document.getElementById('dealsGrid');
+    grid.innerHTML = '';
 
     deals.forEach(deal => {
-        // Проверка прав: Админ или Свой или Свободный
+        // Проверка прав доступа
         const isMine = currentUser.bId.includes(Number(deal.ASSIGNED_BY_ID));
         const isFree = deal.STAGE_ID.includes('NEW');
         const isAdmin = currentUser.role === 'admin';
@@ -113,14 +170,13 @@ function renderDeals(deals) {
         if (isFree) { statusText = 'Свободен'; statusClass = 'status-new'; }
         if (deal.STAGE_ID.includes('WON')) { statusText = 'Продан'; statusClass = 'status-sold'; }
 
-        list.innerHTML += `
+        grid.innerHTML += `
             <div class="deal-card">
-                <div class="flex justify-between">
-                    <span class="font-bold">${deal.TITLE}</span>
-                    <span class="${statusClass}">${statusText}</span>
-                </div>
-                <p class="text-lg font-bold text-blue-600">${Number(deal.OPPORTUNITY).toLocaleString()} ₸</p>
-                <p class="text-sm text-gray-500">Ответственный (ID): ${deal.ASSIGNED_BY_ID}</p>
+                <h3>${deal.TITLE}</h3>
+                <div class="deal-price">${Number(deal.OPPORTUNITY).toLocaleString()} ₸</div>
+                <div class="deal-info"><i class="fas fa-id-badge"></i> ID: ${deal.ID}</div>
+                <div class="deal-info"><i class="fas fa-user-tie"></i> Resp: ${deal.ASSIGNED_BY_ID}</div>
+                <div class="status-badge ${statusClass}">${statusText}</div>
             </div>
         `;
     });
