@@ -11,7 +11,6 @@
         body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
         .deal-card:hover { transform: translateY(-4px); transition: all 0.3s ease; }
         .status-badge { font-size: 0.75rem; padding: 2px 8px; border-radius: 99px; font-weight: 600; }
-        .hidden-phone { filter: blur(4px); user-select: none; }
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 50; }
         .active-modal { display: flex; align-items: center; justify-content: center; }
     </style>
@@ -43,23 +42,14 @@
                 <input type="text" id="loginId" placeholder="ID сотрудника (Krisha)" class="w-full p-3 mb-4 border rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
                 <input type="password" id="loginPass" placeholder="Пароль" class="w-full p-3 mb-6 border rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
                 <button onclick="login()" class="w-full bg-blue-600 text-white p-3 rounded-xl font-semibold hover:bg-blue-700 transition">Войти</button>
-                <p id="loginError" class="text-red-500 text-sm mt-4 hidden text-center">Неверный ID или пароль</p>
+                <p id="loginError" class="text-red-500 text-sm mt-4 hidden text-center">Неверный ID</p>
             </div>
         </div>
 
         <div id="objectsPage" class="hidden">
             <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-bold text-slate-800">Объекты недвижимости</h2>
-                <div class="flex gap-2">
-                    <select id="filterDistrict" onchange="filterDeals()" class="p-2 border rounded-lg text-sm">
-                        <option value="">Все микрорайоны</option>
-                        <option value="Ғажайып">Ғажайып</option>
-                        <option value="Акбулак">Акбулак</option>
-                        <option value="Нуркент">Нуркент</option>
-                        <option value="Саялы">Саялы</option>
-                    </select>
-                    <button onclick="loadDeals()" class="bg-white border p-2 rounded-lg hover:bg-slate-50"><i class="fa-solid fa-rotate"></i></button>
-                </div>
+                <h2 class="text-2xl font-bold text-slate-800">Мои объекты</h2>
+                <button onclick="loadDeals()" class="bg-white border p-2 rounded-lg hover:bg-slate-50"><i class="fa-solid fa-rotate"></i></button>
             </div>
             <div id="dealsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 </div>
@@ -74,7 +64,7 @@
                             <th class="p-4 font-semibold text-slate-600">Риэлтор</th>
                             <th class="p-4 font-semibold text-slate-600">Объектов</th>
                             <th class="p-4 font-semibold text-slate-600">В работе</th>
-                            <th class="p-4 font-semibold text-slate-600">Договоры</th>
+                            <th class="p-4 font-semibold text-slate-600">Продано</th>
                         </tr>
                     </thead>
                     <tbody id="agentsTable"></tbody>
@@ -97,10 +87,6 @@
                 <div class="flex justify-between text-green-700"><span>Риэлтор (50%):</span> <span id="commRealtor" class="font-bold">250,000 ₸</span></div>
                 <div class="flex justify-between text-blue-700"><span>Компания (50%):</span> <span id="commCompany" class="font-bold">250,000 ₸</span></div>
             </div>
-            <div class="p-3 border rounded-lg bg-slate-50 text-xs">
-                <strong>Реквизиты для оплаты:</strong><br>
-                Kaspi Gold/Бизнес: +7 707 271 32 20 (A Realty)
-            </div>
             <button onclick="confirmSale()" class="w-full bg-green-600 text-white p-3 rounded-xl font-bold">Подтвердить продажу</button>
             <button onclick="closeModal('soldModal')" class="w-full text-slate-500 py-2">Отмена</button>
         </div>
@@ -112,12 +98,28 @@
 const WEBHOOK = 'https://b24-6mcve5.bitrix24.kz/rest/1/0bcsjte5yrhzozk4/';
 const CAT_ID = 8; // Алатауский район
 
-// ID из Крыши для входа
+// --- ОБНОВЛЕННЫЙ СПИСОК СОТРУДНИКОВ (15 ЧЕЛОВЕК) ---
 const STAFF = {
+    // АДМИНЫ (Видят всё)
     "5969819": { name: "Тампиева Жанат", role: "admin", bId: [10, 5969819] },
-    "127611": { name: "Пірназарова Асель", role: "admin", bId: [12] },
+    "127611": { name: "Пірназарова Әсел", role: "admin", bId: [12] },
     "18616153": { name: "Кадиров Нурлан", role: "admin", bId: [14] },
-    "admin": { name: "Владелец", role: "admin", bId: [1] }
+    "admin": { name: "Владелец", role: "admin", bId: [1] },
+
+    // СОТРУДНИКИ (Видят свои + свободные)
+    "21302308": { name: "Лесбек Азамат", role: "agent", bId: [21302308] },
+    "9358849": { name: "Умирзаков Ерсин", role: "agent", bId: [9358849] },
+    "16": { name: "Алдыярова Айнура", role: "agent", bId: [16] },
+    "22342401": { name: "Байдалиева Анар", role: "agent", bId: [22342401] },
+    "22808026": { name: "Сайлайбек Нурлыбек", role: "agent", bId: [22808026] },
+    "12275341": { name: "Жүсіп Рамазан", role: "agent", bId: [12275341] },
+    "13651655": { name: "Отгелбаев Ильяс", role: "agent", bId: [13651655] },
+    "10983188": { name: "Төлеутай Төлеген", role: "agent", bId: [10983188] },
+    "15576853": { name: "Қайырғалиев Әлнұр", role: "agent", bId: [15576853] },
+    "14045405": { name: "Сапбекова Акбаян", role: "agent", bId: [14045405] },
+    "13565723": { name: "Солпекова Дина", role: "agent", bId: [13565723] },
+    "5986709": { name: "Мейрбекова Лаура", role: "agent", bId: [5986709] },
+    "22733888": { name: "Алпамыс Ислам", role: "agent", bId: [22733888] }
 };
 
 let currentUser = null;
@@ -168,32 +170,28 @@ function renderDeals(deals) {
         if (currentUser.role !== 'admin' && !isMine && !isFree) return;
 
         const card = document.createElement('div');
-        card.className = 'deal-card bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden relative';
+        card.className = 'deal-card bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden';
         
-        // Заглушка фото (если нет в Битриксе)
+        // Заглушка фото
         const photo = deal.UF_CRM_PHOTO || 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=400';
 
         card.innerHTML = `
-            <div class="h-40 bg-slate-200 relative">
+            <div class="h-40 bg-slate-200">
                 <img src="${photo}" class="w-full h-full object-cover">
-                <div class="absolute top-2 right-2 bg-black/50 text-white px-2 py-1 rounded text-xs">ID: ${deal.ID}</div>
             </div>
             <div class="p-4">
                 <div class="flex justify-between items-start mb-2">
                     <h3 class="font-bold text-slate-800 truncate w-3/4">${deal.TITLE}</h3>
                     <span class="status-badge ${getStatusColor(deal.STAGE_ID)}">${getStatusName(deal.STAGE_ID)}</span>
                 </div>
-                <p class="text-slate-500 text-sm mb-4"><i class="fa-solid fa-location-dot mr-1"></i> Алатауский р-н</p>
                 <div class="flex items-center justify-between mb-4">
                     <span class="text-lg font-bold text-blue-600">${Number(deal.OPPORTUNITY).toLocaleString()} ₸</span>
-                    <span class="text-xs text-slate-400">#${deal.ASSIGNED_BY_ID}</span>
+                    <span class="text-xs text-slate-400">#${deal.ID}</span>
                 </div>
-                
                 <div class="flex gap-2">
                     ${isFree ? 
-                        `<button onclick="takeDeal(${deal.ID})" class="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700">Взять в работу</button>` :
-                        `<button onclick="openCall(${deal.ID})" class="flex-1 bg-slate-100 text-slate-700 py-2 rounded-lg hover:bg-slate-200"><i class="fa-solid fa-phone"></i></button>
-                         <button onclick="openSold(${deal.ID}, ${deal.OPPORTUNITY})" class="flex-1 bg-green-50 text-green-700 py-2 rounded-lg hover:bg-green-100 font-bold">ПРОДАН</button>`
+                        `<button onclick="takeDeal(${deal.ID})" class="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700">Взять</button>` :
+                        `<button onclick="openSold(${deal.ID}, ${deal.OPPORTUNITY})" class="w-full bg-green-600 text-white py-2 rounded-lg font-bold hover:bg-green-700">Продан</button>`
                     }
                 </div>
             </div>
@@ -204,9 +202,8 @@ function renderDeals(deals) {
 
 function getStatusName(stageId) {
     if (stageId.includes('NEW')) return 'СВОБОДЕН';
-    if (stageId.includes('PREPARATION')) return 'В РАБОТЕ';
     if (stageId.includes('WON')) return 'ПРОДАН';
-    return 'В ПРОЦЕССЕ';
+    return 'В РАБОТЕ';
 }
 
 function getStatusColor(stageId) {
@@ -220,7 +217,7 @@ function checkFreeObjects() {
     document.getElementById('freeBadge').classList.toggle('hidden', !hasFree);
 }
 
-// Калькулятор
+// Модальное окно продажи
 let currentDealId = null;
 function openSold(id, price) {
     currentDealId = id;
@@ -231,7 +228,7 @@ function openSold(id, price) {
 
 function updateCommission() {
     const price = document.getElementById('salePrice').value;
-    const total = price * 0.02;
+    const total = price * 0.02; // комиссия
     document.getElementById('commTotal').innerText = total.toLocaleString() + ' ₸';
     document.getElementById('commRealtor').innerText = (total * 0.5).toLocaleString() + ' ₸';
     document.getElementById('commCompany').innerText = (total * 0.5).toLocaleString() + ' ₸';
@@ -252,7 +249,7 @@ function renderAgentsReport() {
     Object.values(STAFF).forEach(staff => {
         if(staff.name === 'Владелец') return;
         const hisDeals = allDeals.filter(d => staff.bId.includes(Number(d.ASSIGNED_BY_ID)));
-        const inWork = hisDeals.filter(d => !d.STAGE_ID.includes('NEW') && !d.STAGE_ID.includes('WON')).length;
+        const inWork = hisDeals.filter(d => d.STAGE_ID.includes('PREPARATION')).length;
         const won = hisDeals.filter(d => d.STAGE_ID.includes('WON')).length;
         
         table.innerHTML += `
@@ -264,12 +261,6 @@ function renderAgentsReport() {
             </tr>
         `;
     });
-}
-
-async function takeDeal(id) {
-    // В реальности тут crm.deal.update
-    alert('Объект ID ' + id + ' успешно закреплен за вами в Битрикс24!');
-    loadDeals();
 }
 
 function logout() { location.reload(); }
