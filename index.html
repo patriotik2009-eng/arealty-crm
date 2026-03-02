@@ -20,169 +20,2300 @@
             background: white; border-radius: 20px; padding: 40px;
             width: 100%; max-width: 400px; box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
-        .login-box h2 { text-align: center; margin-bottom: 30px; color: #333; }
-        .input-group { margin-bottom: 20px; }
-        .input-group input {
-            width: 100%; padding: 12px 15px; border: 1px solid #ddd;
-            border-radius: 10px; font-size: 16px;
+        .logo { text-align: center; margin-bottom: 30px; }
+        .logo h1 { font-size: 48px; font-weight: 700; color: #667eea; line-height: 1; }
+        .logo span { display: block; font-size: 14px; color: #666; margin-top: 5px; letter-spacing: 3px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 500; color: #333; }
+        .form-group input {
+            width: 100%; padding: 14px 16px; border: 2px solid #e0e0e0;
+            border-radius: 12px; font-size: 16px; transition: all 0.3s;
         }
-        .login-btn {
-            width: 100%; padding: 12px; background: #667eea;
-            color: white; border: none; border-radius: 10px;
-            font-size: 16px; cursor: pointer; transition: background 0.3s;
+        .form-group input:focus { outline: none; border-color: #667eea; }
+        .btn {
+            width: 100%; padding: 14px; border: none; border-radius: 12px;
+            font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.3s;
         }
-        .login-btn:hover { background: #5a6fd6; }
-        #loginError { color: red; text-align: center; margin-top: 10px; display: none; }
-
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4); }
+        .btn-success { background: #2ecc71; color: white; }
+        .btn-success:hover { background: #27ae60; }
+        .btn-warning { background: #f39c12; color: white; }
+        .btn-warning:hover { background: #e67e22; }
+        .btn-danger { background: #e74c3c; color: white; }
+        .btn-danger:hover { background: #c0392b; }
+        .btn-info { background: #3498db; color: white; }
+        .btn-info:hover { background: #2980b9; }
+        .btn-gray { background: #95a5a6; color: white; }
+        .btn-gray:hover { background: #7f8c8d; }
+        .error-message { color: #e74c3c; text-align: center; margin-top: 15px; display: none; }
+        
         /* Dashboard */
-        .dashboard { display: none; padding: 20px; }
+        .dashboard { display: none; min-height: 100vh; }
+        .sidebar {
+            position: fixed; left: 0; top: 0; width: 280px; height: 100vh;
+            background: #1a1a2e; padding: 0; z-index: 100; overflow-y: auto;
+        }
+        .sidebar-logo { padding: 20px; border-bottom: 1px solid #333; text-align: center; }
+        .sidebar-logo h2 { color: white; font-size: 32px; margin: 0; }
+        .sidebar-logo span { color: #667eea; font-size: 10px; letter-spacing: 2px; }
+        .user-info { padding: 20px; border-bottom: 1px solid #333; text-align: center; }
+        .user-info .avatar {
+            width: 60px; height: 60px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 24px; font-weight: 600; margin: 0 auto 10px;
+        }
+        .user-info .name { color: white; font-weight: 600; font-size: 16px; }
+        .user-info .role { color: #888; font-size: 12px; margin-top: 5px; }
+        .nav-menu { padding: 10px 0; }
+        .nav-item {
+            padding: 15px 20px; color: #aaa; cursor: pointer; transition: all 0.3s;
+            display: flex; align-items: center; gap: 12px; border-left: 3px solid transparent;
+        }
+        .nav-item:hover, .nav-item.active {
+            background: rgba(102, 126, 234, 0.15); color: white; border-left-color: #667eea;
+        }
+        .nav-item i { width: 20px; text-align: center; }
+        .nav-badge {
+            background: #e74c3c; color: white; font-size: 11px;
+            padding: 2px 8px; border-radius: 10px; margin-left: auto;
+        }
+        
+        .main-content { margin-left: 280px; padding: 30px; min-height: 100vh; }
         .header {
             display: flex; justify-content: space-between; align-items: center;
-            background: white; padding: 15px 25px; border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px;
+            margin-bottom: 30px; flex-wrap: wrap; gap: 15px;
         }
-        .user-info { font-weight: 500; display: flex; align-items: center; gap: 10px; }
-        .logout-btn {
-            background: #ff4757; color: white; border: none;
-            padding: 8px 15px; border-radius: 8px; cursor: pointer;
+        .header h1 { font-size: 28px; color: #333; }
+        .header-actions { display: flex; gap: 10px; align-items: center; }
+        .header-actions .btn { width: auto; padding: 10px 20px; }
+        
+        /* Stats */
+        .stats-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 15px; margin-bottom: 30px;
         }
-
-        /* Deals Grid */
-        .deals-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        .stat-card {
+            background: white; border-radius: 16px; padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: relative; overflow: hidden;
+        }
+        .stat-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
+        }
+        .stat-card.blue::before { background: #667eea; }
+        .stat-card.green::before { background: #2ecc71; }
+        .stat-card.orange::before { background: #f39c12; }
+        .stat-card.red::before { background: #e74c3c; }
+        .stat-card.purple::before { background: #9b59b6; }
+        .stat-card.cyan::before { background: #00bcd4; }
+        .stat-card .icon {
+            width: 40px; height: 40px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px; margin-bottom: 12px;
+        }
+        .stat-card.blue .icon { background: rgba(102, 126, 234, 0.1); color: #667eea; }
+        .stat-card.green .icon { background: rgba(46, 204, 113, 0.1); color: #2ecc71; }
+        .stat-card.orange .icon { background: rgba(243, 156, 18, 0.1); color: #f39c12; }
+        .stat-card.red .icon { background: rgba(231, 76, 60, 0.1); color: #e74c3c; }
+        .stat-card.purple .icon { background: rgba(155, 89, 182, 0.1); color: #9b59b6; }
+        .stat-card.cyan .icon { background: rgba(0, 188, 212, 0.1); color: #00bcd4; }
+        .stat-card .number { font-size: 26px; font-weight: 700; color: #333; }
+        .stat-card .label { color: #888; font-size: 12px; margin-top: 5px; }
+        
+        /* Filters */
+        .filters {
+            background: white; border-radius: 16px; padding: 20px;
+            margin-bottom: 20px; display: flex; gap: 15px; flex-wrap: wrap; align-items: center;
+        }
+        .filters select, .filters input {
+            padding: 10px 15px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 14px;
+        }
+        .filters select:focus, .filters input:focus { outline: none; border-color: #667eea; }
+        .filters button {
+            padding: 10px 20px; background: #667eea; color: white;
+            border: none; border-radius: 10px; cursor: pointer; font-weight: 500;
+        }
+        
+        /* Objects Grid */
+        .objects-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
             gap: 20px;
         }
-        .deal-card {
-            background: white; border-radius: 15px; padding: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            transition: transform 0.2s;
+        .object-card {
+            background: white; border-radius: 16px; overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05); transition: all 0.3s;
         }
-        .deal-card:hover { transform: translateY(-5px); }
-        .deal-card h3 { margin-bottom: 10px; color: #333; font-size: 18px; }
-        .deal-price { font-size: 20px; font-weight: 700; color: #2ecc71; margin-bottom: 10px; }
-        .deal-info { font-size: 14px; color: #666; margin-bottom: 5px; }
+        .object-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+        .object-card.locked { opacity: 0.8; }
+        .object-card.locked .object-header { background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%); }
+        .object-header {
+            padding: 15px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white; position: relative;
+        }
+        .object-header .id { font-size: 12px; opacity: 0.8; }
+        .object-header .title { font-size: 20px; font-weight: 600; margin-top: 5px; }
+        .object-header .badge {
+            position: absolute; top: 15px; right: 15px;
+            padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 600;
+        }
+        .badge-free { background: #2ecc71; }
+        .badge-taken { background: rgba(255,255,255,0.2); }
+        .badge-locked { background: #e74c3c; }
+        .object-body { padding: 20px; }
+        .object-address {
+            font-size: 16px; color: #333; margin-bottom: 15px;
+            display: flex; align-items: flex-start; gap: 8px;
+        }
+        .object-address i { color: #667eea; margin-top: 3px; }
+        .object-seller {
+            background: #f8f9fa; border-radius: 10px; padding: 12px 15px;
+            margin-bottom: 15px; display: flex; align-items: center; gap: 10px;
+        }
+        .object-seller i { color: #e74c3c; }
+        .object-seller .phone-hidden {
+            font-family: monospace; font-size: 16px; font-weight: 600;
+            color: #888; letter-spacing: 2px;
+        }
+        .object-seller .label {
+            font-size: 11px; color: #888; margin-left: auto;
+        }
+        .object-history {
+            background: #f0f7ff; border-radius: 10px; padding: 12px 15px;
+            margin-bottom: 15px; font-size: 13px;
+        }
+        .object-history .item {
+            display: flex; align-items: center; gap: 8px; margin-bottom: 5px;
+        }
+        .object-history .item:last-child { margin-bottom: 0; }
+        .object-history i { color: #667eea; font-size: 12px; }
         .status-badge {
-            display: inline-block; padding: 5px 10px; border-radius: 20px;
+            display: inline-block; padding: 6px 14px; border-radius: 20px;
             font-size: 12px; font-weight: 600;
         }
-        .status-new { background: #e8f5e9; color: #2e7d32; }
-        .status-work { background: #fff3e0; color: #ef6c00; }
-        .status-sold { background: #e3f2fd; color: #1565c0; }
+        .status-new { background: #e3f2fd; color: #1976d2; }
+        .status-work { background: #fff3e0; color: #f57c00; }
+        .status-meeting { background: #f3e5f5; color: #7b1fa2; }
+        .status-contract { background: #e8f5e9; color: #388e3c; }
+        .status-sold { background: #e0f2f1; color: #00796b; }
+        .status-locked { background: #ffebee; color: #c62828; }
+        .object-actions {
+            padding: 15px 20px; border-top: 1px solid #eee;
+            display: flex; gap: 10px; flex-wrap: wrap;
+        }
+        .btn-small {
+            padding: 8px 16px; border: none; border-radius: 8px;
+            font-size: 13px; cursor: pointer; transition: all 0.3s; font-weight: 500;
+        }
+        .btn-take { background: #2ecc71; color: white; }
+        .btn-take:hover { background: #27ae60; }
+        .btn-call { background: #9b59b6; color: white; }
+        .btn-call:hover { background: #8e44ad; }
+        .btn-meeting { background: #00bcd4; color: white; }
+        .btn-meeting:hover { background: #00acc1; }
+        .btn-contract { background: #f39c12; color: white; }
+        .btn-contract:hover { background: #e67e22; }
+        .btn-action { background: #667eea; color: white; }
+        .btn-action:hover { background: #5a6fd6; }
+        .btn-krisha { background: #e74c3c; color: white; }
+        .btn-krisha:hover { background: #c0392b; }
+        .btn-locked { background: #95a5a6; color: white; cursor: not-allowed; }
+        
+        /* Loading */
+        .loading { display: none; text-align: center; padding: 60px; }
+        .loading.active { display: block; }
+        .spinner {
+            width: 50px; height: 50px; border: 4px solid #e0e0e0;
+            border-top-color: #667eea; border-radius: 50%;
+            animation: spin 1s linear infinite; margin: 0 auto 20px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        /* Modal */
+        .modal {
+            display: none; position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%; background: rgba(0,0,0,0.5);
+            z-index: 1000; justify-content: center; align-items: center;
+        }
+        .modal.active { display: flex; }
+        .modal-content {
+            background: white; border-radius: 20px; width: 90%;
+            max-width: 600px; max-height: 90vh; overflow-y: auto;
+        }
+        .modal-header {
+            padding: 20px; border-bottom: 1px solid #eee;
+            display: flex; justify-content: space-between; align-items: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;
+        }
+        .modal-header h2 { font-size: 20px; }
+        .modal-close {
+            background: none; border: none; font-size: 28px;
+            cursor: pointer; color: white; opacity: 0.8;
+        }
+        .modal-body { padding: 25px; }
+        .form-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 15px; }
+        .form-group-full { margin-bottom: 15px; }
+        .form-group-full label { display: block; margin-bottom: 8px; font-weight: 500; color: #333; }
+        .form-group-full input,
+        .form-group-full select,
+        .form-group-full textarea {
+            width: 100%; padding: 12px; border: 2px solid #e0e0e0;
+            border-radius: 10px; font-size: 14px;
+        }
+        .form-group-full input:focus,
+        .form-group-full select:focus,
+        .form-group-full textarea:focus { outline: none; border-color: #667eea; }
+        .form-group-full textarea { min-height: 100px; resize: vertical; }
+        .modal-footer {
+            padding: 20px 25px; border-top: 1px solid #eee;
+            display: flex; justify-content: flex-end; gap: 10px;
+        }
+        .btn-cancel { background: #eee; color: #333; }
+        .btn-cancel:hover { background: #ddd; }
+        .btn-save { background: #667eea; color: white; }
+        
+        /* Toast */
+        .toast-container {
+            position: fixed; top: 20px; right: 20px; z-index: 9999;
+            display: flex; flex-direction: column; gap: 10px;
+        }
+        .toast {
+            background: white; border-radius: 12px; padding: 15px 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            display: flex; align-items: center; gap: 12px;
+            min-width: 300px; animation: slideIn 0.3s ease;
+            border-left: 4px solid #667eea;
+        }
+        .toast.success { border-left-color: #2ecc71; }
+        .toast.warning { border-left-color: #f39c12; }
+        .toast.error { border-left-color: #e74c3c; }
+        .toast-icon {
+            width: 40px; height: 40px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px;
+        }
+        .toast.success .toast-icon { background: rgba(46, 204, 113, 0.1); color: #2ecc71; }
+        .toast.warning .toast-icon { background: rgba(243, 156, 18, 0.1); color: #f39c12; }
+        .toast.error .toast-icon { background: rgba(231, 76, 60, 0.1); color: #e74c3c; }
+        .toast-content h4 { margin: 0 0 5px; font-size: 14px; color: #333; }
+        .toast-content p { margin: 0; font-size: 13px; color: #666; }
+        .toast-close {
+            margin-left: auto; background: none; border: none;
+            font-size: 18px; color: #888; cursor: pointer;
+        }
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+        
+        /* Agents Page - Krisha Style */
+        .agents-list {
+            display: flex; flex-wrap: wrap; gap: 10px;
+            margin-bottom: 20px;
+        }
+        .agent-tab {
+            background: white; border-radius: 10px; padding: 12px 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05); cursor: pointer;
+            display: flex; align-items: center; gap: 10px;
+            transition: all 0.2s; border: 2px solid transparent;
+        }
+        .agent-tab:hover { border-color: #667eea; }
+        .agent-tab.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white; border-color: transparent;
+        }
+        .agent-tab .avatar {
+            width: 35px; height: 35px; background: rgba(255,255,255,0.2);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-weight: 600; font-size: 14px;
+        }
+        .agent-tab.active .avatar { background: rgba(255,255,255,0.3); }
+        .agent-tab .info { display: flex; flex-direction: column; }
+        .agent-tab .name { font-weight: 600; font-size: 14px; }
+        .agent-tab .count { font-size: 12px; opacity: 0.8; }
+        
+        /* Objects Table (Krisha Style) */
+        .objects-table-container {
+            background: white; border-radius: 16px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05); overflow: hidden;
+        }
+        .objects-table {
+            width: 100%; border-collapse: collapse;
+        }
+        .objects-table th {
+            background: #f8f9fa; padding: 12px 15px;
+            text-align: left; font-weight: 600; color: #333;
+            font-size: 12px; border-bottom: 2px solid #eee;
+        }
+        .objects-table td {
+            padding: 12px 15px; border-bottom: 1px solid #eee;
+            font-size: 13px; vertical-align: middle;
+        }
+        .objects-table tr:hover { background: #f8f9fa; }
+        .objects-table .id-cell { font-weight: 600; color: #667eea; }
+        .objects-table .address-cell { max-width: 300px; }
+        .objects-table .status-badge {
+            padding: 4px 10px; border-radius: 12px;
+            font-size: 11px; font-weight: 600;
+        }
+        .objects-table .btn-xs {
+            padding: 4px 10px; border: none; border-radius: 6px;
+            font-size: 11px; cursor: pointer; margin-right: 4px;
+        }
+        .objects-table .btn-call-xs { background: #9b59b6; color: white; }
+        .objects-table .btn-meeting-xs { background: #00bcd4; color: white; }
+        .objects-table .btn-contract-xs { background: #f39c12; color: white; }
+        
+        /* My Cabinet */
+        .cabinet-header {
+            background: white; border-radius: 16px; padding: 25px;
+            margin-bottom: 20px; display: flex; align-items: center; gap: 20px;
+        }
+        .cabinet-avatar {
+            width: 80px; height: 80px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 32px; font-weight: 600;
+        }
+        .cabinet-info h2 { margin: 0 0 5px; color: #333; }
+        .cabinet-info p { margin: 0; color: #888; }
+        
+        /* Activity Log */
+        .activity-log {
+            background: white; border-radius: 16px; padding: 20px;
+            margin-top: 20px;
+        }
+        .activity-log h3 { margin-bottom: 15px; color: #333; }
+        .activity-item {
+            display: flex; gap: 15px; padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .activity-item:last-child { border-bottom: none; }
+        .activity-icon {
+            width: 40px; height: 40px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .activity-icon.call { background: rgba(155, 89, 182, 0.1); color: #9b59b6; }
+        .activity-icon.meeting { background: rgba(0, 188, 212, 0.1); color: #00bcd4; }
+        .activity-icon.contract { background: rgba(243, 156, 18, 0.1); color: #f39c12; }
+        .activity-icon.take { background: rgba(46, 204, 113, 0.1); color: #2ecc71; }
+        .activity-content { flex: 1; }
+        .activity-content .title { font-weight: 600; color: #333; }
+        .activity-content .time { font-size: 12px; color: #888; margin-top: 3px; }
+        .activity-content .comment { font-size: 13px; color: #666; margin-top: 5px; }
+        
+        /* File Upload */
+        .file-upload {
+            border: 2px dashed #ddd; border-radius: 10px;
+            padding: 30px; text-align: center; cursor: pointer;
+            transition: all 0.3s;
+        }
+        .file-upload:hover { border-color: #667eea; background: #f8f9fa; }
+        .file-upload i { font-size: 40px; color: #ddd; margin-bottom: 10px; }
+        .file-upload p { color: #888; margin: 0; }
+        .file-upload input { display: none; }
+        
+        /* Empty state */
+        .empty-state { text-align: center; padding: 60px; color: #888; }
+        .empty-state i { font-size: 48px; color: #ddd; margin-bottom: 15px; }
+        
+        /* Object Photos */
+        .object-photos {
+            position: relative;
+            height: 180px;
+            background: #f0f0f0;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .object-photos img.main-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        .object-photos:hover img.main-photo {
+            transform: scale(1.05);
+        }
+        .object-photos.no-photo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #aaa;
+        }
+        .object-photos.no-photo i {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+        .photo-count {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        /* Photo Gallery Modal */
+        .gallery-modal .modal-content {
+            max-width: 900px;
+            background: #1a1a2e;
+        }
+        .gallery-modal .modal-header {
+            background: #1a1a2e;
+            border-bottom: 1px solid #333;
+        }
+        .gallery-main-image {
+            width: 100%;
+            height: 500px;
+            object-fit: contain;
+            background: #000;
+        }
+        .gallery-thumbnails {
+            display: flex;
+            gap: 10px;
+            padding: 15px;
+            overflow-x: auto;
+            background: #1a1a2e;
+        }
+        .gallery-thumbnail {
+            width: 80px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        .gallery-thumbnail:hover,
+        .gallery-thumbnail.active {
+            opacity: 1;
+            border-color: #667eea;
+        }
+        .gallery-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        .gallery-nav:hover {
+            background: rgba(0,0,0,0.8);
+        }
+        .gallery-nav.prev { left: 20px; }
+        .gallery-nav.next { right: 20px; }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar { width: 100%; height: auto; position: relative; }
+            .main-content { margin-left: 0; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .objects-grid { grid-template-columns: 1fr; }
+            .agents-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
 
-<div id="loginPage" class="login-container">
-    <div class="login-box">
-        <h2>A Realty Group CRM</h2>
-        <div class="input-group">
-            <input type="text" id="loginId" placeholder="ID сотрудника (Крыша)">
-        </div>
-        <button class="login-btn" onclick="login()">Войти</button>
-        <p id="loginError">Неверный ID</p>
-    </div>
-</div>
-
-<div id="dashboard" class="dashboard">
-    <div class="header">
-        <div class="user-info">
-            <i class="fas fa-user-circle"></i>
-            <span id="userName"></span>
-        </div>
-        <button class="logout-btn" onclick="logout()">Выйти</button>
-    </div>
-    <div id="dealsGrid" class="deals-grid"></div>
-</div>
-
-<script>
-// --- КОНФИГУРАЦИЯ ---
-const WEBHOOK = 'https://b24-6mcve5.bitrix24.kz/rest/1/0bcsjte5yrhzozk4/';
-const CAT_ID = 8; // Алатауский район
-
-// --- СПИСОК СОТРУДНИКОВ ---
-const STAFF = {
-    "5969819": { name: "Тампиева Жанат", role: "admin", bId: [10, 5969819] },
-    "127611": { name: "Пірназарова Әсел", role: "admin", bId: [12] },
-    "18616153": { name: "Кадиров Нурлан", role: "admin", bId: [14] },
-    "21302308": { name: "Лесбек Азамат", role: "agent", bId: [21302308] },
-    "9358849": { name: "Умирзаков Ерсин", role: "agent", bId: [9358849] },
-    "16": { name: "Алдыярова Айнура", role: "agent", bId: [16] },
-    "22342401": { name: "Байдалиева Анар", role: "agent", bId: [22342401] },
-    "22808026": { name: "Сайлайбек Нурлыбек", role: "agent", bId: [22808026] },
-    "12275341": { name: "Жүсіп Рамазан", role: "agent", bId: [12275341] },
-    "13651655": { name: "Отгелбаев Ильяс", role: "agent", bId: [13651655] },
-    "10983188": { name: "Төлеутай Төлеген", role: "agent", bId: [10983188] },
-    "15576853": { name: "Қайырғалиев Әлнұр", role: "agent", bId: [15576853] },
-    "14045405": { name: "Сапбекова Акбаян", role: "agent", bId: [14045405] },
-    "13565723": { name: "Солпекова Дина", role: "agent", bId: [13565723] },
-    "5986709": { name: "Мейрбекова Лаура", role: "agent", bId: [5986709] },
-    "22733888": { name: "Алпамыс Ислам", role: "agent", bId: [22733888] }
-};
-
-let currentUser = null;
-
-// --- ЛОГИКА ---
-function login() {
-    const id = document.getElementById('loginId').value;
-    if (STAFF[id]) {
-        currentUser = { ...STAFF[id], id: id };
-        document.getElementById('loginPage').style.display = 'none';
-        document.getElementById('dashboard').style.display = 'block';
-        document.getElementById('userName').innerText = currentUser.name;
-        loadDeals();
-    } else {
-        document.getElementById('loginError').style.display = 'block';
-    }
-}
-
-async function loadDeals() {
-    try {
-        const res = await fetch(`${WEBHOOK}crm.deal.list`, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                filter: { "CATEGORY_ID": CAT_ID },
-                select: ["ID", "TITLE", "STAGE_ID", "ASSIGNED_BY_ID", "OPPORTUNITY", "UF_*"]
-            })
-        });
-        const data = await res.json();
-        renderDeals(data.result);
-    } catch (e) {
-        document.getElementById('dealsGrid').innerText = "Ошибка загрузки";
-    }
-}
-
-function renderDeals(deals) {
-    const grid = document.getElementById('dealsGrid');
-    grid.innerHTML = '';
-
-    deals.forEach(deal => {
-        // Проверка прав доступа
-        const isMine = currentUser.bId.includes(Number(deal.ASSIGNED_BY_ID));
-        const isFree = deal.STAGE_ID.includes('NEW');
-        const isAdmin = currentUser.role === 'admin';
-
-        if (!isAdmin && !isMine && !isFree) return;
-
-        let statusText = 'В работе';
-        let statusClass = 'status-work';
-        if (isFree) { statusText = 'Свободен'; statusClass = 'status-new'; }
-        if (deal.STAGE_ID.includes('WON')) { statusText = 'Продан'; statusClass = 'status-sold'; }
-
-        grid.innerHTML += `
-            <div class="deal-card">
-                <h3>${deal.TITLE}</h3>
-                <div class="deal-price">${Number(deal.OPPORTUNITY).toLocaleString()} ₸</div>
-                <div class="deal-info"><i class="fas fa-id-badge"></i> ID: ${deal.ID}</div>
-                <div class="deal-info"><i class="fas fa-user-tie"></i> Resp: ${deal.ASSIGNED_BY_ID}</div>
-                <div class="status-badge ${statusClass}">${statusText}</div>
+    <!-- Login Page -->
+    <div class="login-container" id="loginPage">
+        <div class="login-box">
+            <div class="logo">
+                <h1>A</h1>
+                <span>REALTY GROUP</span>
             </div>
-        `;
-    });
-}
+            <form id="loginForm">
+                <div class="form-group">
+                    <label>ID сотрудника</label>
+                    <input type="text" id="userId" placeholder="Введите ID" required>
+                </div>
+                <div class="form-group">
+                    <label>Пароль</label>
+                    <input type="password" id="password" placeholder="Введите пароль" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Войти</button>
+                <div class="error-message" id="loginError">Неверный ID или пароль</div>
+            </form>
+        </div>
+    </div>
 
-function logout() { location.reload(); }
-</script>
+    <!-- Dashboard -->
+    <div class="dashboard" id="dashboard">
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <h2>A</h2>
+                <span>REALTY GROUP</span>
+            </div>
+            <div class="user-info">
+                <div class="avatar" id="userAvatar">A</div>
+                <div class="name" id="userName">Сотрудник</div>
+                <div class="role" id="userRole">Риэлтор</div>
+            </div>
+            <nav class="nav-menu">
+                <div class="nav-item active" onclick="showPage('objects')" id="navObjects">
+                    <i class="fas fa-building"></i>
+                    <span>Объекты</span>
+                    <span class="nav-badge" id="freeCount">0</span>
+                </div>
+                <div class="nav-item" onclick="showPage('cabinet')" id="navCabinet">
+                    <i class="fas fa-user"></i>
+                    <span>Мой кабинет</span>
+                </div>
+                <div class="nav-item" onclick="showPage('agents')" id="navAgents" style="display:none;">
+                    <i class="fas fa-users"></i>
+                    <span>Сотрудники</span>
+                </div>
+                <div class="nav-item" onclick="showPage('activity')" id="navActivity" style="display:none;">
+                    <i class="fas fa-history"></i>
+                    <span>Активность</span>
+                </div>
+                <div class="nav-item" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Выйти</span>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <!-- Header -->
+            <div class="header">
+                <h1 id="pageTitle">Объекты недвижимости</h1>
+                <div class="header-actions">
+                    <span id="autoRefreshIndicator" style="color: #888; font-size: 13px;">
+                        <i class="fas fa-circle" style="color: #2ecc71; font-size: 8px;"></i> Автообновление
+                    </span>
+                    <button class="btn btn-primary" onclick="refreshData()" style="width: auto; padding: 10px 20px;">
+                        <i class="fas fa-sync-alt"></i> Обновить
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats-grid" id="statsSection">
+                <div class="stat-card blue">
+                    <div class="icon"><i class="fas fa-building"></i></div>
+                    <div class="number" id="statTotal">0</div>
+                    <div class="label">Всего</div>
+                </div>
+                <div class="stat-card green">
+                    <div class="icon"><i class="fas fa-hand-holding"></i></div>
+                    <div class="number" id="statFree">0</div>
+                    <div class="label">Свободные</div>
+                </div>
+                <div class="stat-card orange">
+                    <div class="icon"><i class="fas fa-user-clock"></i></div>
+                    <div class="number" id="statWork">0</div>
+                    <div class="label">В работе</div>
+                </div>
+                <div class="stat-card cyan">
+                    <div class="icon"><i class="fas fa-handshake"></i></div>
+                    <div class="number" id="statMeeting">0</div>
+                    <div class="label">Встречи</div>
+                </div>
+                <div class="stat-card purple">
+                    <div class="icon"><i class="fas fa-file-signature"></i></div>
+                    <div class="number" id="statContract">0</div>
+                    <div class="label">Договоры</div>
+                </div>
+                <div class="stat-card red">
+                    <div class="icon"><i class="fas fa-check-circle"></i></div>
+                    <div class="number" id="statSold">0</div>
+                    <div class="label">Продано</div>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="filters" id="filtersSection">
+                <select id="filterStatus" onchange="filterObjects()">
+                    <option value="">Все статусы</option>
+                    <option value="NEW">Свободен</option>
+                    <option value="PREPARATION">В работе</option>
+                    <option value="PREPAYMENT_INVOICE">Встреча назначена</option>
+                    <option value="EXECUTING">Договор</option>
+                    <option value="WON">Продан</option>
+                    <option value="LOSE">Отказ</option>
+                </select>
+                <select id="filterDistrict" onchange="filterObjects()">
+                    <option value="">Все микрорайоны</option>
+                    <option value="Ғажайып">Ғажайып</option>
+                    <option value="Акбулак">Акбулак</option>
+                    <option value="Нуркент">Нуркент</option>
+                    <option value="Саялы">Саялы</option>
+                    <option value="20-й Микрорайон">20-й Микрорайон</option>
+                    <option value="Улжан-1">Улжан-1</option>
+                    <option value="Улжан-2">Улжан-2</option>
+                    <option value="Алгабас">Алгабас</option>
+                    <option value="Мадениет">Мадениет</option>
+                    <option value="Зердели">Зердели</option>
+                    <option value="Дарабоз">Дарабоз</option>
+                </select>
+                <input type="text" id="filterSearch" placeholder="Поиск по адресу..." oninput="filterObjects()">
+                <button onclick="filterObjects()">
+                    <i class="fas fa-search"></i> Применить
+                </button>
+            </div>
+
+            <!-- Loading -->
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Загрузка объектов из Битрикс24...</p>
+            </div>
+
+            <!-- Objects Grid -->
+            <div class="objects-grid" id="objectsGrid"></div>
+
+            <!-- Empty State -->
+            <div class="empty-state" id="emptyState" style="display:none;">
+                <i class="fas fa-building"></i>
+                <h3>Нет объектов</h3>
+                <p>Объекты не найдены</p>
+            </div>
+
+            <!-- My Cabinet Page -->
+            <div id="cabinetPage" style="display:none;">
+                <div class="cabinet-header">
+                    <div class="cabinet-avatar" id="cabinetAvatar">A</div>
+                    <div class="cabinet-info">
+                        <h2 id="cabinetName">Имя сотрудника</h2>
+                        <p id="cabinetId">ID: </p>
+                    </div>
+                </div>
+                <div class="stats-grid" id="cabinetStats"></div>
+                <h3 style="margin: 20px 0 15px; color: #333;"><i class="fas fa-building"></i> Мои объекты</h3>
+                <div class="objects-grid" id="cabinetObjects"></div>
+            </div>
+
+            <!-- Agents Page -->
+            <div id="agentsPage" style="display:none;">
+                <div class="agents-grid" id="agentsGrid"></div>
+            </div>
+
+            <!-- Activity Page -->
+            <div id="activityPage" style="display:none;">
+                <div class="activity-log">
+                    <h3><i class="fas fa-history"></i> История активности всех сотрудников</h3>
+                    <div id="activityList"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Call Modal -->
+    <div class="modal" id="callModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-phone"></i> Звонок продавцу</h2>
+                <button class="modal-close" onclick="closeCallModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="callDealId">
+                <div style="text-align: center; padding: 30px;">
+                    <div style="font-size: 48px; color: #9b59b6; margin-bottom: 20px;">
+                        <i class="fas fa-phone-volume"></i>
+                    </div>
+                    <p style="color: #888; margin-bottom: 20px;">Нажмите кнопку для звонка через Mango</p>
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+                        <i class="fas fa-shield-alt" style="color: #2ecc71;"></i>
+                        <span style="margin-left: 10px; color: #666;">Номер продавца скрыт</span>
+                    </div>
+                </div>
+                <div class="form-group-full">
+                    <label>Комментарий после звонка</label>
+                    <textarea id="callComment" placeholder="Что обсудили с продавцом..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-small btn-cancel" onclick="closeCallModal()">Отмена</button>
+                <button class="btn-small btn-call" onclick="makeCall()">
+                    <i class="fas fa-phone"></i> Позвонить
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Meeting Modal -->
+    <div class="modal" id="meetingModal">
+        <div class="modal-content">
+            <div class="modal-header" style="background: linear-gradient(135deg, #00bcd4 0%, #0097a7 100%);">
+                <h2><i class="fas fa-handshake"></i> Назначить встречу</h2>
+                <button class="modal-close" onclick="closeMeetingModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="meetingDealId">
+                <div class="form-row">
+                    <div class="form-group-full">
+                        <label>Дата встречи</label>
+                        <input type="date" id="meetingDate">
+                    </div>
+                    <div class="form-group-full">
+                        <label>Время встречи</label>
+                        <input type="time" id="meetingTime">
+                    </div>
+                </div>
+                <div class="form-group-full">
+                    <label>Место встречи</label>
+                    <input type="text" id="meetingPlace" placeholder="Адрес встречи">
+                </div>
+                <div class="form-group-full">
+                    <label>Комментарий</label>
+                    <textarea id="meetingComment" placeholder="Детали встречи..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-small btn-cancel" onclick="closeMeetingModal()">Отмена</button>
+                <button class="btn-small btn-meeting" onclick="saveMeeting()">
+                    <i class="fas fa-save"></i> Сохранить встречу
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contract Modal -->
+    <div class="modal" id="contractModal">
+        <div class="modal-content">
+            <div class="modal-header" style="background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);">
+                <h2><i class="fas fa-file-signature"></i> Загрузить договор</h2>
+                <button class="modal-close" onclick="closeContractModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="contractDealId">
+                <div class="form-group-full">
+                    <label>Загрузить PDF договор</label>
+                    <div class="file-upload" onclick="document.getElementById('contractFile').click()">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Нажмите или перетащите PDF файл</p>
+                        <input type="file" id="contractFile" accept=".pdf" onchange="onFileSelected(this)">
+                    </div>
+                    <div id="fileName" style="margin-top: 10px; color: #667eea; font-weight: 500; display: none;"></div>
+                </div>
+                <div class="form-group-full">
+                    <label>Комментарий</label>
+                    <textarea id="contractComment" placeholder="Примечания к договору..."></textarea>
+                </div>
+                <div style="background: #fff3e0; padding: 15px; border-radius: 10px; margin-top: 15px;">
+                    <i class="fas fa-exclamation-triangle" style="color: #f39c12;"></i>
+                    <span style="margin-left: 10px; color: #666; font-size: 13px;">
+                        После загрузки договора объект будет заблокирован для изменений
+                    </span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-small btn-cancel" onclick="closeContractModal()">Отмена</button>
+                <button class="btn-small btn-contract" onclick="uploadContract()">
+                    <i class="fas fa-upload"></i> Загрузить и заблокировать
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sold Modal -->
+    <div class="modal" id="soldModal">
+        <div class="modal-content" style="max-width: 700px;">
+            <div class="modal-header" style="background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);">
+                <h2><i class="fas fa-check-circle"></i> Продажа объекта</h2>
+                <button class="modal-close" onclick="closeSoldModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="soldDealId">
+                
+                <!-- Object Info -->
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+                    <h4 style="margin: 0 0 10px; color: #333;"><i class="fas fa-building"></i> Информация об объекте</h4>
+                    <div id="soldObjectInfo" style="color: #666; font-size: 14px;"></div>
+                </div>
+                
+                <!-- Contract View -->
+                <div class="form-group-full">
+                    <label><i class="fas fa-file-contract"></i> Договор купли-продажи</label>
+                    <div id="soldContractView" style="background: #e8f5e9; padding: 15px; border-radius: 10px; border: 2px solid #4caf50;">
+                        <p style="margin: 0; color: #388e3c;"><i class="fas fa-check"></i> Договор загружен и подписан</p>
+                        <a href="#" id="viewContractLink" target="_blank" style="color: #667eea; display: inline-block; margin-top: 10px;">
+                            <i class="fas fa-eye"></i> Просмотреть договор
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Requisites -->
+                <div class="form-group-full">
+                    <label><i class="fas fa-money-bill-wave"></i> Реквизиты для оплаты</label>
+                    <div style="background: #fff8e1; padding: 15px; border-radius: 10px; border: 1px dashed #ffc107;">
+                        <p style="margin: 0 0 10px; font-weight: 600; color: #333;">A Realty Group</p>
+                        <p style="margin: 0; font-size: 13px; color: #666;">
+                            БИН: 940440001234<br>
+                            Kaspi Бизнес: KZ86125KZT5001300000<br>
+                            Тел: +7 (707) 271-32-20
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Commission Calculator -->
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; border-radius: 15px; margin: 20px 0; color: white;">
+                    <h4 style="margin: 0 0 15px;"><i class="fas fa-calculator"></i> Калькулятор комиссии</h4>
+                    
+                    <div class="form-row">
+                        <div class="form-group-full">
+                            <label style="color: rgba(255,255,255,0.9);">Сумма продажи (₸)</label>
+                            <input type="number" id="saleAmount" placeholder="0" oninput="calculateCommission()" 
+                                   style="background: rgba(255,255,255,0.2); border: none; color: white; font-size: 18px;">
+                        </div>
+                        <div class="form-group-full">
+                            <label style="color: rgba(255,255,255,0.9);">Процент комиссии (%)</label>
+                            <input type="number" id="commissionPercent" value="2" oninput="calculateCommission()"
+                                   style="background: rgba(255,255,255,0.2); border: none; color: white;">
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 15px;">
+                        <div style="background: rgba(255,255,255,0.15); padding: 15px; border-radius: 10px; text-align: center;">
+                            <div style="font-size: 12px; opacity: 0.8;">Общая комиссия</div>
+                            <div id="totalCommission" style="font-size: 22px; font-weight: 700;">0 ₸</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.15); padding: 15px; border-radius: 10px; text-align: center;">
+                            <div style="font-size: 12px; opacity: 0.8;">Компания (50%)</div>
+                            <div id="companyShare" style="font-size: 22px; font-weight: 700;">0 ₸</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.15); padding: 15px; border-radius: 10px; text-align: center;">
+                            <div style="font-size: 12px; opacity: 0.8;">Риэлтор (50%)</div>
+                            <div id="agentShare" style="font-size: 22px; font-weight: 700;">0 ₸</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group-full">
+                    <label>Комментарий к продаже</label>
+                    <textarea id="soldComment" placeholder="Дополнительная информация..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-small btn-cancel" onclick="closeSoldModal()">Отмена</button>
+                <button class="btn-small btn-success" onclick="confirmSale()" style="background: #2ecc71;">
+                    <i class="fas fa-check-circle"></i> Подтвердить продажу
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Call Recording Modal -->
+    <div class="modal" id="recordingModal">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">
+                <h2><i class="fas fa-microphone-alt"></i> Запись звонка</h2>
+                <button class="modal-close" onclick="closeRecordingModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div style="text-align: center; padding: 20px;">
+                    <div style="font-size: 64px; color: #9b59b6; margin-bottom: 20px; animation: pulse 1.5s infinite;">
+                        <i class="fas fa-microphone"></i>
+                    </div>
+                    <h3 style="color: #333; margin-bottom: 10px;">Идет запись звонка...</h3>
+                    <p style="color: #888;">Все разговоры записываются для контроля качества</p>
+                    
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; margin-top: 20px;">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                            <i class="fas fa-clock" style="color: #667eea;"></i>
+                            <span id="callDuration" style="font-family: monospace; font-size: 18px;">00:00</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-calendar" style="color: #667eea;"></i>
+                            <span id="callDateTime"></span>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 20px;">
+                        <div style="height: 40px; display: flex; align-items: center; justify-content: center; gap: 3px;">
+                            <div class="audio-bar" style="width: 4px; height: 20px; background: #9b59b6; border-radius: 2px; animation: audioWave 0.5s infinite;"></div>
+                            <div class="audio-bar" style="width: 4px; height: 30px; background: #9b59b6; border-radius: 2px; animation: audioWave 0.5s infinite 0.1s;"></div>
+                            <div class="audio-bar" style="width: 4px; height: 25px; background: #9b59b6; border-radius: 2px; animation: audioWave 0.5s infinite 0.2s;"></div>
+                            <div class="audio-bar" style="width: 4px; height: 35px; background: #9b59b6; border-radius: 2px; animation: audioWave 0.5s infinite 0.3s;"></div>
+                            <div class="audio-bar" style="width: 4px; height: 20px; background: #9b59b6; border-radius: 2px; animation: audioWave 0.5s infinite 0.4s;"></div>
+                            <div class="audio-bar" style="width: 4px; height: 30px; background: #9b59b6; border-radius: 2px; animation: audioWave 0.5s infinite 0.5s;"></div>
+                            <div class="audio-bar" style="width: 4px; height: 25px; background: #9b59b6; border-radius: 2px; animation: audioWave 0.5s infinite 0.6s;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-small btn-danger" onclick="endCallRecording()">
+                    <i class="fas fa-phone-slash"></i> Завершить звонок
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Photo Gallery Modal -->
+    <div class="modal gallery-modal" id="galleryModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-images"></i> Фото объекта</h2>
+                <button class="modal-close" onclick="closeGalleryModal()">&times;</button>
+            </div>
+            <div class="modal-body" style="padding: 0; position: relative;">
+                <img id="galleryMainImage" src="" alt="Фото объекта" class="gallery-main-image">
+                <button class="gallery-nav prev" onclick="prevGalleryImage()">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="gallery-nav next" onclick="nextGalleryImage()">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+            <div class="gallery-thumbnails" id="galleryThumbnails"></div>
+        </div>
+    </div>
+
+    <style>
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        @keyframes audioWave {
+            0%, 100% { transform: scaleY(0.5); }
+            50% { transform: scaleY(1); }
+        }
+    </style>
+
+    <script>
+        // ==================== CONFIG ====================
+       const BITRIX_WEBHOOK = 'https://b24-6mcve5.bitrix24.kz/rest/1/0bcsjte5yrhzozk4/';
+        const CATEGORY_ID = 8;
+        
+        // Telegram Bot Config (замените на реальные значения)
+        const TELEGRAM_CONFIG = {
+            botToken: 'YOUR_BOT_TOKEN',
+            chatId: 'YOUR_CHAT_ID',
+            enabled: false // Включите после настройки бота
+        };
+        
+        // Mango Telephony Config
+        const MANGO_CONFIG = {
+            apiKey: 'YOUR_MANGO_API_KEY',
+            apiSalt: 'YOUR_MANGO_API_SALT',
+            enabled: false // Включите после настройки Mango
+        };
+        
+        // ==================== USERS (ВСЕ СОТРУДНИКИ) ====================
+        // ID из Krisha: Жанат=5969819, Асель=127611, Нурлан=18616153
+        // Объекты в Битрикс24 назначены на ID: 10=Жанат, 12=Асель, 14=Нурлан
+        const USERS = {
+            // Владелец
+            'admin': { id: 'admin', name: 'Владелец', role: 'owner', phone: '' },
+            // Админы (ID из Krisha для входа, bitrixId для объектов в Битрикс24)
+            '5969819': { id: '5969819', name: 'Тампиева Жанат', role: 'admin', phone: '77072713220', bitrixId: '10' },
+            '127611': { id: '127611', name: 'Пірназарова Асель', role: 'admin', phone: '77056116160', bitrixId: '12' },
+            '18616153': { id: '18616153', name: 'Кадиров Нурлан', role: 'admin', phone: '77059713595', bitrixId: '14' },
+            // Сотрудники (ID из Krisha)
+            '21302308': { id: '21302308', name: 'Лесбек Азамат', role: 'agent', phone: '77005545420' },
+            '9358849': { id: '9358849', name: 'Умирзаков Ерсин', role: 'agent', phone: '77756471808' },
+            '22342401': { id: '22342401', name: 'Байдалиєва Анар', role: 'agent', phone: '77074276492' },
+            '22808026': { id: '22808026', name: 'Сайлаубек Нурлыбек', role: 'agent', phone: '77070257717' },
+            '12275341': { id: '12275341', name: 'Жусіп Рамазан', role: 'agent', phone: '77478999876' },
+            '13651655': { id: '13651655', name: 'Отегенбаев Ильяс', role: 'agent', phone: '77026660062' },
+            '10983188': { id: '10983188', name: 'Телеуғай Телеген', role: 'agent', phone: '77767312723' },
+            '15576853': { id: '15576853', name: 'Қайырғалиев Әлнұр', role: 'agent', phone: '77054522333' },
+            '14045405': { id: '14045405', name: 'Сапбекова Акбаян', role: 'agent', phone: '77752987371' },
+            '13565723': { id: '13565723', name: 'Солпекова Дина', role: 'agent', phone: '77778165029' },
+            '5986709': { id: '5986709', name: 'Мейрбекова Лаура', role: 'agent', phone: '77778149508' },
+            '22733888': { id: '22733888', name: 'Алпамыс Ислам', role: 'agent', phone: '77778149508' }
+        };
+        
+        // Маппинг Bitrix ID -> Krisha ID для отображения имен
+        const BITRIX_TO_KRISHA = {
+            '10': '5969819',   // Жанат
+            '12': '127611',    // Асель
+            '14': '18616153'   // Нурлан
+        };
+        
+        // ==================== STATE ====================
+        let currentUser = null;
+        let allDeals = [];
+        let filteredDeals = [];
+        let currentPage = 'objects';
+        let autoRefreshInterval = null;
+        let notifiedDeals = new Set();
+        let activityLog = [];
+        
+        // ==================== LOGIN ====================
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const userId = document.getElementById('userId').value.trim();
+            
+            if (USERS[userId]) {
+                currentUser = USERS[userId];
+                localStorage.setItem('crmUser', JSON.stringify(currentUser));
+                showDashboard();
+            } else {
+                document.getElementById('loginError').style.display = 'block';
+            }
+        });
+        
+        // ==================== DASHBOARD ====================
+        function showDashboard() {
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+            
+            document.getElementById('userName').textContent = currentUser.name;
+            document.getElementById('userAvatar').textContent = currentUser.name.charAt(0).toUpperCase();
+            document.getElementById('userRole').textContent = 
+                currentUser.role === 'owner' ? 'Владелец' : (currentUser.role === 'admin' ? 'Админ' : 'Риэлтор');
+            
+            // Показываем меню в зависимости от роли
+            if (currentUser.role === 'owner') {
+                document.getElementById('navAgents').style.display = 'flex';
+                document.getElementById('navActivity').style.display = 'flex';
+            }
+            
+            loadDeals();
+            startAutoRefresh();
+        }
+        
+        // ==================== TOAST ====================
+        function showToast(title, message, type = 'info', duration = 5000) {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            
+            const icons = { info: 'fa-info-circle', success: 'fa-check-circle', warning: 'fa-bell', error: 'fa-exclamation-circle' };
+            
+            toast.innerHTML = `
+                <div class="toast-icon"><i class="fas ${icons[type]}"></i></div>
+                <div class="toast-content"><h4>${title}</h4><p>${message}</p></div>
+                <button class="toast-close" onclick="this.parentElement.remove()">&times;</button>
+            `;
+            
+            container.appendChild(toast);
+            playSound();
+            
+            setTimeout(() => {
+                toast.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, duration);
+        }
+        
+        function playSound() {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.frequency.value = 800;
+                gain.gain.setValueAtTime(0.2, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+                osc.start();
+                osc.stop(ctx.currentTime + 0.3);
+            } catch (e) {}
+        }
+        
+        // ==================== LOAD DEALS ====================
+        async function loadDeals() {
+            document.getElementById('loading').classList.add('active');
+
+            try {
+                let allResults = [];
+                let start = 0;
+                let hasMore = true;
+
+                while (hasMore && start < 200) {
+                    // Загружаем сделки с дополнительными полями (телефон продавца)
+                    const response = await fetch(
+                        `${BITRIX_WEBHOOK}crm.deal.list?filter[CATEGORY_ID]=${CATEGORY_ID}&order[ID]=DESC&start=${start}&select[]=ID&select[]=TITLE&select[]=STAGE_ID&select[]=ASSIGNED_BY_ID&select[]=COMMENTS&select[]=UF_CRM_1709123456&select[]=UF_CRM_1709123457`
+                    );
+                    const data = await response.json();
+
+                    if (data.result && data.result.length > 0) {
+                        allResults = allResults.concat(data.result);
+                        if (data.result.length < 50) hasMore = false;
+                        else start += 50;
+                    } else {
+                        hasMore = false;
+                    }
+                }
+
+                // Загружаем фото для каждой сделки
+                for (let deal of allResults) {
+                    deal.photos = await loadDealPhotos(deal.ID);
+                }
+
+                if (allResults.length > 0) {
+                    const previousCount = allDeals.length;
+                    allDeals = allResults;
+                    await loadUserNames();
+                    filterAndRender();
+
+                    if (previousCount === 0) {
+                        const freeCount = allDeals.filter(d => d.STAGE_ID === 'C8:NEW').length;
+                        showToast('Добро пожовать!', `Загружено ${allDeals.length} объектов. Свободных: ${freeCount}`, 'info', 5000);
+                    }
+
+                    // Проверяем новые объекты
+                    if (previousCount > 0 && allResults.length > previousCount) {
+                        const newDeals = allResults.filter(d => !allDeals.some(old => old.ID === d.ID));
+                        newDeals.forEach(d => {
+                            if (!notifiedDeals.has(d.ID)) {
+                                notifiedDeals.add(d.ID);
+                                const parts = d.TITLE ? d.TITLE.split('|') : ['Новый', ''];
+                                showToast('Новый объект!', `${parts[0].trim()} - ${parts[1]?.trim() || ''}`, 'success', 8000);
+
+                                // Telegram уведомление о новом объекте
+                                notifyNewFreeObject(d);
+                            }
+                        });
+                    }
+                }
+            } catch (error) {
+                showToast('Ошибка', 'Не удалось подключиться к Битрикс24', 'error');
+            }
+
+            document.getElementById('loading').classList.remove('active');
+        }
+
+        // ==================== LOAD DEAL PHOTOS ====================
+        async function loadDealPhotos(dealId) {
+            try {
+                // Получаем вложения (фото) сделки
+                const response = await fetch(
+                    `${BITRIX_WEBHOOK}crm.deal.get?id=${dealId}`
+                );
+                const data = await response.json();
+
+                if (data.result && data.result.FILE) {
+                    // Если есть файлы в сделке
+                    const files = Array.isArray(data.result.FILE) ? data.result.FILE : [data.result.FILE];
+                    const photoUrls = [];
+
+                    for (const file of files) {
+                        if (file && file.FILE_ID) {
+                            const fileResponse = await fetch(
+                                `${BITRIX_WEBHOOK}disk.file.get?id=${file.FILE_ID}`
+                            );
+                            const fileData = await fileResponse.json();
+                            if (fileData.result && fileData.result.DOWNLOAD_URL) {
+                                photoUrls.push(fileData.result.DOWNLOAD_URL);
+                            }
+                        }
+                    }
+                    return photoUrls;
+                }
+                return [];
+            } catch (e) {
+                console.log('Error loading photos for deal', dealId, e);
+                return [];
+            }
+        }
+
+        // ==================== HIDE PHONE NUMBER ====================
+        function hidePhoneNumber(phone) {
+            if (!phone) return '••• ••• •• ••';
+            // Оставляем только последние 2 цифры
+            const cleaned = phone.replace(/\D/g, '');
+            if (cleaned.length < 4) return '••• ••• •• ••';
+            return '••• ••• •• ' + cleaned.slice(-2);
+        }
+
+        // ==================== LOAD USER NAMES ====================
+        async function loadUserNames() {
+            const userIds = [...new Set(allDeals.map(d => d.ASSIGNED_BY_ID).filter(Boolean))];
+            for (const userId of userIds) {
+                if (USERS[userId]) {
+                    window['user_' + userId] = USERS[userId].name;
+                } else {
+                    try {
+                        const response = await fetch(`${BITRIX_WEBHOOK}user.get?ID=${userId}`);
+                        const data = await response.json();
+                        if (data.result && data.result[0]) {
+                            const user = data.result[0];
+                            window['user_' + userId] = `${user.NAME} ${user.LAST_NAME}`;
+                        }
+                    } catch (e) {
+                        window['user_' + userId] = 'Не назначен';
+                    }
+                }
+            }
+        }
+        
+        function getUserName(userId) {
+            // Объединяем Жаната: ID 10 и 5969819 - это один человек
+            if (userId === '10' || userId === '5969819') {
+                return 'Тампиева Жанат';
+            }
+            // Ищем по прямому ID
+            if (USERS[userId]) return USERS[userId].name;
+            // Ищем по bitrixId (для админов)
+            for (const key in USERS) {
+                if (USERS[key].bitrixId === userId) return USERS[key].name;
+            }
+            return window['user_' + userId] || 'Не назначен';
+        }
+        
+        // Получить Krisha ID по Bitrix ID (для объединения статистики)
+        function getKrishaId(bitrixId) {
+            if (bitrixId === '10' || bitrixId === '5969819') return '5969819';
+            if (bitrixId === '12') return '127611';
+            if (bitrixId === '14') return '18616153';
+            return bitrixId;
+        }
+        
+        // ==================== FILTER & RENDER ====================
+        function filterAndRender() {
+            const statusFilter = document.getElementById('filterStatus').value;
+            const districtFilter = document.getElementById('filterDistrict').value;
+            const searchFilter = document.getElementById('filterSearch').value.toLowerCase();
+            
+            // Фильтрация по правам доступа
+            let visibleDeals = allDeals;
+            if (currentUser.role === 'agent') {
+                visibleDeals = allDeals.filter(d => {
+                    const isFree = d.STAGE_ID === 'C8:NEW';
+                    const isMine = d.ASSIGNED_BY_ID === currentUser.id;
+                    return isFree || isMine;
+                });
+            }
+            
+            filteredDeals = visibleDeals.filter(deal => {
+                if (statusFilter) {
+                    const stage = deal.STAGE_ID ? deal.STAGE_ID.replace('C8:', '') : '';
+                    if (stage !== statusFilter) return false;
+                }
+                if (districtFilter) {
+                    const parts = deal.TITLE ? deal.TITLE.split('|') : [];
+                    if (parts[1] && !parts[1].trim().includes(districtFilter)) return false;
+                }
+                if (searchFilter) {
+                    const title = (deal.TITLE || '').toLowerCase();
+                    const address = (deal.COMMENTS || '').toLowerCase();
+                    if (!title.includes(searchFilter) && !address.includes(searchFilter)) return false;
+                }
+                return true;
+            });
+            
+            updateStats();
+            renderDeals();
+        }
+        
+        // ==================== UPDATE STATS ====================
+        function updateStats() {
+            const stats = {
+                total: allDeals.length,
+                free: allDeals.filter(d => d.STAGE_ID === 'C8:NEW').length,
+                work: allDeals.filter(d => d.STAGE_ID === 'C8:PREPARATION').length,
+                meeting: allDeals.filter(d => d.STAGE_ID === 'C8:PREPAYMENT_INVOICE').length,
+                contract: allDeals.filter(d => d.STAGE_ID === 'C8:EXECUTING').length,
+                sold: allDeals.filter(d => d.STAGE_ID === 'C8:WON').length
+            };
+            
+            document.getElementById('statTotal').textContent = stats.total;
+            document.getElementById('statFree').textContent = stats.free;
+            document.getElementById('statWork').textContent = stats.work;
+            document.getElementById('statMeeting').textContent = stats.meeting;
+            document.getElementById('statContract').textContent = stats.contract;
+            document.getElementById('statSold').textContent = stats.sold;
+            
+            // Бейдж на кнопке "Объекты" - красный когда есть свободные
+            const freeBadge = document.getElementById('freeCount');
+            freeBadge.textContent = stats.free;
+            if (stats.free > 0) {
+                freeBadge.style.background = '#e74c3c'; // Красный когда есть свободные
+            } else {
+                freeBadge.style.background = '#95a5a6'; // Серый когда нет
+            }
+        }
+        
+        // ==================== STATUS HELPERS ====================
+        const STAGES = {
+            'C8:NEW': { text: 'Свободен', class: 'status-new' },
+            'C8:PREPARATION': { text: 'В работе', class: 'status-work' },
+            'C8:PREPAYMENT_INVOICE': { text: 'Встреча назначена', class: 'status-meeting' },
+            'C8:EXECUTING': { text: 'Договор', class: 'status-contract' },
+            'C8:WON': { text: 'Продан', class: 'status-sold' },
+            'C8:LOSE': { text: 'Отказ', class: 'status-reject' },
+            'LOCKED': { text: 'Заблокирован', class: 'status-locked' }
+        };
+        
+        function getStatusClass(stage) {
+            return STAGES[stage]?.class || 'status-new';
+        }
+        
+        function getStatusText(stage) {
+            return STAGES[stage]?.text || stage;
+        }
+        
+        // ==================== RENDER DEALS ====================
+        function renderDeals() {
+            const grid = document.getElementById('objectsGrid');
+            
+            if (filteredDeals.length === 0) {
+                grid.innerHTML = '';
+                document.getElementById('emptyState').style.display = 'block';
+                return;
+            }
+            
+            document.getElementById('emptyState').style.display = 'none';
+            
+            grid.innerHTML = filteredDeals.map(deal => {
+                const parts = deal.TITLE ? deal.TITLE.split('|') : ['', '', ''];
+                const objectId = parts[0]?.trim() || 'AL' + deal.ID;
+                const district = parts[1]?.trim() || '—';
+                
+                const address = deal.COMMENTS || 'Адрес не указан';
+                const isFree = deal.STAGE_ID === 'C8:NEW';
+                const isLocked = deal.UF_CRM_LOCKED === 'Y' || deal.STAGE_ID === 'C8:WON';
+                const assignedName = getUserName(deal.ASSIGNED_BY_ID);
+                
+                // История действий
+                const history = deal.UF_CRM_HISTORY ? JSON.parse(deal.UF_CRM_HISTORY) : [];
+                const lastActions = history.slice(-2);
+                
+                let buttons = '';
+                
+                if (isLocked) {
+                    buttons = `
+                        <button class="btn-small btn-locked" disabled>
+                            <i class="fas fa-lock"></i> Заблокирован
+                        </button>
+                    `;
+                } else if (isFree) {
+                    buttons = `
+                        <button class="btn-small btn-take" onclick="takeObject('${deal.ID}')">
+                            <i class="fas fa-hand-paper"></i> Взять в работу
+                        </button>
+                    `;
+                } else {
+                    // Проверяем права на редактирование
+                    let canEdit = false;
+                    if (currentUser.role === 'owner') canEdit = true;
+                    else if (currentUser.id === '5969819' && (deal.ASSIGNED_BY_ID === '10' || deal.ASSIGNED_BY_ID === '5969819')) canEdit = true;
+                    else if (currentUser.id === '127611' && deal.ASSIGNED_BY_ID === '12') canEdit = true;
+                    else if (currentUser.id === '18616153' && deal.ASSIGNED_BY_ID === '14') canEdit = true;
+                    else if (deal.ASSIGNED_BY_ID === currentUser.id) canEdit = true;
+                    
+                    if (canEdit) {
+                        // Если статус "Договор" - показываем кнопку "Продан"
+                        if (deal.STAGE_ID === 'C8:EXECUTING') {
+                            buttons = `
+                                <button class="btn-small btn-call" onclick="openCallModal('${deal.ID}')">
+                                    <i class="fas fa-phone"></i> Звонок
+                                </button>
+                                <button class="btn-small btn-success" onclick="openSoldModal('${deal.ID}')" style="background: #2ecc71;">
+                                    <i class="fas fa-check-circle"></i> Продан
+                                </button>
+                            `;
+                        } else {
+                            buttons = `
+                                <button class="btn-small btn-call" onclick="openCallModal('${deal.ID}')">
+                                    <i class="fas fa-phone"></i> Звонок
+                                </button>
+                                <button class="btn-small btn-meeting" onclick="openMeetingModal('${deal.ID}')">
+                                    <i class="fas fa-handshake"></i> Встреча
+                                </button>
+                                <button class="btn-small btn-contract" onclick="openContractModal('${deal.ID}')">
+                                    <i class="fas fa-file-signature"></i> Договор
+                                </button>
+                            `;
+                        }
+                    }
+                }
+                
+                const statusClass = isLocked ? 'status-locked' : getStatusClass(deal.STAGE_ID);
+                const statusText = isLocked ? 'Заблокирован' : getStatusText(deal.STAGE_ID);
+                
+                // Получаем номер телефона продавца из UF поля
+                const sellerPhone = deal.UF_CRM_1709123456 || deal.UF_CRM_1709123457 || '';
+                const hiddenPhone = hidePhoneNumber(sellerPhone);
+
+                // Фото объекта
+                const hasPhotos = deal.photos && deal.photos.length > 0;
+                const photoGallery = hasPhotos ? `
+                    <div class="object-photos" onclick="openPhotoGallery('${deal.ID}')">
+                        <img src="${deal.photos[0]}" alt="Фото объекта" class="main-photo">
+                        ${deal.photos.length > 1 ? `<span class="photo-count">+${deal.photos.length - 1}</span>` : ''}
+                    </div>
+                ` : `
+                    <div class="object-photos no-photo">
+                        <i class="fas fa-image"></i>
+                        <span>Нет фото</span>
+                    </div>
+                `;
+
+                return `
+                    <div class="object-card ${isLocked ? 'locked' : ''}">
+                        ${photoGallery}
+                        <div class="object-header">
+                            <div class="id">${objectId}</div>
+                            <div class="title">${district}</div>
+                            <span class="badge ${isFree ? 'badge-free' : (isLocked ? 'badge-locked' : 'badge-taken')}">
+                                ${isFree ? 'СВОБОДЕН' : (isLocked ? 'ЗАБЛОКИРОВАН' : assignedName)}
+                            </span>
+                        </div>
+                        <div class="object-body">
+                            <div class="object-address">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>${address}</span>
+                            </div>
+                            <div class="object-seller">
+                                <i class="fas fa-phone"></i>
+                                <span class="phone-hidden">${hiddenPhone}</span>
+                                <span class="label">номер скрыт</span>
+                            </div>
+                            ${lastActions.length > 0 ? `
+                                <div class="object-history">
+                                    ${lastActions.map(h => `
+                                        <div class="item">
+                                            <i class="fas fa-${h.icon}"></i>
+                                            <span>${h.text}</span>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            ` : ''}
+                            <span class="status-badge ${statusClass}">${statusText}</span>
+                        </div>
+                        <div class="object-actions">
+                            ${buttons}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        // ==================== ACTIONS ====================
+        async function takeObject(dealId) {
+            const deal = allDeals.find(d => d.ID === dealId);
+            if (!deal || deal.STAGE_ID !== 'C8:NEW') {
+                showToast('Ошибка', 'Объект уже занят!', 'error');
+                return;
+            }
+            
+            if (!confirm('Взять этот объект в работу?')) return;
+            
+            // Для Жаната назначаем на ID 10 (основной в Битрикс24)
+            // Для Асель - ID 12, для Нурлана - ID 14
+            let assignId;
+            if (currentUser.id === '5969819') assignId = '10';
+            else if (currentUser.id === '127611') assignId = '12';
+            else if (currentUser.id === '18616153') assignId = '14';
+            else assignId = currentUser.id;
+            
+            try {
+                const response = await fetch(
+                    `${BITRIX_WEBHOOK}crm.deal.update?id=${dealId}&fields[STAGE_ID]=C8:PREPARATION&fields[ASSIGNED_BY_ID]=${assignId}`
+                );
+                const data = await response.json();
+                
+                if (data.result) {
+                    // Добавляем в историю
+                    await addToHistory(dealId, 'take', `✅ Взято в работу: ${currentUser.name}`);
+                    
+                    // Логируем активность
+                    logActivity(currentUser.id, 'take', dealId, `Взял объект ${deal.TITLE?.split('|')[0] || deal.ID}`);
+                    
+                    showToast('Успех!', 'Объект взят в работу', 'success');
+                    
+                    // Telegram уведомление
+                    const deal = allDeals.find(d => d.ID === dealId);
+                    const parts = deal.TITLE ? deal.TITLE.split('|') : ['', ''];
+                    await sendTelegramNotification(
+                        '📞 ОБЪЕКТ ВЗЯТ В РАБОТУ',
+                        `🏢 Объект: ${parts[0]?.trim() || dealId}
+📍 Район: ${parts[1]?.trim() || '—'}
+👤 Риэлтор: ${currentUser.name}`
+                    );
+                    loadDeals();
+                }
+            } catch (e) {
+                showToast('Ошибка', 'Не удалось взять объект', 'error');
+            }
+        }
+        
+        // ==================== CALL MODAL ====================
+        function openCallModal(dealId) {
+            document.getElementById('callDealId').value = dealId;
+            document.getElementById('callComment').value = '';
+            document.getElementById('callModal').classList.add('active');
+        }
+        
+        function closeCallModal() {
+            document.getElementById('callModal').classList.remove('active');
+        }
+        
+        async function makeCall() {
+            const dealId = document.getElementById('callDealId').value;
+            const comment = document.getElementById('callComment').value.trim();
+            const deal = allDeals.find(d => d.ID === dealId);
+
+            // Закрываем модал звонка и открываем запись
+            document.getElementById('callModal').classList.remove('active');
+            openRecordingModal();
+
+            // Здесь будет интеграция с Mango для переадресации
+            if (MANGO_CONFIG.enabled) {
+                // Инициируем звонок через Mango API
+                // Переадресация на телефон риэлтора
+                initiateMangoCall(dealId, currentUser.phone);
+            }
+
+            // Записываем в историю
+            await addToHistory(dealId, 'phone', `📞 Звонок: ${currentUser.name}${comment ? ' - ' + comment : ''}`);
+
+            // Логируем активность
+            logActivity(currentUser.id, 'call', dealId, `Позвонил по объекту ${deal.TITLE?.split('|')[0] || dealId}${comment ? ': ' + comment : ''}`);
+        }
+
+        // Mango Telephony Integration (placeholder)
+        async function initiateMangoCall(dealId, agentPhone) {
+            // Здесь будет реальная интеграция с Mango API
+            console.log('Mango call initiated:', { dealId, agentPhone });
+            // API endpoint: https://app.mango-office.ru/vpbx/commands/callback
+        }
+        
+        // ==================== MEETING MODAL ====================
+        function openMeetingModal(dealId) {
+            document.getElementById('meetingDealId').value = dealId;
+            document.getElementById('meetingDate').value = '';
+            document.getElementById('meetingTime').value = '';
+            document.getElementById('meetingPlace').value = '';
+            document.getElementById('meetingComment').value = '';
+            document.getElementById('meetingModal').classList.add('active');
+        }
+        
+        function closeMeetingModal() {
+            document.getElementById('meetingModal').classList.remove('active');
+        }
+        
+        async function saveMeeting() {
+            const dealId = document.getElementById('meetingDealId').value;
+            const date = document.getElementById('meetingDate').value;
+            const time = document.getElementById('meetingTime').value;
+            const place = document.getElementById('meetingPlace').value.trim();
+            const comment = document.getElementById('meetingComment').value.trim();
+            
+            if (!date || !time) {
+                showToast('Ошибка', 'Укажите дату и время встречи', 'error');
+                return;
+            }
+            
+            try {
+                // Меняем статус
+                await fetch(`${BITRIX_WEBHOOK}crm.deal.update?id=${dealId}&fields[STAGE_ID]=C8:PREPAYMENT_INVOICE`);
+                
+                // Добавляем в историю
+                const meetingText = `🤝 Встреча ${date} ${time}${place ? ' в ' + place : ''}${comment ? ' - ' + comment : ''}`;
+                await addToHistory(dealId, 'handshake', `${meetingText} (${currentUser.name})`);
+                
+                // Логируем активность
+                logActivity(currentUser.id, 'meeting', dealId, meetingText);
+                
+                closeMeetingModal();
+                showToast('Успех!', 'Встреча назначена', 'success');
+                
+                // Telegram уведомление
+                const deal = allDeals.find(d => d.ID === dealId);
+                const parts = deal.TITLE ? deal.TITLE.split('|') : ['', ''];
+                await sendTelegramNotification(
+                    '🤝 ВСТРЕЧА НАЗНАЧЕНА',
+                    `🏢 Объект: ${parts[0]?.trim() || dealId}
+📍 Район: ${parts[1]?.trim() || '—'}
+👤 Риэлтор: ${currentUser.name}
+📅 Дата: ${date} ${time}`
+                );
+                loadDeals();
+            } catch (e) {
+                showToast('Ошибка', 'Не удалось сохранить встречу', 'error');
+            }
+        }
+        
+        // ==================== CONTRACT MODAL ====================
+        function openContractModal(dealId) {
+            document.getElementById('contractDealId').value = dealId;
+            document.getElementById('contractFile').value = '';
+            document.getElementById('fileName').style.display = 'none';
+            document.getElementById('contractComment').value = '';
+            document.getElementById('contractModal').classList.add('active');
+        }
+        
+        function closeContractModal() {
+            document.getElementById('contractModal').classList.remove('active');
+        }
+        
+        function onFileSelected(input) {
+            if (input.files && input.files[0]) {
+                document.getElementById('fileName').textContent = input.files[0].name;
+                document.getElementById('fileName').style.display = 'block';
+            }
+        }
+        
+        async function uploadContract() {
+            const dealId = document.getElementById('contractDealId').value;
+            const fileInput = document.getElementById('contractFile');
+            const comment = document.getElementById('contractComment').value.trim();
+            
+            if (!fileInput.files || !fileInput.files[0]) {
+                showToast('Ошибка', 'Выберите PDF файл договора', 'error');
+                return;
+            }
+            
+            if (!confirm('После загрузки договора объект будет заблокирован. Продолжить?')) return;
+            
+            try {
+                // Меняем статус на "Договор"
+                await fetch(`${BITRIX_WEBHOOK}crm.deal.update?id=${dealId}&fields[STAGE_ID]=C8:EXECUTING`);
+                
+                // Помечаем как заблокированный
+                await fetch(`${BITRIX_WEBHOOK}crm.deal.update?id=${dealId}&fields[UF_CRM_LOCKED]=Y`);
+                
+                // Добавляем в историю
+                await addToHistory(dealId, 'file-signature', `📝 Договор загружен: ${currentUser.name}${comment ? ' - ' + comment : ''}`);
+                
+                // Логируем активность
+                logActivity(currentUser.id, 'contract', dealId, `Загрузил договор для объекта ${dealId}${comment ? ': ' + comment : ''}`);
+                
+                // Telegram уведомление
+                const deal = allDeals.find(d => d.ID === dealId);
+                const parts = deal.TITLE ? deal.TITLE.split('|') : ['', ''];
+                await sendTelegramNotification(
+                    '📝 ДОГОВОР ЗАГРУЖЕН',
+                    `Объект: ${parts[0]?.trim() || dealId}\nРайон: ${parts[1]?.trim() || '—'}\nРиэлтор: ${currentUser.name}`
+                );
+                
+                closeContractModal();
+                showToast('Успех!', 'Договор загружен. Объект заблокирован.', 'success');
+                loadDeals();
+            } catch (e) {
+                showToast('Ошибка', 'Не удалось загрузить договор', 'error');
+            }
+        }
+        
+        // ==================== SOLD MODAL & COMMISSION ====================
+        let callRecordingInterval = null;
+        let callStartTime = null;
+        
+        function openSoldModal(dealId) {
+            const deal = allDeals.find(d => d.ID === dealId);
+            if (!deal) return;
+            
+            document.getElementById('soldDealId').value = dealId;
+            
+            const parts = deal.TITLE ? deal.TITLE.split('|') : ['', '', ''];
+            const objectId = parts[0]?.trim() || 'AL' + dealId;
+            const district = parts[1]?.trim() || '—';
+            const address = deal.COMMENTS || 'Адрес не указан';
+            
+            document.getElementById('soldObjectInfo').innerHTML = `
+                <strong>ID:</strong> ${objectId}<br>
+                <strong>Район:</strong> ${district}<br>
+                <strong>Адрес:</strong> ${address}
+            `;
+            
+            // Сброс калькулятора
+            document.getElementById('saleAmount').value = '';
+            document.getElementById('commissionPercent').value = '2';
+            document.getElementById('soldComment').value = '';
+            calculateCommission();
+            
+            document.getElementById('soldModal').classList.add('active');
+        }
+        
+        function closeSoldModal() {
+            document.getElementById('soldModal').classList.remove('active');
+        }
+        
+        function calculateCommission() {
+            const amount = parseFloat(document.getElementById('saleAmount').value) || 0;
+            const percent = parseFloat(document.getElementById('commissionPercent').value) || 0;
+            
+            const totalCommission = Math.round(amount * percent / 100);
+            const companyShare = Math.round(totalCommission / 2);
+            const agentShare = totalCommission - companyShare;
+            
+            document.getElementById('totalCommission').textContent = formatMoney(totalCommission) + ' ₸';
+            document.getElementById('companyShare').textContent = formatMoney(companyShare) + ' ₸';
+            document.getElementById('agentShare').textContent = formatMoney(agentShare) + ' ₸';
+        }
+        
+        function formatMoney(amount) {
+            return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+        }
+        
+        async function confirmSale() {
+            const dealId = document.getElementById('soldDealId').value;
+            const amount = document.getElementById('saleAmount').value;
+            const comment = document.getElementById('soldComment').value.trim();
+            
+            if (!amount || parseFloat(amount) <= 0) {
+                showToast('Ошибка', 'Укажите сумму продажи', 'error');
+                return;
+            }
+            
+            if (!confirm('Подтвердить продажу объекта? Это действие нельзя отменить.')) return;
+            
+            try {
+                const percent = parseFloat(document.getElementById('commissionPercent').value) || 0;
+                const totalCommission = Math.round(parseFloat(amount) * percent / 100);
+                const companyShare = Math.round(totalCommission / 2);
+                const agentShare = totalCommission - companyShare;
+                
+                // Меняем статус на "Продан"
+                await fetch(`${BITRIX_WEBHOOK}crm.deal.update?id=${dealId}&fields[STAGE_ID]=C8:WON`);
+                
+                // Сохраняем данные о продаже
+                await fetch(`${BITRIX_WEBHOOK}crm.deal.update?id=${dealId}&fields[UF_CRM_SALE_AMOUNT]=${amount}`);
+                await fetch(`${BITRIX_WEBHOOK}crm.deal.update?id=${dealId}&fields[UF_CRM_COMMISSION]=${totalCommission}`);
+                await fetch(`${BITRIX_WEBHOOK}crm.deal.update?id=${dealId}&fields[UF_CRM_SALE_DATE]=${new Date().toISOString().split('T')[0]}`);
+                
+                // Добавляем в историю
+                await addToHistory(dealId, 'check-circle', `✅ ПРОДАНО! Сумма: ${formatMoney(amount)} ₸, Комиссия: ${formatMoney(totalCommission)} ₸ (${currentUser.name})`);
+                
+                // Логируем активность
+                logActivity(currentUser.id, 'sold', dealId, `Продал объект на ${formatMoney(amount)} ₸`);
+                
+                // Telegram уведомление о продаже
+                const deal = allDeals.find(d => d.ID === dealId);
+                const parts = deal.TITLE ? deal.TITLE.split('|') : ['', ''];
+                await sendTelegramNotification(
+                    '🎉 ОБЪЕКТ ПРОДАН!',
+                    `🏢 Объект: ${parts[0]?.trim() || dealId}\n📍 Район: ${parts[1]?.trim() || '—'}\n👤 Риэлтор: ${currentUser.name}\n💰 Сумма: ${formatMoney(amount)} ₸\n📊 Комиссия: ${formatMoney(totalCommission)} ₸\n🏢 Компания: ${formatMoney(companyShare)} ₸\n👤 Риэлтору: ${formatMoney(agentShare)} ₸`
+                );
+                
+                closeSoldModal();
+                showToast('Поздравляем!', 'Объект успешно продан!', 'success', 8000);
+                loadDeals();
+            } catch (e) {
+                showToast('Ошибка', 'Не удалось подтвердить продажу', 'error');
+            }
+        }
+        
+        // ==================== CALL RECORDING ====================
+        function openRecordingModal() {
+            document.getElementById('recordingModal').classList.add('active');
+            callStartTime = new Date();
+            document.getElementById('callDateTime').textContent = callStartTime.toLocaleString('ru-RU');
+            
+            // Запускаем таймер
+            let seconds = 0;
+            callRecordingInterval = setInterval(() => {
+                seconds++;
+                const mins = Math.floor(seconds / 60).toString().padStart(2, '0');
+                const secs = (seconds % 60).toString().padStart(2, '0');
+                document.getElementById('callDuration').textContent = `${mins}:${secs}`;
+            }, 1000);
+        }
+        
+        function closeRecordingModal() {
+            document.getElementById('recordingModal').classList.remove('active');
+            if (callRecordingInterval) {
+                clearInterval(callRecordingInterval);
+                callRecordingInterval = null;
+            }
+        }
+        
+        async function endCallRecording() {
+            const duration = document.getElementById('callDuration').textContent;
+            const dealId = document.getElementById('callDealId').value;
+            
+            closeRecordingModal();
+            closeCallModal();
+            
+            // Сохраняем запись звонка
+            const callData = {
+                dealId: dealId,
+                duration: duration,
+                dateTime: callStartTime.toISOString(),
+                agent: currentUser.name,
+                recordingUrl: null // Будет заполнено после интеграции с Mango
+            };
+            
+            // Сохраняем в localStorage для демо
+            const recordings = JSON.parse(localStorage.getItem('callRecordings') || '[]');
+            recordings.push(callData);
+            localStorage.setItem('callRecordings', JSON.stringify(recordings));
+            
+            showToast('Звонок завершен', `Длительность: ${duration}. Запись сохранена.`, 'success');
+        }
+        
+        // ==================== PHOTO GALLERY ====================
+        let currentGalleryDeal = null;
+        let currentGalleryIndex = 0;
+        
+        function openPhotoGallery(dealId) {
+            const deal = allDeals.find(d => d.ID === dealId);
+            if (!deal || !deal.photos || deal.photos.length === 0) return;
+            
+            currentGalleryDeal = deal;
+            currentGalleryIndex = 0;
+            
+            updateGalleryView();
+            document.getElementById('galleryModal').classList.add('active');
+        }
+        
+        function closeGalleryModal() {
+            document.getElementById('galleryModal').classList.remove('active');
+            currentGalleryDeal = null;
+        }
+        
+        function updateGalleryView() {
+            if (!currentGalleryDeal || !currentGalleryDeal.photos) return;
+            
+            const photos = currentGalleryDeal.photos;
+            const mainImage = document.getElementById('galleryMainImage');
+            const thumbnails = document.getElementById('galleryThumbnails');
+            
+            // Update main image
+            mainImage.src = photos[currentGalleryIndex];
+            
+            // Update thumbnails
+            thumbnails.innerHTML = photos.map((photo, index) => `
+                <img src="${photo}" 
+                     class="gallery-thumbnail ${index === currentGalleryIndex ? 'active' : ''}" 
+                     onclick="selectGalleryImage(${index})">
+            `).join('');
+        }
+        
+        function selectGalleryImage(index) {
+            currentGalleryIndex = index;
+            updateGalleryView();
+        }
+        
+        function prevGalleryImage() {
+            if (!currentGalleryDeal || !currentGalleryDeal.photos) return;
+            currentGalleryIndex = (currentGalleryIndex - 1 + currentGalleryDeal.photos.length) % currentGalleryDeal.photos.length;
+            updateGalleryView();
+        }
+        
+        function nextGalleryImage() {
+            if (!currentGalleryDeal || !currentGalleryDeal.photos) return;
+            currentGalleryIndex = (currentGalleryIndex + 1) % currentGalleryDeal.photos.length;
+            updateGalleryView();
+        }
+        
+        // ==================== TELEGRAM NOTIFICATIONS ====================
+        async function sendTelegramNotification(title, message) {
+            if (!TELEGRAM_CONFIG.enabled) {
+                console.log('Telegram notification (disabled):', title, message);
+                return;
+            }
+            
+            try {
+                const text = `🔔 *${title}*\n\n${message}\n\n⏰ ${new Date().toLocaleString('ru-RU')}`;
+                const url = `https://api.telegram.org/bot${TELEGRAM_CONFIG.botToken}/sendMessage`;
+                
+                await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CONFIG.chatId,
+                        text: text,
+                        parse_mode: 'Markdown'
+                    })
+                });
+            } catch (e) {
+                console.error('Telegram error:', e);
+            }
+        }
+        
+        // Уведомление о новом свободном объекте
+        async function notifyNewFreeObject(deal) {
+            const parts = deal.TITLE ? deal.TITLE.split('|') : ['', ''];
+            await sendTelegramNotification(
+                '🆕 НОВЫЙ СВОБОДНЫЙ ОБЪЕКТ',
+                `🏢 ID: ${parts[0]?.trim() || deal.ID}\n📍 Район: ${parts[1]?.trim() || '—'}\n💡 Статус: Свободен для работы`
+            );
+        }
+        
+        // Уведомление о смене статуса
+        async function notifyStatusChange(deal, newStatus) {
+            const parts = deal.TITLE ? deal.TITLE.split('|') : ['', ''];
+            const statusNames = {
+                'C8:NEW': 'Свободен',
+                'C8:PREPARATION': 'В работе',
+                'C8:PREPAYMENT_INVOICE': 'Встреча назначена',
+                'C8:EXECUTING': 'Договор',
+                'C8:WON': 'Продан',
+                'C8:LOSE': 'Отказ'
+            };
+            
+            await sendTelegramNotification(
+                '🔄 СМЕНА СТАТУСА',
+                `🏢 ID: ${parts[0]?.trim() || deal.ID}\n📍 Район: ${parts[1]?.trim() || '—'}\n📊 Новый статус: ${statusNames[newStatus] || newStatus}\n👤 Риэлтор: ${getUserName(deal.ASSIGNED_BY_ID)}`
+            );
+        }
+        
+        // ==================== HISTORY & ACTIVITY ====================
+        async function addToHistory(dealId, icon, text) {
+            const deal = allDeals.find(d => d.ID === dealId);
+            let history = deal.UF_CRM_HISTORY ? JSON.parse(deal.UF_CRM_HISTORY) : [];
+            history.push({
+                icon: icon,
+                text: text,
+                time: new Date().toISOString()
+            });
+            
+            // Сохраняем в Битрикс24
+            await fetch(`${BITRIX_WEBHOOK}crm.deal.update?id=${dealId}&fields[UF_CRM_HISTORY]=${encodeURIComponent(JSON.stringify(history))}`);
+        }
+        
+        function logActivity(userId, type, dealId, description) {
+            const activity = {
+                userId: userId,
+                userName: USERS[userId]?.name || 'Неизвестный',
+                type: type,
+                dealId: dealId,
+                description: description,
+                time: new Date().toISOString()
+            };
+            activityLog.unshift(activity);
+            
+            // Сохраняем в localStorage для владельца
+            if (currentUser.role === 'owner') {
+                localStorage.setItem('activityLog', JSON.stringify(activityLog));
+            }
+        }
+        
+        // ==================== PAGE NAVIGATION ====================
+        function showPage(page) {
+            currentPage = page;
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            
+            document.getElementById('statsSection').style.display = 'none';
+            document.getElementById('filtersSection').style.display = 'none';
+            document.getElementById('objectsGrid').style.display = 'none';
+            document.getElementById('cabinetPage').style.display = 'none';
+            document.getElementById('agentsPage').style.display = 'none';
+            document.getElementById('activityPage').style.display = 'none';
+            document.getElementById('emptyState').style.display = 'none';
+            
+            if (page === 'objects') {
+                document.getElementById('navObjects').classList.add('active');
+                document.getElementById('pageTitle').textContent = 'Объекты недвижимости';
+                document.getElementById('statsSection').style.display = 'grid';
+                document.getElementById('filtersSection').style.display = 'flex';
+                document.getElementById('objectsGrid').style.display = 'grid';
+                filterAndRender();
+            } else if (page === 'cabinet') {
+                document.getElementById('navCabinet').classList.add('active');
+                document.getElementById('pageTitle').textContent = 'Мой кабинет';
+                document.getElementById('cabinetPage').style.display = 'block';
+                renderCabinet();
+            } else if (page === 'agents') {
+                document.getElementById('navAgents').classList.add('active');
+                document.getElementById('pageTitle').textContent = 'Сотрудники';
+                document.getElementById('agentsPage').style.display = 'block';
+                renderAgentsPage();
+            } else if (page === 'activity') {
+                document.getElementById('navActivity').classList.add('active');
+                document.getElementById('pageTitle').textContent = 'Активность сотрудников';
+                document.getElementById('activityPage').style.display = 'block';
+                renderActivityPage();
+            }
+        }
+        
+        // ==================== RENDER CABINET ====================
+        function renderCabinet() {
+            document.getElementById('cabinetAvatar').textContent = currentUser.name.charAt(0).toUpperCase();
+            document.getElementById('cabinetName').textContent = currentUser.name;
+            document.getElementById('cabinetId').textContent = `ID: ${currentUser.id} | Тел: ${currentUser.phone || '—'}`;
+            
+            // Для Жаната объединяем ID 10 и 5969819
+            let myDeals = [];
+            if (currentUser.id === '5969819' || currentUser.bitrixId === '10') {
+                myDeals = allDeals.filter(d => d.ASSIGNED_BY_ID === '10' || d.ASSIGNED_BY_ID === '5969819');
+            } else {
+                const myId = currentUser.bitrixId || currentUser.id;
+                myDeals = allDeals.filter(d => d.ASSIGNED_BY_ID === myId || d.ASSIGNED_BY_ID === currentUser.id);
+            }
+            
+            const stats = {
+                total: myDeals.length,
+                work: myDeals.filter(d => d.STAGE_ID === 'C8:PREPARATION').length,
+                meeting: myDeals.filter(d => d.STAGE_ID === 'C8:PREPAYMENT_INVOICE').length,
+                contract: myDeals.filter(d => d.STAGE_ID === 'C8:EXECUTING').length,
+                sold: myDeals.filter(d => d.STAGE_ID === 'C8:WON').length
+            };
+            
+            document.getElementById('cabinetStats').innerHTML = `
+                <div class="stat-card blue"><div class="icon"><i class="fas fa-building"></i></div><div class="number">${stats.total}</div><div class="label">Всего</div></div>
+                <div class="stat-card orange"><div class="icon"><i class="fas fa-user-clock"></i></div><div class="number">${stats.work}</div><div class="label">В работе</div></div>
+                <div class="stat-card cyan"><div class="icon"><i class="fas fa-handshake"></i></div><div class="number">${stats.meeting}</div><div class="label">Встречи</div></div>
+                <div class="stat-card purple"><div class="icon"><i class="fas fa-file-signature"></i></div><div class="number">${stats.contract}</div><div class="label">Договоры</div></div>
+                <div class="stat-card red"><div class="icon"><i class="fas fa-check-circle"></i></div><div class="number">${stats.sold}</div><div class="label">Продано</div></div>
+            `;
+            
+            // Мои объекты
+            const cabinetObjects = document.getElementById('cabinetObjects');
+            if (myDeals.length === 0) {
+                cabinetObjects.innerHTML = '<div class="empty-state"><i class="fas fa-building"></i><h3>Нет объектов</h3><p>Вы пока не взяли ни одного объекта</p></div>';
+            } else {
+                cabinetObjects.innerHTML = myDeals.map(deal => {
+                    const parts = deal.TITLE ? deal.TITLE.split('|') : ['', '', ''];
+                    const objectId = parts[0]?.trim() || 'AL' + deal.ID;
+                    const district = parts[1]?.trim() || '—';
+                    const address = deal.COMMENTS || 'Адрес не указан';
+                    const statusClass = getStatusClass(deal.STAGE_ID);
+                    const statusText = getStatusText(deal.STAGE_ID);
+                    const isLocked = deal.UF_CRM_LOCKED === 'Y';
+                    
+                    return `
+                        <div class="object-card ${isLocked ? 'locked' : ''}">
+                            <div class="object-header">
+                                <div class="id">${objectId}</div>
+                                <div class="title">${district}</div>
+                                ${isLocked ? '<span class="badge badge-locked">ЗАБЛОКИРОВАН</span>' : ''}
+                            </div>
+                            <div class="object-body">
+                                <div class="object-address"><i class="fas fa-map-marker-alt"></i><span>${address}</span></div>
+                                <span class="status-badge ${isLocked ? 'status-locked' : statusClass}">${isLocked ? 'Заблокирован' : statusText}</span>
+                            </div>
+                            <div class="object-actions">
+                                ${!isLocked ? `
+                                    <button class="btn-small btn-call" onclick="openCallModal('${deal.ID}')"><i class="fas fa-phone"></i> Звонок</button>
+                                    <button class="btn-small btn-meeting" onclick="openMeetingModal('${deal.ID}')"><i class="fas fa-handshake"></i> Встреча</button>
+                                    <button class="btn-small btn-contract" onclick="openContractModal('${deal.ID}')"><i class="fas fa-file-signature"></i> Договор</button>
+                                ` : '<button class="btn-small btn-locked" disabled><i class="fas fa-lock"></i> Заблокирован</button>'}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
+        
+        // ==================== RENDER AGENTS PAGE ====================
+        let selectedAgentId = 'all';
+        
+        function renderAgentsPage() {
+            const grid = document.getElementById('agentsGrid');
+            
+            // Получаем уникальных назначенных пользователей из объектов (объединяем Жаната)
+            const assignedMap = new Map();
+            allDeals.forEach(deal => {
+                const assignedId = deal.ASSIGNED_BY_ID;
+                if (!assignedId) return;
+                
+                // Объединяем Жаната (ID 10 и 5969819)
+                const krishaId = getKrishaId(assignedId);
+                if (!assignedMap.has(krishaId)) {
+                    assignedMap.set(krishaId, []);
+                }
+                assignedMap.get(krishaId).push(deal);
+            });
+            
+            if (assignedMap.size === 0) {
+                grid.innerHTML = '<div class="empty-state"><i class="fas fa-users"></i><h3>Нет назначенных сотрудников</h3></div>';
+                return;
+            }
+            
+            // Создаем вкладки сотрудников
+            let tabsHtml = `
+                <div class="agents-list">
+                    <div class="agent-tab ${selectedAgentId === 'all' ? 'active' : ''}" onclick="selectAgent('all')">
+                        <div class="avatar"><i class="fas fa-users"></i></div>
+                        <div class="info">
+                            <span class="name">Все сотрудники</span>
+                            <span class="count">${allDeals.filter(d => d.ASSIGNED_BY_ID).length} объектов</span>
+                        </div>
+                    </div>
+            `;
+            
+            assignedMap.forEach((deals, krishaId) => {
+                const agentName = getUserName(krishaId);
+                tabsHtml += `
+                    <div class="agent-tab ${selectedAgentId === krishaId ? 'active' : ''}" onclick="selectAgent('${krishaId}')">
+                        <div class="avatar">${agentName.charAt(0).toUpperCase()}</div>
+                        <div class="info">
+                            <span class="name">${agentName}</span>
+                            <span class="count">${deals.length} объектов</span>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            tabsHtml += '</div>';
+            
+            // Формируем таблицу объектов
+            let objectsToShow = [];
+            if (selectedAgentId === 'all') {
+                objectsToShow = allDeals.filter(d => d.ASSIGNED_BY_ID);
+            } else {
+                objectsToShow = allDeals.filter(d => {
+                    const krishaId = getKrishaId(d.ASSIGNED_BY_ID);
+                    return krishaId === selectedAgentId;
+                });
+            }
+            
+            const tableHtml = `
+                <div class="objects-table-container">
+                    <table class="objects-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Риэлтор</th>
+                                <th>Адрес</th>
+                                <th>Район</th>
+                                <th>Статус</th>
+                                <th>Действия</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${objectsToShow.map(deal => {
+                                const parts = deal.TITLE ? deal.TITLE.split('|') : ['', '', ''];
+                                const objectId = parts[0]?.trim() || 'AL' + deal.ID;
+                                const district = parts[1]?.trim() || '—';
+                                const address = deal.COMMENTS || '—';
+                                const agentName = getUserName(deal.ASSIGNED_BY_ID);
+                                const statusClass = getStatusClass(deal.STAGE_ID);
+                                const statusText = getStatusText(deal.STAGE_ID);
+                                const isLocked = deal.UF_CRM_LOCKED === 'Y';
+                                const canEdit = !isLocked && (deal.ASSIGNED_BY_ID === (currentUser.bitrixId || currentUser.id) || 
+                                               currentUser.role === 'owner');
+                                
+                                return `
+                                    <tr>
+                                        <td class="id-cell">${objectId}</td>
+                                        <td>${agentName}</td>
+                                        <td class="address-cell">${address}</td>
+                                        <td>${district}</td>
+                                        <td class="status-cell"><span class="status-badge ${statusClass}">${statusText}</span></td>
+                                        <td class="actions-cell">
+                                            ${canEdit ? `
+                                                <button class="btn-xs btn-call-xs" onclick="openCallModal('${deal.ID}')" title="Звонок"><i class="fas fa-phone"></i></button>
+                                                <button class="btn-xs btn-meeting-xs" onclick="openMeetingModal('${deal.ID}')" title="Встреча"><i class="fas fa-handshake"></i></button>
+                                                <button class="btn-xs btn-contract-xs" onclick="openContractModal('${deal.ID}')" title="Договор"><i class="fas fa-file-signature"></i></button>
+                                            ` : isLocked ? '<span style="color: #888; font-size: 11px;"><i class="fas fa-lock"></i> Заблокирован</span>' : ''}
+                                        </td>
+                                    </tr>
+                                `;
+                            }).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+            
+            grid.innerHTML = tabsHtml + tableHtml;
+        }
+        
+        function selectAgent(agentId) {
+            selectedAgentId = agentId;
+            renderAgentsPage();
+        }
+        
+        // ==================== RENDER ACTIVITY PAGE ====================
+        function renderActivityPage() {
+            const list = document.getElementById('activityList');
+            const savedLog = localStorage.getItem('activityLog');
+            if (savedLog) {
+                activityLog = JSON.parse(savedLog);
+            }
+            
+            if (activityLog.length === 0) {
+                list.innerHTML = '<div class="empty-state"><i class="fas fa-history"></i><h3>Нет записей</h3><p>Активность пока не записана</p></div>';
+                return;
+            }
+            
+            list.innerHTML = activityLog.slice(0, 50).map(log => {
+                const icons = { take: 'hand-paper', call: 'phone', meeting: 'handshake', contract: 'file-signature' };
+                const time = new Date(log.time).toLocaleString('ru-RU');
+                
+                return `
+                    <div class="activity-item">
+                        <div class="activity-icon ${log.type}"><i class="fas fa-${icons[log.type] || 'circle'}"></i></div>
+                        <div class="activity-content">
+                            <div class="title">${log.userName} - ${log.description}</div>
+                            <div class="time">${time}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        // ==================== FILTER ====================
+        function filterObjects() {
+            filterAndRender();
+        }
+        
+        // ==================== REFRESH ====================
+        async function refreshData() {
+            const icon = document.querySelector('.header-actions .btn i');
+            icon.classList.add('fa-spin');
+            await loadDeals();
+            icon.classList.remove('fa-spin');
+        }
+        
+        // ==================== AUTO REFRESH ====================
+        function startAutoRefresh() {
+            if (autoRefreshInterval) clearInterval(autoRefreshInterval);
+            autoRefreshInterval = setInterval(() => {
+                if (currentPage === 'objects') checkForNewDeals();
+            }, 30000);
+        }
+        
+        async function checkForNewDeals() {
+            try {
+                const response = await fetch(`${BITRIX_WEBHOOK}crm.deal.list?filter[CATEGORY_ID]=${CATEGORY_ID}&order[ID]=DESC&start=0`);
+                const data = await response.json();
+                
+                if (data.result) {
+                    const currentIds = new Set(allDeals.map(d => d.ID));
+                    const newDeals = data.result.filter(d => !currentIds.has(d.ID));
+                    
+                    newDeals.forEach(deal => {
+                        if (!notifiedDeals.has(deal.ID)) {
+                            notifiedDeals.add(deal.ID);
+                            const parts = deal.TITLE ? deal.TITLE.split('|') : ['Новый', ''];
+                            showToast('Новый объект!', `${parts[0].trim()} - ${parts[1]?.trim() || ''}`, 'success', 8000);
+                        }
+                    });
+                    
+                    if (newDeals.length > 0) {
+                        allDeals = data.result;
+                        filterAndRender();
+                    }
+                }
+            } catch (e) {}
+        }
+        
+        // ==================== LOGOUT ====================
+        function logout() {
+            if (autoRefreshInterval) clearInterval(autoRefreshInterval);
+            localStorage.removeItem('crmUser');
+            currentUser = null;
+            allDeals = [];
+            notifiedDeals.clear();
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('loginPage').style.display = 'flex';
+        }
+        
+        // ==================== INIT ====================
+        window.addEventListener('load', () => {
+            const saved = localStorage.getItem('crmUser');
+            if (saved) {
+                currentUser = JSON.parse(saved);
+                showDashboard();
+            }
+        });
+        
+        // Close modals on outside click
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', e => {
+                if (e.target === modal) modal.classList.remove('active');
+            });
+        });
+    </script>
 </body>
 </html>
