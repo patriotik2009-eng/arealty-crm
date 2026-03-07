@@ -310,7 +310,15 @@
         <div class="modal-header"><h2><i class="fas fa-phone"></i> Звонок продавцу</h2><button class="modal-close" onclick="closeCallModal()">&times;</button></div>
         <div class="modal-body">
             <input type="hidden" id="callDealId">
-            <div style="text-align:center;padding:20px;"><div style="font-size:48px;color:#9b59b6;margin-bottom:15px;"><i class="fas fa-phone-volume"></i></div><div style="background:#f8f9fa;padding:12px;border-radius:10px;"><i class="fas fa-shield-alt" style="color:#2ecc71;"></i><span style="margin-left:8px;color:#666;font-size:13px;">Номер продавца скрыт от риэлтора</span></div></div>
+            <div style="text-align:center;padding:20px;" id="callPhoneBlock">
+        <div style="font-size:48px;color:#9b59b6;margin-bottom:15px;"><i class="fas fa-phone-volume"></i></div>
+        <div id="callRealPhone" style="display:none;background:#e8f5e9;border:2px solid #2ecc71;border-radius:12px;padding:15px;margin-bottom:10px;">
+            <div style="font-size:11px;color:#888;margin-bottom:5px;">ТЕЛЕФОН ХОЗЯИНА</div>
+            <div id="callPhoneNumber" style="font-size:22px;font-weight:700;color:#2ecc71;font-family:monospace;"></div>
+            <a id="callPhoneLink" href="#" style="display:inline-block;margin-top:8px;background:#2ecc71;color:white;padding:8px 20px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px;"><i class="fas fa-phone"></i> Позвонить</a>
+        </div>
+        <div id="callHiddenPhone" style="background:#f8f9fa;padding:12px;border-radius:10px;"><i class="fas fa-shield-alt" style="color:#2ecc71;"></i><span style="margin-left:8px;color:#666;font-size:13px;">Номер продавца скрыт от риэлтора</span></div>
+    </div>
             <div class="form-group-full"><label>Комментарий</label><textarea id="callComment" placeholder="Что обсудили..."></textarea></div>
         </div>
         <div class="modal-footer"><button class="btn-cancel" onclick="closeCallModal()">Отмена</button><button class="btn-small btn-call" onclick="makeCall()"><i class="fas fa-phone"></i> Позвонить</button></div>
@@ -469,7 +477,8 @@ const UF = {
     KRISHA_URL: 'UF_CRM_1772205372',
     KRISHA_ID:  'UF_CRM_1772205400',
     REJECT:     'UF_CRM_1772205416',
-    PHOTOS:     'UF_CRM_1772374276'
+    PHOTOS:     'UF_CRM_1772374276',
+    OWNER_PHONE:'UF_CRM_1772903452'
 };
 
 const USERS = {
@@ -589,16 +598,39 @@ async function loadDeals(){
     document.getElementById('loading').classList.add('active');
     try{
         let res=[],start=0,more=true;
-        const f=['ID','TITLE','STAGE_ID','ASSIGNED_BY_ID','OPPORTUNITY',
+        const f=['ID','TITLE','STAGE_ID','ASSIGNED_BY_ID','OPPORTUNITY','AMOUNT','DATE_MODIFY',
             UF.ID_OBJECT,UF.DISTRICT,UF.ADDRESS,UF.AREA,UF.PRICE,
             UF.ROOMS,UF.FLOOR,UF.CONDITION,UF.KRISHA_URL,UF.KRISHA_ID,
-            UF.REJECT,UF.PHOTOS
+            UF.REJECT,UF.PHOTOS,UF.OWNER_PHONE
         ].map(x=>`select[]=${x}`).join('&');
-        while(more&&start<400){
+        while(more&&start<1000){
             const r=await fetch(`${BITRIX_WEBHOOK}crm.deal.list?filter[CATEGORY_ID]=${CATEGORY_ID}&order[ID]=DESC&start=${start}&${f}`);
             const d=await r.json();
-            if(d.result&&d.result.length>0){ res=res.concat(d.result); if(d.result.length<50) more=false; else start+=50; }
-            else more=false;
+            if(d.result&&d.result.length>0){
+                res=res.concat(d.result);
+                if(d.next) start=d.next; else more=false;
+            } else more=false;
+        }
+        for(let deal of res){
+            // Парсим цену из TITLE: "AL01 | Ғажайып | 25 500 000"
+            if(!deal[UF.PRICE]||deal[UF.PRICE]==='0'||deal[UF.PRICE]==='0.00'){
+                const parts=deal.TITLE.split('|');
+                if(parts.length>=3){
+                    const priceStr=parts[parts.length-1].replace(/\s/g,'').trim();
+                    const priceNum=parseInt(priceStr);
+                    if(!isNaN(priceNum)&&priceNum>0) deal[UF.PRICE]=priceNum;
+                }
+            }
+            // Парсим ID объекта из TITLE если UF пустой
+            if(!deal[UF.ID_OBJECT]){
+                const parts=deal.TITLE.split('|');
+                if(parts.length>=1) deal[UF.ID_OBJECT]=parts[0].trim();
+            }
+            // Парсим микрорайон из TITLE если UF пустой
+            if(!deal[UF.DISTRICT]){
+                const parts=deal.TITLE.split('|');
+                if(parts.length>=2) deal[UF.DISTRICT]=parts[1].trim();
+            }
         }
         for(let deal of res) deal.photoUrls=await loadPhotos(deal);
         const prev=allDeals.length;
@@ -666,11 +698,13 @@ function renderCard(deal){
     const dist =deal[UF.DISTRICT]  ||'—';
     const addr =deal[UF.ADDRESS]   ||'Адрес не указан';
     const area =deal[UF.AREA]      ||'';
-    const price=deal[UF.PRICE]     ||'';
+    const priceFromTitle=(()=>{ const parts=(deal.TITLE||'').split('|'); for(let p of parts){ const n=parseInt(p.trim().replace(/\s/g,'')); if(n>=1000000) return String(n); } return ''; })();
+    const price=priceFromTitle||deal[UF.PRICE]||deal.OPPORTUNITY||deal.AMOUNT||'';
     const rooms=deal[UF.ROOMS]     ||'';
     const floor=deal[UF.FLOOR]     ||'';
     const cond =deal[UF.CONDITION] ||'';
     const kurl =deal[UF.KRISHA_URL]||'';
+    const ownerPhone=deal[UF.OWNER_PHONE]||'';
     const isFree  =deal.STAGE_ID==='C8:NEW';
     const isSold  =deal.STAGE_ID==='C8:WON';
     const isReject=deal.STAGE_ID==='C8:LOSE';
@@ -693,7 +727,13 @@ function renderCard(deal){
             ${floor?`<div class="detail-item"><div class="dl">Этаж</div><div class="dv">${floor}</div></div>`:''}
             ${cond ?`<div class="detail-item"><div class="dl">Состояние</div><div class="dv">${cond}</div></div>`:''}
             ${price?`<div class="detail-item full"><div class="dl">Цена</div><div class="dv" style="color:#2ecc71;font-size:16px;">${formatMoney(price)} ₸</div></div>`:''}
-        </div>${kurl?`<a href="${kurl}" target="_blank" class="krisha-btn"><i class="fas fa-external-link-alt"></i> Открыть на Krisha</a>`:''}</div>`;
+        </div>
+        ${kurl?`<a href="${kurl}" target="_blank" class="krisha-btn"><i class="fas fa-external-link-alt"></i> Открыть на Krisha</a>`:''}
+        ${ownerPhone?`<div class="object-seller" style="margin-top:8px;">
+            <i class="fas fa-phone" style="color:#2ecc71;"></i>
+            <span style="font-family:monospace;font-size:14px;font-weight:600;color:#333;">${ownerPhone}</span>
+            <a href="tel:${ownerPhone}" style="margin-left:auto;background:#2ecc71;color:white;padding:4px 12px;border-radius:8px;text-decoration:none;font-size:12px;font-weight:600;"><i class="fas fa-phone"></i> Позвонить</a>
+        </div>`:''}</div>`;
     } else {
         infoBlock=`
         <div class="admin-details">
@@ -776,7 +816,23 @@ async function takeObject(dealId){
     }catch(e){ showToast('Ошибка','Не удалось взять объект','error'); }
 }
 
-function openCallModal(id){ document.getElementById('callDealId').value=id; document.getElementById('callComment').value=''; document.getElementById('callModal').classList.add('active'); }
+function openCallModal(id){
+    document.getElementById('callDealId').value=id;
+    document.getElementById('callComment').value='';
+    // Показываем реальный номер только админу/владельцу
+    const deal=allDeals.find(d=>d.ID===id);
+    const phone=deal&&deal[UF.OWNER_PHONE]?deal[UF.OWNER_PHONE]:'';
+    if(isAdminOrOwner()&&phone){
+        document.getElementById('callRealPhone').style.display='block';
+        document.getElementById('callHiddenPhone').style.display='none';
+        document.getElementById('callPhoneNumber').textContent=phone;
+        document.getElementById('callPhoneLink').href='tel:'+phone;
+    } else {
+        document.getElementById('callRealPhone').style.display='none';
+        document.getElementById('callHiddenPhone').style.display='block';
+    }
+    document.getElementById('callModal').classList.add('active');
+}
 function closeCallModal(){ document.getElementById('callModal').classList.remove('active'); }
 async function makeCall(){
     const id=document.getElementById('callDealId').value;
@@ -882,13 +938,15 @@ async function saveReject(){
 function openSoldModal(id){
     const deal=allDeals.find(d=>d.ID===id); if(!deal) return;
     document.getElementById('soldDealId').value=id;
+    const priceFromTitleSold=(()=>{ const parts=(deal.TITLE||'').split('|'); for(let p of parts){ const n=parseInt(p.trim().replace(/\s/g,'')); if(n>=1000000) return String(n); } return ''; })();
+    const dealPrice=priceFromTitleSold||deal[UF.PRICE]||deal.OPPORTUNITY||'';
     document.getElementById('soldObjectInfo').innerHTML=`
         <strong>ID:</strong> ${deal[UF.ID_OBJECT]||id}<br>
         <strong>Район:</strong> ${deal[UF.DISTRICT]||'—'}<br>
         <strong>Адрес:</strong> ${deal[UF.ADDRESS]||'—'}<br>
         <strong>Площадь:</strong> ${deal[UF.AREA]||'—'} м²<br>
-        <strong>Цена:</strong> ${deal[UF.PRICE]?formatMoney(deal[UF.PRICE])+' ₸':'—'}`;
-    document.getElementById('saleAmount').value=deal[UF.PRICE]||'';
+        <strong>Цена:</strong> ${dealPrice?formatMoney(dealPrice)+' ₸':'—'}`;
+    document.getElementById('saleAmount').value=dealPrice;
     document.getElementById('commissionPercent').value='2';
     document.getElementById('soldComment').value='';
     calculateCommission();
@@ -979,7 +1037,8 @@ function renderSoldPage(){
         const dist=deal[UF.DISTRICT]||'—', addr=deal[UF.ADDRESS]||'—';
         const area=deal[UF.AREA]||'—', rooms=deal[UF.ROOMS]||'—';
         const floor=deal[UF.FLOOR]||'—', cond=deal[UF.CONDITION]||'—';
-        const price=deal[UF.PRICE]||'0', kurl=deal[UF.KRISHA_URL]||'';
+        const priceFromTitle2=(()=>{ const parts=(deal.TITLE||'').split('|'); for(let p of parts){ const n=parseInt(p.trim().replace(/\s/g,'')); if(n>=1000000) return String(n); } return ''; })();
+        const price=priceFromTitle2||deal[UF.PRICE]||deal.OPPORTUNITY||'0', kurl=deal[UF.KRISHA_URL]||'';
         const agent=getUserName(deal.ASSIGNED_BY_ID);
         const sa=deal.OPPORTUNITY||price;
         const comm=Math.round(parseFloat(sa)*2/100),co=Math.round(comm/2),ag=comm-co;
@@ -1057,7 +1116,8 @@ function renderAgentsPage(){
             const oid=deal[UF.ID_OBJECT]||('Сделка #'+deal.ID);
             const dist=deal[UF.DISTRICT]||'—',addr=deal[UF.ADDRESS]||'—';
             const area=deal[UF.AREA]||'—',rooms=deal[UF.ROOMS]||'—';
-            const price=deal[UF.PRICE]?formatMoney(deal[UF.PRICE])+' ₸':'—';
+            const priceFromTitle3=(()=>{ const parts=(deal.TITLE||'').split('|'); for(let p of parts){ const n=parseInt(p.trim().replace(/\s/g,'')); if(n>=1000000) return String(n); } return ''; })();
+            const price=(priceFromTitle3||deal[UF.PRICE]||deal.OPPORTUNITY)?formatMoney(priceFromTitle3||deal[UF.PRICE]||deal.OPPORTUNITY)+' ₸':'—';
             const agent=getUserName(deal.ASSIGNED_BY_ID);
             const isSold=deal.STAGE_ID==='C8:WON',isLose=deal.STAGE_ID==='C8:LOSE';
             const canEdit=!isSold&&!isLose&&(currentUser.role==='owner'||(currentUser.id==='5969819'&&(deal.ASSIGNED_BY_ID==='10'||deal.ASSIGNED_BY_ID==='5969819'))||(currentUser.id==='127611'&&deal.ASSIGNED_BY_ID==='12')||(currentUser.id==='18616153'&&deal.ASSIGNED_BY_ID==='14')||deal.ASSIGNED_BY_ID===currentUser.id);
