@@ -24,7 +24,7 @@
         .btn-success { background: #2ecc71; color: white; }
         .error-message { color: #e74c3c; text-align: center; margin-top: 15px; display: none; }
         .dashboard { display: none; min-height: 100vh; }
-        .sidebar { position: fixed; left: 0; top: 0; width: 280px; height: 100vh; background: #1a1a2e; padding: 0; z-index: 100; overflow-y: auto; }
+        .sidebar { position: fixed; left: 0; top: 0; width: 280px; height: 100vh; background: #1a1a2e; z-index: 100; overflow-y: auto; }
         .sidebar-logo { padding: 20px; border-bottom: 1px solid #333; text-align: center; }
         .sidebar-logo h2 { color: white; font-size: 32px; margin: 0; }
         .sidebar-logo span { color: #667eea; font-size: 10px; letter-spacing: 2px; }
@@ -82,12 +82,8 @@
         .krisha-btn:hover { background: #c0392b; }
         .object-seller { background: #f8f9fa; border-radius: 10px; padding: 10px 15px; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
         .object-seller i { color: #e74c3c; }
-        .phone-hidden { font-family: monospace; font-size: 15px; font-weight: 600; color: #888; letter-spacing: 2px; }
-        .phone-label { font-size: 11px; color: #888; margin-left: auto; }
-        .object-history { background: #f0f7ff; border-radius: 10px; padding: 10px 15px; margin-bottom: 12px; font-size: 13px; }
-        .object-history .item { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
-        .object-history .item:last-child { margin-bottom: 0; }
-        .object-history i { color: #667eea; font-size: 11px; }
+        .phone-fake { font-family: monospace; font-size: 14px; font-weight: 600; color: #555; }
+        .phone-label { font-size: 11px; color: #e74c3c; margin-left: auto; background: #ffebee; padding: 2px 8px; border-radius: 10px; }
         .status-badge { display: inline-block; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
         .status-new { background: #e3f2fd; color: #1976d2; }
         .status-work { background: #fff3e0; color: #f57c00; }
@@ -101,7 +97,7 @@
         .btn-call { background: #9b59b6; color: white; } .btn-call:hover { background: #8e44ad; }
         .btn-meeting { background: #00bcd4; color: white; } .btn-meeting:hover { background: #00acc1; }
         .btn-contract { background: #f39c12; color: white; } .btn-contract:hover { background: #e67e22; }
-        .btn-locked { background: #95a5a6; color: white; cursor: not-allowed; }
+        .btn-reject { background: #e74c3c; color: white; } .btn-reject:hover { background: #c0392b; }
         .object-photos { position: relative; height: 180px; background: #f0f0f0; overflow: hidden; cursor: pointer; }
         .object-photos img.main-photo { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
         .object-photos:hover img.main-photo { transform: scale(1.05); }
@@ -157,6 +153,7 @@
         .btn-xs { padding: 5px 10px; border: none; border-radius: 6px; font-size: 11px; cursor: pointer; margin-right: 3px; font-weight: 500; }
         .btn-call-xs { background: #9b59b6; color: white; } .btn-meeting-xs { background: #00bcd4; color: white; }
         .btn-contract-xs { background: #f39c12; color: white; } .btn-sold-xs { background: #2ecc71; color: white; }
+        .btn-reject-xs { background: #e74c3c; color: white; }
         .sold-deals-grid { display: grid; gap: 20px; }
         .sold-card { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         .sold-card-header { padding: 18px 24px; background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%); color: white; display: flex; justify-content: space-between; align-items: center; }
@@ -187,6 +184,7 @@
         .activity-icon.contract { background: rgba(243,156,18,0.1); color: #f39c12; }
         .activity-icon.take { background: rgba(46,204,113,0.1); color: #2ecc71; }
         .activity-icon.sold { background: rgba(46,204,113,0.1); color: #2ecc71; }
+        .activity-icon.reject { background: rgba(231,76,60,0.1); color: #e74c3c; }
         .activity-content .title { font-weight: 600; color: #333; font-size: 14px; }
         .activity-content .time { font-size: 12px; color: #888; margin-top: 3px; }
         .file-upload { border: 2px dashed #ddd; border-radius: 10px; padding: 25px; text-align: center; cursor: pointer; transition: all 0.3s; }
@@ -240,39 +238,22 @@
             <div class="role" id="userRole">Риэлтор</div>
         </div>
         <nav class="nav-menu">
-            <div class="nav-item active" onclick="showPage('objects')" id="navObjects">
-                <i class="fas fa-building"></i><span>Объекты</span>
-                <span class="nav-badge" id="freeCount">0</span>
-            </div>
-            <div class="nav-item" onclick="showPage('cabinet')" id="navCabinet">
-                <i class="fas fa-user"></i><span>Мой кабинет</span>
-            </div>
-            <div class="nav-item" onclick="showPage('agents')" id="navAgents" style="display:none;">
-                <i class="fas fa-users"></i><span>Сотрудники</span>
-            </div>
-            <div class="nav-item" onclick="showPage('sold')" id="navSold" style="display:none;">
-                <i class="fas fa-trophy"></i><span>Проданные</span>
-            </div>
-            <div class="nav-item" onclick="showPage('activity')" id="navActivity" style="display:none;">
-                <i class="fas fa-history"></i><span>Активность</span>
-            </div>
-            <div class="nav-item" onclick="logout()">
-                <i class="fas fa-sign-out-alt"></i><span>Выйти</span>
-            </div>
+            <div class="nav-item active" onclick="showPage('objects')" id="navObjects"><i class="fas fa-building"></i><span>Объекты</span><span class="nav-badge" id="freeCount">0</span></div>
+            <div class="nav-item" onclick="showPage('cabinet')" id="navCabinet"><i class="fas fa-user"></i><span>Мой кабинет</span></div>
+            <div class="nav-item" onclick="showPage('agents')" id="navAgents" style="display:none;"><i class="fas fa-users"></i><span>Сотрудники</span></div>
+            <div class="nav-item" onclick="showPage('sold')" id="navSold" style="display:none;"><i class="fas fa-trophy"></i><span>Проданные</span></div>
+            <div class="nav-item" onclick="showPage('activity')" id="navActivity" style="display:none;"><i class="fas fa-history"></i><span>Активность</span></div>
+            <div class="nav-item" onclick="logout()"><i class="fas fa-sign-out-alt"></i><span>Выйти</span></div>
         </nav>
     </aside>
-
     <main class="main-content">
         <div class="header">
             <h1 id="pageTitle">Объекты недвижимости</h1>
             <div class="header-actions">
                 <span style="color:#888;font-size:13px;"><i class="fas fa-circle" style="color:#2ecc71;font-size:8px;"></i> Автообновление</span>
-                <button class="btn btn-primary" onclick="refreshData()" style="width:auto;padding:10px 20px;">
-                    <i class="fas fa-sync-alt"></i> Обновить
-                </button>
+                <button class="btn btn-primary" onclick="refreshData()" style="width:auto;padding:10px 20px;"><i class="fas fa-sync-alt"></i> Обновить</button>
             </div>
         </div>
-
         <div class="stats-grid" id="statsSection">
             <div class="stat-card blue"><div class="icon"><i class="fas fa-building"></i></div><div class="number" id="statTotal">0</div><div class="label">Всего</div></div>
             <div class="stat-card green"><div class="icon"><i class="fas fa-hand-holding"></i></div><div class="number" id="statFree">0</div><div class="label">Свободные</div></div>
@@ -281,7 +262,6 @@
             <div class="stat-card purple"><div class="icon"><i class="fas fa-file-signature"></i></div><div class="number" id="statContract">0</div><div class="label">Договоры</div></div>
             <div class="stat-card red"><div class="icon"><i class="fas fa-check-circle"></i></div><div class="number" id="statSold">0</div><div class="label">Продано</div></div>
         </div>
-
         <div class="filters" id="filtersSection">
             <select id="filterStatus" onchange="filterObjects()">
                 <option value="">Все статусы</option>
@@ -309,56 +289,35 @@
             <input type="text" id="filterSearch" placeholder="Поиск по адресу..." oninput="filterObjects()">
             <button onclick="filterObjects()"><i class="fas fa-search"></i> Применить</button>
         </div>
-
         <div class="loading" id="loading"><div class="spinner"></div><p>Загрузка объектов из Битрикс24...</p></div>
         <div class="objects-grid" id="objectsGrid"></div>
         <div class="empty-state" id="emptyState" style="display:none;"><i class="fas fa-building"></i><h3>Нет объектов</h3></div>
-
         <div id="cabinetPage" style="display:none;">
-            <div class="cabinet-header">
-                <div class="cabinet-avatar" id="cabinetAvatar">A</div>
-                <div class="cabinet-info"><h2 id="cabinetName">Имя</h2><p id="cabinetId">ID:</p></div>
-            </div>
+            <div class="cabinet-header"><div class="cabinet-avatar" id="cabinetAvatar">A</div><div class="cabinet-info"><h2 id="cabinetName">Имя</h2><p id="cabinetId">ID:</p></div></div>
             <div class="stats-grid" id="cabinetStats"></div>
             <h3 style="margin:20px 0 15px;color:#333;"><i class="fas fa-building"></i> Мои объекты</h3>
             <div class="objects-grid" id="cabinetObjects"></div>
         </div>
-
         <div id="agentsPage" style="display:none;"><div id="agentsGrid"></div></div>
-
-        <div id="soldPage" style="display:none;">
-            <div class="sold-deals-grid" id="soldDealsGrid"></div>
-        </div>
-
-        <div id="activityPage" style="display:none;">
-            <div class="activity-log">
-                <h3><i class="fas fa-history"></i> История активности</h3>
-                <div id="activityList"></div>
-            </div>
-        </div>
+        <div id="soldPage" style="display:none;"><div class="sold-deals-grid" id="soldDealsGrid"></div></div>
+        <div id="activityPage" style="display:none;"><div class="activity-log"><h3><i class="fas fa-history"></i> История активности</h3><div id="activityList"></div></div></div>
     </main>
 </div>
 
-<!-- MODALS -->
+<!-- Call Modal -->
 <div class="modal" id="callModal">
     <div class="modal-content">
         <div class="modal-header"><h2><i class="fas fa-phone"></i> Звонок продавцу</h2><button class="modal-close" onclick="closeCallModal()">&times;</button></div>
         <div class="modal-body">
             <input type="hidden" id="callDealId">
-            <div style="text-align:center;padding:25px;">
-                <div style="font-size:48px;color:#9b59b6;margin-bottom:15px;"><i class="fas fa-phone-volume"></i></div>
-                <p style="color:#888;margin-bottom:15px;">Нажмите кнопку для звонка</p>
-                <div style="background:#f8f9fa;padding:12px;border-radius:10px;"><i class="fas fa-shield-alt" style="color:#2ecc71;"></i><span style="margin-left:8px;color:#666;font-size:13px;">Номер продавца скрыт</span></div>
-            </div>
-            <div class="form-group-full"><label>Комментарий после звонка</label><textarea id="callComment" placeholder="Что обсудили с продавцом..."></textarea></div>
+            <div style="text-align:center;padding:20px;"><div style="font-size:48px;color:#9b59b6;margin-bottom:15px;"><i class="fas fa-phone-volume"></i></div><div style="background:#f8f9fa;padding:12px;border-radius:10px;"><i class="fas fa-shield-alt" style="color:#2ecc71;"></i><span style="margin-left:8px;color:#666;font-size:13px;">Номер продавца скрыт от риэлтора</span></div></div>
+            <div class="form-group-full"><label>Комментарий</label><textarea id="callComment" placeholder="Что обсудили..."></textarea></div>
         </div>
-        <div class="modal-footer">
-            <button class="btn-cancel" onclick="closeCallModal()">Отмена</button>
-            <button class="btn-small btn-call" onclick="makeCall()"><i class="fas fa-phone"></i> Позвонить</button>
-        </div>
+        <div class="modal-footer"><button class="btn-cancel" onclick="closeCallModal()">Отмена</button><button class="btn-small btn-call" onclick="makeCall()"><i class="fas fa-phone"></i> Позвонить</button></div>
     </div>
 </div>
 
+<!-- Meeting Modal -->
 <div class="modal" id="meetingModal">
     <div class="modal-content">
         <div class="modal-header" style="background:linear-gradient(135deg,#00bcd4,#0097a7);"><h2><i class="fas fa-handshake"></i> Назначить встречу</h2><button class="modal-close" onclick="closeMeetingModal()">&times;</button></div>
@@ -368,47 +327,77 @@
                 <div class="form-group-full"><label>Дата</label><input type="date" id="meetingDate"></div>
                 <div class="form-group-full"><label>Время</label><input type="time" id="meetingTime"></div>
             </div>
-            <div class="form-group-full"><label>Место встречи</label><input type="text" id="meetingPlace" placeholder="Адрес встречи"></div>
+            <div class="form-group-full"><label>Место</label><input type="text" id="meetingPlace" placeholder="Адрес встречи"></div>
             <div class="form-group-full"><label>Комментарий</label><textarea id="meetingComment" placeholder="Детали встречи..."></textarea></div>
         </div>
-        <div class="modal-footer">
-            <button class="btn-cancel" onclick="closeMeetingModal()">Отмена</button>
-            <button class="btn-small btn-meeting" onclick="saveMeeting()"><i class="fas fa-save"></i> Сохранить</button>
-        </div>
+        <div class="modal-footer"><button class="btn-cancel" onclick="closeMeetingModal()">Отмена</button><button class="btn-small btn-meeting" onclick="saveMeeting()"><i class="fas fa-save"></i> Сохранить</button></div>
     </div>
 </div>
 
+<!-- Contract Modal -->
 <div class="modal" id="contractModal">
     <div class="modal-content">
         <div class="modal-header" style="background:linear-gradient(135deg,#f39c12,#e67e22);"><h2><i class="fas fa-file-signature"></i> Загрузить договор</h2><button class="modal-close" onclick="closeContractModal()">&times;</button></div>
         <div class="modal-body">
             <input type="hidden" id="contractDealId">
+            <div style="background:#fff8e1;border:2px solid #f39c12;border-radius:10px;padding:15px;margin-bottom:20px;">
+                <i class="fas fa-exclamation-triangle" style="color:#f39c12;"></i>
+                <span style="margin-left:8px;color:#e67e22;font-weight:500;">PDF договор обязателен для загрузки</span>
+            </div>
             <div class="form-group-full">
-                <label>PDF договор</label>
-                <div class="file-upload" onclick="document.getElementById('contractFile').click()">
-                    <i class="fas fa-cloud-upload-alt"></i><p>Нажмите или перетащите PDF</p>
+                <label>PDF договор <span style="color:#e74c3c;">*</span></label>
+                <div class="file-upload" id="fileUploadZone" onclick="document.getElementById('contractFile').click()">
+                    <i class="fas fa-cloud-upload-alt"></i><p>Нажмите или перетащите PDF файл</p>
                     <input type="file" id="contractFile" accept=".pdf" onchange="onFileSelected(this)">
                 </div>
-                <div id="fileName" style="margin-top:10px;color:#667eea;font-weight:500;display:none;"></div>
+                <div id="fileName" style="margin-top:10px;color:#2ecc71;font-weight:500;display:none;">
+                    <i class="fas fa-file-pdf" style="color:#e74c3c;"></i> <span id="fileNameText"></span>
+                </div>
             </div>
             <div class="form-group-full"><label>Комментарий</label><textarea id="contractComment" placeholder="Примечания..."></textarea></div>
         </div>
-        <div class="modal-footer">
-            <button class="btn-cancel" onclick="closeContractModal()">Отмена</button>
-            <button class="btn-small btn-contract" onclick="uploadContract()"><i class="fas fa-upload"></i> Загрузить</button>
-        </div>
+        <div class="modal-footer"><button class="btn-cancel" onclick="closeContractModal()">Отмена</button><button class="btn-small btn-contract" onclick="uploadContract()"><i class="fas fa-upload"></i> Загрузить договор</button></div>
     </div>
 </div>
 
+<!-- Reject Modal -->
+<div class="modal" id="rejectModal">
+    <div class="modal-content" style="max-width:500px;">
+        <div class="modal-header" style="background:linear-gradient(135deg,#e74c3c,#c0392b);"><h2><i class="fas fa-times-circle"></i> Причина отказа</h2><button class="modal-close" onclick="closeRejectModal()">&times;</button></div>
+        <div class="modal-body">
+            <input type="hidden" id="rejectDealId">
+            <div style="background:#fff5f5;border:2px solid #e74c3c;border-radius:10px;padding:15px;margin-bottom:20px;">
+                <i class="fas fa-exclamation-triangle" style="color:#e74c3c;"></i>
+                <span style="margin-left:8px;color:#c0392b;font-weight:500;">Обязательно укажите причину отказа</span>
+            </div>
+            <div class="form-group-full">
+                <label>Причина <span style="color:#e74c3c;">*</span></label>
+                <select id="rejectReason" onchange="toggleCustomReason(this.value)">
+                    <option value="">— Выберите причину —</option>
+                    <option value="Высокая цена">Высокая цена</option>
+                    <option value="Не понравилась квартира">Не понравилась квартира</option>
+                    <option value="Нашли другой вариант">Нашли другой вариант</option>
+                    <option value="Передумали покупать">Передумали покупать</option>
+                    <option value="Не одобрили ипотеку">Не одобрили ипотеку</option>
+                    <option value="Другое">Другое (указать)</option>
+                </select>
+            </div>
+            <div class="form-group-full" id="customReasonBlock" style="display:none;">
+                <label>Опишите причину <span style="color:#e74c3c;">*</span></label>
+                <textarea id="rejectComment" placeholder="Подробности отказа..."></textarea>
+            </div>
+        </div>
+        <div class="modal-footer"><button class="btn-cancel" onclick="closeRejectModal()">Отмена</button><button class="btn-small btn-reject" onclick="saveReject()"><i class="fas fa-times-circle"></i> Подтвердить отказ</button></div>
+    </div>
+</div>
+
+<!-- Sold Modal -->
 <div class="modal" id="soldModal">
     <div class="modal-content" style="max-width:700px;">
         <div class="modal-header" style="background:linear-gradient(135deg,#2ecc71,#27ae60);"><h2><i class="fas fa-check-circle"></i> Продажа объекта</h2><button class="modal-close" onclick="closeSoldModal()">&times;</button></div>
         <div class="modal-body">
             <input type="hidden" id="soldDealId">
-            <div style="background:#f8f9fa;padding:15px;border-radius:10px;margin-bottom:20px;">
-                <h4 style="margin:0 0 10px;color:#333;"><i class="fas fa-building"></i> Объект</h4>
-                <div id="soldObjectInfo" style="color:#666;font-size:14px;"></div>
-            </div>
+            <div style="background:#f8f9fa;padding:15px;border-radius:10px;margin-bottom:20px;"><h4 style="margin:0 0 10px;color:#333;"><i class="fas fa-building"></i> Объект</h4><div id="soldObjectInfo" style="color:#666;font-size:14px;"></div></div>
             <div style="background:linear-gradient(135deg,#667eea,#764ba2);padding:20px;border-radius:15px;color:white;">
                 <h4 style="margin:0 0 15px;"><i class="fas fa-calculator"></i> Калькулятор комиссии</h4>
                 <div class="form-row">
@@ -423,13 +412,11 @@
             </div>
             <div class="form-group-full" style="margin-top:15px;"><label>Комментарий</label><textarea id="soldComment" placeholder="Доп. информация..."></textarea></div>
         </div>
-        <div class="modal-footer">
-            <button class="btn-cancel" onclick="closeSoldModal()">Отмена</button>
-            <button class="btn-small btn-success" onclick="confirmSale()"><i class="fas fa-check-circle"></i> Подтвердить продажу</button>
-        </div>
+        <div class="modal-footer"><button class="btn-cancel" onclick="closeSoldModal()">Отмена</button><button class="btn-small btn-success" onclick="confirmSale()"><i class="fas fa-check-circle"></i> Подтвердить продажу</button></div>
     </div>
 </div>
 
+<!-- Recording Modal -->
 <div class="modal" id="recordingModal">
     <div class="modal-content" style="max-width:500px;">
         <div class="modal-header" style="background:linear-gradient(135deg,#9b59b6,#8e44ad);"><h2><i class="fas fa-microphone-alt"></i> Запись звонка</h2><button class="modal-close" onclick="closeRecordingModal()">&times;</button></div>
@@ -454,6 +441,7 @@
     </div>
 </div>
 
+<!-- Gallery Modal -->
 <div class="modal gallery-modal" id="galleryModal">
     <div class="modal-content">
         <div class="modal-header"><h2><i class="fas fa-images"></i> Фото объекта</h2><button class="modal-close" onclick="closeGalleryModal()">&times;</button></div>
@@ -467,7 +455,6 @@
 </div>
 
 <script>
-// ==================== CONFIG ====================
 const BITRIX_WEBHOOK = 'https://b24-6mcve5.bitrix24.kz/rest/1/0bcsjte5yrhzozk4/';
 const CATEGORY_ID = 8;
 const UF = {
@@ -485,798 +472,682 @@ const UF = {
     PHOTOS:     'UF_CRM_1772374276'
 };
 
-// ==================== USERS ====================
 const USERS = {
-    'admin':     { id: 'admin',     name: 'Владелец',           role: 'owner', phone: '' },
-    '5969819':   { id: '5969819',   name: 'Тампиева Жанат',     role: 'admin', phone: '77072713220', bitrixId: '10' },
-    '127611':    { id: '127611',    name: 'Пірназарова Асель',  role: 'admin', phone: '77056116160', bitrixId: '12' },
-    '18616153':  { id: '18616153',  name: 'Кадиров Нурлан',     role: 'admin', phone: '77059713595', bitrixId: '14' },
-    '21302308':  { id: '21302308',  name: 'Лесбек Азамат',      role: 'agent', phone: '77005545420' },
-    '9358849':   { id: '9358849',   name: 'Умирзаков Ерсин',    role: 'agent', phone: '77756471808' },
-    '22342401':  { id: '22342401',  name: 'Байдалиєва Анар',    role: 'agent', phone: '77074276492' },
-    '22808026':  { id: '22808026',  name: 'Сайлаубек Нурлыбек', role: 'agent', phone: '77070257717' },
-    '12275341':  { id: '12275341',  name: 'Жусіп Рамазан',      role: 'agent', phone: '77478999876' },
-    '13651655':  { id: '13651655',  name: 'Отегенбаев Ильяс',   role: 'agent', phone: '77026660062' },
-    '10983188':  { id: '10983188',  name: 'Телеуғай Телеген',   role: 'agent', phone: '77767312723' },
-    '15576853':  { id: '15576853',  name: 'Қайырғалиев Әлнұр',  role: 'agent', phone: '77054522333' },
-    '14045405':  { id: '14045405',  name: 'Сапбекова Акбаян',   role: 'agent', phone: '77752987371' },
-    '13565723':  { id: '13565723',  name: 'Солпекова Дина',      role: 'agent', phone: '77778165029' },
-    '5986709':   { id: '5986709',   name: 'Мейрбекова Лаура',   role: 'agent', phone: '77778149508' },
-    '22733888':  { id: '22733888',  name: 'Алпамыс Ислам',      role: 'agent', phone: '77778149508' }
+    'admin':    { id:'admin',    name:'Владелец',           role:'owner', phone:'' },
+    '5969819':  { id:'5969819',  name:'Тампиева Жанат',     role:'admin', phone:'77072713220', bitrixId:'10' },
+    '127611':   { id:'127611',   name:'Пірназарова Асель',  role:'admin', phone:'77056116160', bitrixId:'12' },
+    '18616153': { id:'18616153', name:'Кадиров Нурлан',     role:'admin', phone:'77059713595', bitrixId:'14' },
+    '21302308': { id:'21302308', name:'Лесбек Азамат',      role:'agent', phone:'77005545420' },
+    '9358849':  { id:'9358849',  name:'Умирзаков Ерсин',    role:'agent', phone:'77756471808' },
+    '22342401': { id:'22342401', name:'Байдалиєва Анар',    role:'agent', phone:'77074276492' },
+    '22808026': { id:'22808026', name:'Сайлаубек Нурлыбек', role:'agent', phone:'77070257717' },
+    '12275341': { id:'12275341', name:'Жусіп Рамазан',      role:'agent', phone:'77478999876' },
+    '13651655': { id:'13651655', name:'Отегенбаев Ильяс',   role:'agent', phone:'77026660062' },
+    '10983188': { id:'10983188', name:'Телеуғай Телеген',   role:'agent', phone:'77767312723' },
+    '15576853': { id:'15576853', name:'Қайырғалиев Әлнұр',  role:'agent', phone:'77054522333' },
+    '14045405': { id:'14045405', name:'Сапбекова Акбаян',   role:'agent', phone:'77752987371' },
+    '13565723': { id:'13565723', name:'Солпекова Дина',      role:'agent', phone:'77778165029' },
+    '5986709':  { id:'5986709',  name:'Мейрбекова Лаура',   role:'agent', phone:'77778149508' },
+    '22733888': { id:'22733888', name:'Алпамыс Ислам',      role:'agent', phone:'77778149508' }
 };
 
-// ==================== STATE ====================
-let currentUser = null;
-let allDeals = [];
-let filteredDeals = [];
-let currentPage = 'objects';
-let autoRefreshInterval = null;
-let notifiedDeals = new Set();
-let activityLog = [];
+let currentUser=null, allDeals=[], filteredDeals=[];
+let currentPage='objects', autoRefreshInterval=null;
+let notifiedDeals=new Set(), activityLog=[];
 
-// ==================== HELPERS ====================
-function isAdminOrOwner() { return currentUser && (currentUser.role === 'owner' || currentUser.role === 'admin'); }
+function isAdminOrOwner(){ return currentUser&&(currentUser.role==='owner'||currentUser.role==='admin'); }
 
-function getUserName(userId) {
-    if (userId === '10' || userId === '5969819') return 'Тампиева Жанат';
-    if (USERS[userId]) return USERS[userId].name;
-    for (const key in USERS) { if (USERS[key].bitrixId === userId) return USERS[key].name; }
-    return window['user_' + userId] || 'Не назначен';
+function getUserName(userId){
+    if(userId==='10'||userId==='5969819') return 'Тампиева Жанат';
+    if(USERS[userId]) return USERS[userId].name;
+    for(const k in USERS){ if(USERS[k].bitrixId===userId) return USERS[k].name; }
+    return window['user_'+userId]||'Не назначен';
 }
 
-function getKrishaId(bitrixId) {
-    if (bitrixId === '10' || bitrixId === '5969819') return '5969819';
-    if (bitrixId === '12') return '127611';
-    if (bitrixId === '14') return '18616153';
-    return bitrixId;
+function getKrishaId(id){
+    if(id==='10'||id==='5969819') return '5969819';
+    if(id==='12') return '127611';
+    if(id==='14') return '18616153';
+    return id;
 }
 
-function formatMoney(amount) {
-    return parseInt(amount || 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+function formatMoney(n){ return parseInt(n||0).toString().replace(/\B(?=(\d{3})+(?!\d))/g,' '); }
+
+function fakePhone(dealId){
+    const seed=parseInt(dealId)||1;
+    const r=(n,min,max)=>{ let x=Math.sin(seed*n+n)*10000; x=x-Math.floor(x); return Math.floor(x*(max-min+1))+min; };
+    const ops=['700','701','702','705','707','708','747','771','775','776','777','778'];
+    const op=ops[r(1,0,ops.length-1)];
+    const p1=String(r(2,100,999));
+    const p2=String(r(3,10,99)).padStart(2,'0');
+    const p3=String(r(4,10,99)).padStart(2,'0');
+    return `+7 (${op}) ${p1}-${p2}-${p3}`;
 }
 
-const STAGES = {
-    'C8:NEW':                { text: 'Свободен',         class: 'status-new' },
-    'C8:PREPARATION':        { text: 'В работе',          class: 'status-work' },
-    'C8:PREPAYMENT_INVOICE': { text: 'Встреча назначена', class: 'status-meeting' },
-    'C8:EXECUTING':          { text: 'Договор',           class: 'status-contract' },
-    'C8:WON':                { text: 'Продан',            class: 'status-sold' },
-    'C8:LOSE':               { text: 'Отказ',             class: 'status-reject' }
+const STAGES={
+    'C8:NEW':                {text:'Свободен',         cls:'status-new'},
+    'C8:PREPARATION':        {text:'В работе',          cls:'status-work'},
+    'C8:PREPAYMENT_INVOICE': {text:'Встреча назначена', cls:'status-meeting'},
+    'C8:EXECUTING':          {text:'Договор',           cls:'status-contract'},
+    'C8:WON':                {text:'Продан',            cls:'status-sold'},
+    'C8:LOSE':               {text:'Отказ',             cls:'status-reject'}
 };
-function getStatusClass(s) { return STAGES[s]?.class || 'status-new'; }
-function getStatusText(s)  { return STAGES[s]?.text || s; }
+function getStageCls(s){ return STAGES[s]?.cls||'status-new'; }
+function getStageTxt(s){ return STAGES[s]?.text||s; }
 
-// ==================== LOGIN ====================
-document.getElementById('loginForm').addEventListener('submit', function(e) {
+document.getElementById('loginForm').addEventListener('submit',function(e){
     e.preventDefault();
-    const userId = document.getElementById('userId').value.trim();
-    if (USERS[userId]) {
-        currentUser = USERS[userId];
-        localStorage.setItem('crmUser', JSON.stringify(currentUser));
+    const uid=document.getElementById('userId').value.trim();
+    if(USERS[uid]){
+        currentUser=USERS[uid];
+        localStorage.setItem('crmUser',JSON.stringify(currentUser));
         showDashboard();
     } else {
-        document.getElementById('loginError').style.display = 'block';
+        document.getElementById('loginError').style.display='block';
     }
 });
 
-function showDashboard() {
-    document.getElementById('loginPage').style.display = 'none';
-    document.getElementById('dashboard').style.display = 'block';
-    document.getElementById('userName').textContent = currentUser.name;
-    document.getElementById('userAvatar').textContent = currentUser.name.charAt(0).toUpperCase();
-    document.getElementById('userRole').textContent =
-        currentUser.role === 'owner' ? 'Владелец' : (currentUser.role === 'admin' ? 'Админ' : 'Риэлтор');
-    if (currentUser.role === 'owner') {
-        document.getElementById('navAgents').style.display = 'flex';
-        document.getElementById('navSold').style.display = 'flex';
-        document.getElementById('navActivity').style.display = 'flex';
-    } else if (currentUser.role === 'admin') {
-        document.getElementById('navAgents').style.display = 'flex';
-        document.getElementById('navSold').style.display = 'flex';
+function showDashboard(){
+    document.getElementById('loginPage').style.display='none';
+    document.getElementById('dashboard').style.display='block';
+    document.getElementById('userName').textContent=currentUser.name;
+    document.getElementById('userAvatar').textContent=currentUser.name.charAt(0).toUpperCase();
+    document.getElementById('userRole').textContent=currentUser.role==='owner'?'Владелец':(currentUser.role==='admin'?'Админ':'Риэлтор');
+    if(currentUser.role==='owner'){
+        ['navAgents','navSold','navActivity'].forEach(id=>document.getElementById(id).style.display='flex');
+    } else if(currentUser.role==='admin'){
+        ['navAgents','navSold'].forEach(id=>document.getElementById(id).style.display='flex');
     }
     loadDeals();
     startAutoRefresh();
 }
 
-// ==================== TOAST ====================
-function showToast(title, message, type = 'info', duration = 5000) {
-    const container = document.getElementById('toastContainer');
-    const toast = document.createElement('div');
-    toast.className = `toast ${type}`;
-    const icons = { info: 'fa-info-circle', success: 'fa-check-circle', warning: 'fa-bell', error: 'fa-exclamation-circle' };
-    toast.innerHTML = `<div class="toast-icon"><i class="fas ${icons[type]}"></i></div><div class="toast-content"><h4>${title}</h4><p>${message}</p></div><button class="toast-close" onclick="this.parentElement.remove()">&times;</button>`;
-    container.appendChild(toast);
+function showToast(title,msg,type='info',dur=5000){
+    const c=document.getElementById('toastContainer');
+    const t=document.createElement('div');
+    t.className=`toast ${type}`;
+    const ic={info:'fa-info-circle',success:'fa-check-circle',warning:'fa-bell',error:'fa-exclamation-circle'};
+    t.innerHTML=`<div class="toast-icon"><i class="fas ${ic[type]}"></i></div><div class="toast-content"><h4>${title}</h4><p>${msg}</p></div><button class="toast-close" onclick="this.parentElement.remove()">&times;</button>`;
+    c.appendChild(t);
     playSound();
-    setTimeout(() => { toast.style.animation = 'slideOut 0.3s ease'; setTimeout(() => toast.remove(), 300); }, duration);
+    setTimeout(()=>{ t.style.animation='slideOut 0.3s ease'; setTimeout(()=>t.remove(),300); },dur);
 }
 
-function playSound() {
-    try {
-        const ctx = new (window.AudioContext || window.webkitAudioContext)();
-        const osc = ctx.createOscillator(); const gain = ctx.createGain();
-        osc.connect(gain); gain.connect(ctx.destination);
-        osc.frequency.value = 800;
-        gain.gain.setValueAtTime(0.2, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
-        osc.start(); osc.stop(ctx.currentTime + 0.3);
-    } catch(e) {}
+function playSound(){
+    try{
+        const ctx=new(window.AudioContext||window.webkitAudioContext)();
+        const o=ctx.createOscillator(),g=ctx.createGain();
+        o.connect(g);g.connect(ctx.destination);
+        o.frequency.value=800;
+        g.gain.setValueAtTime(0.2,ctx.currentTime);
+        g.gain.exponentialRampToValueAtTime(0.01,ctx.currentTime+0.3);
+        o.start();o.stop(ctx.currentTime+0.3);
+    }catch(e){}
 }
 
-// ==================== LOAD DEALS ====================
-async function loadDeals() {
+async function loadDeals(){
     document.getElementById('loading').classList.add('active');
-    try {
-        let allResults = [];
-        let start = 0;
-        let hasMore = true;
-        const fields = ['ID','TITLE','STAGE_ID','ASSIGNED_BY_ID','OPPORTUNITY',
-            UF.ID_OBJECT, UF.DISTRICT, UF.ADDRESS, UF.AREA, UF.PRICE,
-            UF.ROOMS, UF.FLOOR, UF.CONDITION, UF.KRISHA_URL, UF.KRISHA_ID,
-            UF.REJECT, UF.PHOTOS
-        ].map(f => `select[]=${f}`).join('&');
-
-        while (hasMore && start < 400) {
-            const response = await fetch(`${BITRIX_WEBHOOK}crm.deal.list?filter[CATEGORY_ID]=${CATEGORY_ID}&order[ID]=DESC&start=${start}&${fields}`);
-            const data = await response.json();
-            if (data.result && data.result.length > 0) {
-                allResults = allResults.concat(data.result);
-                if (data.result.length < 50) hasMore = false;
-                else start += 50;
-            } else { hasMore = false; }
+    try{
+        let res=[],start=0,more=true;
+        const f=['ID','TITLE','STAGE_ID','ASSIGNED_BY_ID','OPPORTUNITY',
+            UF.ID_OBJECT,UF.DISTRICT,UF.ADDRESS,UF.AREA,UF.PRICE,
+            UF.ROOMS,UF.FLOOR,UF.CONDITION,UF.KRISHA_URL,UF.KRISHA_ID,
+            UF.REJECT,UF.PHOTOS
+        ].map(x=>`select[]=${x}`).join('&');
+        while(more&&start<400){
+            const r=await fetch(`${BITRIX_WEBHOOK}crm.deal.list?filter[CATEGORY_ID]=${CATEGORY_ID}&order[ID]=DESC&start=${start}&${f}`);
+            const d=await r.json();
+            if(d.result&&d.result.length>0){ res=res.concat(d.result); if(d.result.length<50) more=false; else start+=50; }
+            else more=false;
         }
-
-        // Загружаем фото
-        for (let deal of allResults) {
-            deal.photoUrls = await loadDealPhotos(deal);
-        }
-
-        const previousCount = allDeals.length;
-        allDeals = allResults;
+        for(let deal of res) deal.photoUrls=await loadPhotos(deal);
+        const prev=allDeals.length;
+        allDeals=res;
         await loadUserNames();
         filterAndRender();
-
-        if (previousCount === 0) {
-            const freeCount = allDeals.filter(d => d.STAGE_ID === 'C8:NEW').length;
-            showToast('Добро пожаловать!', `Загружено ${allDeals.length} объектов. Свободных: ${freeCount}`, 'info');
-        }
-        if (previousCount > 0 && allResults.length > previousCount) {
-            allResults.filter(d => !allDeals.some(old => old.ID === d.ID)).forEach(d => {
-                if (!notifiedDeals.has(d.ID)) {
-                    notifiedDeals.add(d.ID);
-                    showToast('Новый объект!', `${d[UF.ID_OBJECT] || ('Сделка #' + d.ID)} - ${d[UF.DISTRICT] || '—'}`, 'success', 8000);
-                }
-            });
-        }
-    } catch(e) {
-        showToast('Ошибка', 'Не удалось подключиться к Битрикс24', 'error');
-    }
+        if(prev===0){ const free=allDeals.filter(d=>d.STAGE_ID==='C8:NEW').length; showToast('Добро пожаловать!',`Загружено ${allDeals.length} объектов. Свободных: ${free}`,'info'); }
+    }catch(e){ showToast('Ошибка','Не удалось подключиться к Битрикс24','error'); }
     document.getElementById('loading').classList.remove('active');
 }
 
-async function loadDealPhotos(deal) {
-    try {
-        const photoField = deal[UF.PHOTOS];
-        if (!photoField) return [];
-        const photos = Array.isArray(photoField) ? photoField : [photoField];
-        const urls = [];
-        for (const photo of photos) {
-            if (!photo) continue;
-            const fileId = typeof photo === 'object' ? (photo.id || photo.ID) : photo;
-            if (!fileId) continue;
-            try {
-                const r = await fetch(`${BITRIX_WEBHOOK}disk.file.get?id=${fileId}`);
-                const d = await r.json();
-                if (d.result && d.result.DOWNLOAD_URL) urls.push(d.result.DOWNLOAD_URL);
-            } catch(e) {}
+async function loadPhotos(deal){
+    try{
+        const pf=deal[UF.PHOTOS]; if(!pf) return [];
+        const photos=Array.isArray(pf)?pf:[pf]; const urls=[];
+        for(const p of photos){
+            if(!p) continue;
+            const fid=typeof p==='object'?(p.id||p.ID):p; if(!fid) continue;
+            try{ const r=await fetch(`${BITRIX_WEBHOOK}disk.file.get?id=${fid}`); const d=await r.json(); if(d.result&&d.result.DOWNLOAD_URL) urls.push(d.result.DOWNLOAD_URL); }catch(e){}
         }
         return urls;
-    } catch(e) { return []; }
+    }catch(e){ return []; }
 }
 
-async function loadUserNames() {
-    const userIds = [...new Set(allDeals.map(d => d.ASSIGNED_BY_ID).filter(Boolean))];
-    for (const userId of userIds) {
-        if (!USERS[userId] && !window['user_' + userId]) {
-            try {
-                const r = await fetch(`${BITRIX_WEBHOOK}user.get?ID=${userId}`);
-                const d = await r.json();
-                if (d.result && d.result[0]) window['user_' + userId] = `${d.result[0].NAME} ${d.result[0].LAST_NAME}`;
-            } catch(e) { window['user_' + userId] = 'Не назначен'; }
+async function loadUserNames(){
+    const ids=[...new Set(allDeals.map(d=>d.ASSIGNED_BY_ID).filter(Boolean))];
+    for(const id of ids){
+        if(!USERS[id]&&!window['user_'+id]){
+            try{ const r=await fetch(`${BITRIX_WEBHOOK}user.get?ID=${id}`); const d=await r.json(); if(d.result&&d.result[0]) window['user_'+id]=`${d.result[0].NAME} ${d.result[0].LAST_NAME}`; }
+            catch(e){ window['user_'+id]='Не назначен'; }
         }
     }
 }
 
-// ==================== FILTER & RENDER ====================
-function filterAndRender() {
-    const statusFilter   = document.getElementById('filterStatus').value;
-    const districtFilter = document.getElementById('filterDistrict').value;
-    const searchFilter   = document.getElementById('filterSearch').value.toLowerCase();
-
-    let visible = allDeals;
-    if (currentUser.role === 'agent') {
-        visible = allDeals.filter(d => d.STAGE_ID === 'C8:NEW' || d.ASSIGNED_BY_ID === currentUser.id);
-    }
-
-    filteredDeals = visible.filter(deal => {
-        if (statusFilter && (deal.STAGE_ID || '').replace('C8:', '') !== statusFilter) return false;
-        if (districtFilter && !(deal[UF.DISTRICT] || '').includes(districtFilter)) return false;
-        if (searchFilter) {
-            const haystack = ((deal[UF.ADDRESS] || '') + (deal[UF.DISTRICT] || '') + (deal[UF.ID_OBJECT] || '')).toLowerCase();
-            if (!haystack.includes(searchFilter)) return false;
-        }
+function filterAndRender(){
+    const sf=document.getElementById('filterStatus').value;
+    const df=document.getElementById('filterDistrict').value;
+    const qf=document.getElementById('filterSearch').value.toLowerCase();
+    let vis=allDeals;
+    if(currentUser.role==='agent') vis=allDeals.filter(d=>d.STAGE_ID==='C8:NEW'||d.ASSIGNED_BY_ID===currentUser.id);
+    filteredDeals=vis.filter(d=>{
+        if(sf&&(d.STAGE_ID||'').replace('C8:','')!==sf) return false;
+        if(df&&!(d[UF.DISTRICT]||'').includes(df)) return false;
+        if(qf){ const h=((d[UF.ADDRESS]||'')+(d[UF.DISTRICT]||'')+(d[UF.ID_OBJECT]||'')).toLowerCase(); if(!h.includes(qf)) return false; }
         return true;
     });
     updateStats();
     renderDeals();
 }
 
-function updateStats() {
-    document.getElementById('statTotal').textContent    = allDeals.length;
-    document.getElementById('statFree').textContent     = allDeals.filter(d => d.STAGE_ID === 'C8:NEW').length;
-    document.getElementById('statWork').textContent     = allDeals.filter(d => d.STAGE_ID === 'C8:PREPARATION').length;
-    document.getElementById('statMeeting').textContent  = allDeals.filter(d => d.STAGE_ID === 'C8:PREPAYMENT_INVOICE').length;
-    document.getElementById('statContract').textContent = allDeals.filter(d => d.STAGE_ID === 'C8:EXECUTING').length;
-    document.getElementById('statSold').textContent     = allDeals.filter(d => d.STAGE_ID === 'C8:WON').length;
-    const free = allDeals.filter(d => d.STAGE_ID === 'C8:NEW').length;
-    const badge = document.getElementById('freeCount');
-    badge.textContent = free;
-    badge.style.background = free > 0 ? '#e74c3c' : '#95a5a6';
+function updateStats(){
+    document.getElementById('statTotal').textContent    =allDeals.length;
+    document.getElementById('statFree').textContent     =allDeals.filter(d=>d.STAGE_ID==='C8:NEW').length;
+    document.getElementById('statWork').textContent     =allDeals.filter(d=>d.STAGE_ID==='C8:PREPARATION').length;
+    document.getElementById('statMeeting').textContent  =allDeals.filter(d=>d.STAGE_ID==='C8:PREPAYMENT_INVOICE').length;
+    document.getElementById('statContract').textContent =allDeals.filter(d=>d.STAGE_ID==='C8:EXECUTING').length;
+    document.getElementById('statSold').textContent     =allDeals.filter(d=>d.STAGE_ID==='C8:WON').length;
+    const free=allDeals.filter(d=>d.STAGE_ID==='C8:NEW').length;
+    const b=document.getElementById('freeCount');
+    b.textContent=free; b.style.background=free>0?'#e74c3c':'#95a5a6';
 }
 
-// ==================== RENDER CARD ====================
-function renderCard(deal) {
-    const objectId  = deal[UF.ID_OBJECT]  || ('Сделка #' + deal.ID);
-    const district  = deal[UF.DISTRICT]   || '—';
-    const address   = deal[UF.ADDRESS]    || 'Адрес не указан';
-    const area      = deal[UF.AREA]       || '';
-    const price     = deal[UF.PRICE]      || '';
-    const rooms     = deal[UF.ROOMS]      || '';
-    const floor     = deal[UF.FLOOR]      || '';
-    const condition = deal[UF.CONDITION]  || '';
-    const krishaUrl = deal[UF.KRISHA_URL] || '';
-    const isFree    = deal.STAGE_ID === 'C8:NEW';
-    const isSold    = deal.STAGE_ID === 'C8:WON';
-    const isAdmin   = isAdminOrOwner();
-    const assignedName = getUserName(deal.ASSIGNED_BY_ID);
+function renderCard(deal){
+    const oid  =deal[UF.ID_OBJECT] ||('Сделка #'+deal.ID);
+    const dist =deal[UF.DISTRICT]  ||'—';
+    const addr =deal[UF.ADDRESS]   ||'Адрес не указан';
+    const area =deal[UF.AREA]      ||'';
+    const price=deal[UF.PRICE]     ||'';
+    const rooms=deal[UF.ROOMS]     ||'';
+    const floor=deal[UF.FLOOR]     ||'';
+    const cond =deal[UF.CONDITION] ||'';
+    const kurl =deal[UF.KRISHA_URL]||'';
+    const isFree  =deal.STAGE_ID==='C8:NEW';
+    const isSold  =deal.STAGE_ID==='C8:WON';
+    const isReject=deal.STAGE_ID==='C8:LOSE';
+    const isAdmin =isAdminOrOwner();
+    const aname   =getUserName(deal.ASSIGNED_BY_ID);
 
-    // Фото
-    const hasPhotos = deal.photoUrls && deal.photoUrls.length > 0;
-    const photoSection = hasPhotos
-        ? `<div class="object-photos" onclick="openPhotoGallery('${deal.ID}')">
-                <img src="${deal.photoUrls[0]}" alt="Фото" class="main-photo">
-                ${deal.photoUrls.length > 1 ? `<span class="photo-count"><i class="fas fa-images"></i> ${deal.photoUrls.length}</span>` : ''}
+    const hasP=deal.photoUrls&&deal.photoUrls.length>0;
+    const photoSec=hasP
+        ?`<div class="object-photos" onclick="openGallery('${deal.ID}')">
+            <img src="${deal.photoUrls[0]}" class="main-photo">
+            ${deal.photoUrls.length>1?`<span class="photo-count"><i class="fas fa-images"></i> ${deal.photoUrls.length}</span>`:''}
            </div>`
-        : `<div class="object-photos no-photo"><i class="fas fa-image"></i><span>Нет фото</span></div>`;
+        :`<div class="object-photos no-photo"><i class="fas fa-image"></i><span>Нет фото</span></div>`;
 
-    // Детали — только для админа/владельца
-    let adminInfo = '';
-    if (isAdmin) {
-        adminInfo = `<div class="admin-details"><div class="admin-details-grid">
-            ${area      ? `<div class="detail-item"><div class="dl">Площадь</div><div class="dv">${area} м²</div></div>` : ''}
-            ${rooms     ? `<div class="detail-item"><div class="dl">Комнаты</div><div class="dv">${rooms}</div></div>` : ''}
-            ${floor     ? `<div class="detail-item"><div class="dl">Этаж</div><div class="dv">${floor}</div></div>` : ''}
-            ${condition ? `<div class="detail-item"><div class="dl">Состояние</div><div class="dv">${condition}</div></div>` : ''}
-            ${price     ? `<div class="detail-item full"><div class="dl">Цена</div><div class="dv" style="color:#2ecc71;font-size:16px;">${formatMoney(price)} ₸</div></div>` : ''}
-        </div>
-        ${krishaUrl ? `<a href="${krishaUrl}" target="_blank" class="krisha-btn"><i class="fas fa-external-link-alt"></i> Открыть на Krisha</a>` : ''}
-        </div>`;
-    }
-
-    // Кнопки
-    let buttons = '';
-    if (isFree) {
-        buttons = `<button class="btn-small btn-take" onclick="takeObject('${deal.ID}')"><i class="fas fa-hand-paper"></i> Взять в работу</button>`;
-    } else if (isSold) {
-        buttons = `<span style="color:#888;font-size:13px;"><i class="fas fa-check-circle" style="color:#2ecc71;"></i> Сделка закрыта</span>`;
+    let infoBlock='';
+    if(isAdmin){
+        infoBlock=`<div class="admin-details"><div class="admin-details-grid">
+            ${area ?`<div class="detail-item"><div class="dl">Площадь</div><div class="dv">${area} м²</div></div>`:''}
+            ${rooms?`<div class="detail-item"><div class="dl">Комнаты</div><div class="dv">${rooms}</div></div>`:''}
+            ${floor?`<div class="detail-item"><div class="dl">Этаж</div><div class="dv">${floor}</div></div>`:''}
+            ${cond ?`<div class="detail-item"><div class="dl">Состояние</div><div class="dv">${cond}</div></div>`:''}
+            ${price?`<div class="detail-item full"><div class="dl">Цена</div><div class="dv" style="color:#2ecc71;font-size:16px;">${formatMoney(price)} ₸</div></div>`:''}
+        </div>${kurl?`<a href="${kurl}" target="_blank" class="krisha-btn"><i class="fas fa-external-link-alt"></i> Открыть на Krisha</a>`:''}</div>`;
     } else {
-        let canEdit = false;
-        if (currentUser.role === 'owner') canEdit = true;
-        else if (currentUser.id === '5969819' && (deal.ASSIGNED_BY_ID === '10' || deal.ASSIGNED_BY_ID === '5969819')) canEdit = true;
-        else if (currentUser.id === '127611' && deal.ASSIGNED_BY_ID === '12') canEdit = true;
-        else if (currentUser.id === '18616153' && deal.ASSIGNED_BY_ID === '14') canEdit = true;
-        else if (deal.ASSIGNED_BY_ID === currentUser.id) canEdit = true;
-
-        if (canEdit) {
-            if (deal.STAGE_ID === 'C8:EXECUTING') {
-                buttons = `
-                    <button class="btn-small btn-call" onclick="openCallModal('${deal.ID}')"><i class="fas fa-phone"></i> Звонок</button>
-                    <button class="btn-small btn-success" onclick="openSoldModal('${deal.ID}')" style="background:#2ecc71;color:white;"><i class="fas fa-check-circle"></i> Продан</button>`;
-            } else {
-                buttons = `
-                    <button class="btn-small btn-call" onclick="openCallModal('${deal.ID}')"><i class="fas fa-phone"></i> Звонок</button>
-                    <button class="btn-small btn-meeting" onclick="openMeetingModal('${deal.ID}')"><i class="fas fa-handshake"></i> Встреча</button>
-                    <button class="btn-small btn-contract" onclick="openContractModal('${deal.ID}')"><i class="fas fa-file-signature"></i> Договор</button>`;
+        infoBlock=`
+        <div class="admin-details">
+            ${price
+                ?`<div class="detail-item full"><div class="dl">Цена</div><div class="dv" style="color:#2ecc71;font-size:16px;">${formatMoney(price)} ₸</div></div>`
+                :`<div style="color:#aaa;font-size:13px;"><i class="fas fa-tag"></i> Цена не указана</div>`
             }
-        }
-    }
-
-    return `
-        <div class="object-card">
-            ${photoSection}
-            <div class="object-header">
-                <div class="id">${objectId}</div>
-                <div class="title">${district}</div>
-                <span class="badge ${isFree ? 'badge-free' : 'badge-taken'}">${isFree ? 'СВОБОДЕН' : assignedName}</span>
-            </div>
-            <div class="object-body">
-                <div class="object-address"><i class="fas fa-map-marker-alt"></i><span>${address}</span></div>
-                ${adminInfo}
-                ${!isAdmin ? `<div class="object-seller"><i class="fas fa-phone"></i><span class="phone-hidden">••• ••• •• ••</span><span class="phone-label">номер скрыт</span></div>` : ''}
-                <span class="status-badge ${getStatusClass(deal.STAGE_ID)}">${getStatusText(deal.STAGE_ID)}</span>
-            </div>
-            <div class="object-actions">${buttons}</div>
+        </div>
+        <div class="object-seller">
+            <i class="fas fa-phone"></i>
+            <span class="phone-fake">${fakePhone(deal.ID)}</span>
+            <span class="phone-label"><i class="fas fa-lock"></i> скрыт</span>
         </div>`;
-}
-
-function renderDeals() {
-    const grid = document.getElementById('objectsGrid');
-    if (filteredDeals.length === 0) {
-        grid.innerHTML = '';
-        document.getElementById('emptyState').style.display = 'block';
-        return;
     }
-    document.getElementById('emptyState').style.display = 'none';
-    grid.innerHTML = filteredDeals.map(deal => renderCard(deal)).join('');
-}
 
-// ==================== ACTIONS ====================
-async function takeObject(dealId) {
-    const deal = allDeals.find(d => d.ID === dealId);
-    if (!deal || deal.STAGE_ID !== 'C8:NEW') { showToast('Ошибка', 'Объект уже занят!', 'error'); return; }
-    if (!confirm('Взять этот объект в работу?')) return;
-    let assignId = currentUser.id;
-    if (currentUser.id === '5969819') assignId = '10';
-    else if (currentUser.id === '127611') assignId = '12';
-    else if (currentUser.id === '18616153') assignId = '14';
-    try {
-        const r = await fetch(`${BITRIX_WEBHOOK}crm.deal.update?id=${dealId}&fields[STAGE_ID]=C8:PREPARATION&fields[ASSIGNED_BY_ID]=${assignId}`);
-        const d = await r.json();
-        if (d.result) {
-            logActivity(currentUser.id, 'take', dealId, `Взял объект ${deal[UF.ID_OBJECT] || dealId}`);
-            showToast('Успех!', 'Объект взят в работу', 'success');
-            loadDeals();
+    let canEdit=false;
+    if(currentUser.role==='owner') canEdit=true;
+    else if(currentUser.id==='5969819'&&(deal.ASSIGNED_BY_ID==='10'||deal.ASSIGNED_BY_ID==='5969819')) canEdit=true;
+    else if(currentUser.id==='127611'  &&deal.ASSIGNED_BY_ID==='12') canEdit=true;
+    else if(currentUser.id==='18616153'&&deal.ASSIGNED_BY_ID==='14') canEdit=true;
+    else if(deal.ASSIGNED_BY_ID===currentUser.id) canEdit=true;
+
+    let btns='';
+    if(isFree){
+        btns=`<button class="btn-small btn-take" onclick="takeObject('${deal.ID}')"><i class="fas fa-hand-paper"></i> Взять в работу</button>`;
+    } else if(isSold){
+        btns=`<span style="color:#888;font-size:13px;"><i class="fas fa-check-circle" style="color:#2ecc71;"></i> Сделка закрыта</span>`;
+    } else if(isReject){
+        const reason=deal[UF.REJECT]||'—';
+        btns=`<span style="color:#e74c3c;font-size:13px;"><i class="fas fa-times-circle"></i> Отказ: ${reason}</span>`;
+    } else if(canEdit){
+        if(deal.STAGE_ID==='C8:PREPARATION'){
+            btns=`<button class="btn-small btn-call" onclick="openCallModal('${deal.ID}')"><i class="fas fa-phone"></i> Звонок</button>
+                  <button class="btn-small btn-meeting" onclick="openMeetingModal('${deal.ID}')"><i class="fas fa-handshake"></i> Встреча</button>`;
+        } else if(deal.STAGE_ID==='C8:PREPAYMENT_INVOICE'){
+            btns=`<button class="btn-small btn-call" onclick="openCallModal('${deal.ID}')"><i class="fas fa-phone"></i> Звонок</button>
+                  <button class="btn-small btn-contract" onclick="openContractModal('${deal.ID}')"><i class="fas fa-file-signature"></i> Договор</button>
+                  <button class="btn-small btn-reject" onclick="openRejectModal('${deal.ID}')"><i class="fas fa-times-circle"></i> Отказ</button>`;
+        } else if(deal.STAGE_ID==='C8:EXECUTING'){
+            btns=`<button class="btn-small btn-call" onclick="openCallModal('${deal.ID}')"><i class="fas fa-phone"></i> Звонок</button>
+                  <button class="btn-small btn-success" onclick="openSoldModal('${deal.ID}')" style="background:#2ecc71;color:white;"><i class="fas fa-check-circle"></i> Продан</button>`;
         }
-    } catch(e) { showToast('Ошибка', 'Не удалось взять объект', 'error'); }
+    }
+
+    return `<div class="object-card">
+        ${photoSec}
+        <div class="object-header">
+            <div class="id">${oid}</div>
+            <div class="title">${dist}</div>
+            <span class="badge ${isFree?'badge-free':'badge-taken'}">${isFree?'СВОБОДЕН':aname}</span>
+        </div>
+        <div class="object-body">
+            <div class="object-address"><i class="fas fa-map-marker-alt"></i><span>${addr}</span></div>
+            ${infoBlock}
+            <span class="status-badge ${getStageCls(deal.STAGE_ID)}">${getStageTxt(deal.STAGE_ID)}</span>
+        </div>
+        <div class="object-actions">${btns}</div>
+    </div>`;
 }
 
-// ==================== CALL ====================
-function openCallModal(dealId) { document.getElementById('callDealId').value = dealId; document.getElementById('callComment').value = ''; document.getElementById('callModal').classList.add('active'); }
-function closeCallModal() { document.getElementById('callModal').classList.remove('active'); }
-async function makeCall() {
-    const dealId  = document.getElementById('callDealId').value;
-    const comment = document.getElementById('callComment').value.trim();
-    const deal    = allDeals.find(d => d.ID === dealId);
+function renderDeals(){
+    const g=document.getElementById('objectsGrid');
+    if(filteredDeals.length===0){ g.innerHTML=''; document.getElementById('emptyState').style.display='block'; return; }
+    document.getElementById('emptyState').style.display='none';
+    g.innerHTML=filteredDeals.map(d=>renderCard(d)).join('');
+}
+
+async function takeObject(dealId){
+    const deal=allDeals.find(d=>d.ID===dealId);
+    if(!deal||deal.STAGE_ID!=='C8:NEW'){ showToast('Ошибка','Объект уже занят!','error'); return; }
+    if(!confirm('Взять этот объект в работу?')) return;
+    let aid=currentUser.id;
+    if(currentUser.id==='5969819') aid='10';
+    else if(currentUser.id==='127611') aid='12';
+    else if(currentUser.id==='18616153') aid='14';
+    try{
+        const r=await fetch(`${BITRIX_WEBHOOK}crm.deal.update?id=${dealId}&fields[STAGE_ID]=C8:PREPARATION&fields[ASSIGNED_BY_ID]=${aid}`);
+        const d=await r.json();
+        if(d.result){ logActivity(currentUser.id,'take',dealId,`Взял объект ${deal[UF.ID_OBJECT]||dealId}`); showToast('Успех!','Объект взят в работу','success'); loadDeals(); }
+    }catch(e){ showToast('Ошибка','Не удалось взять объект','error'); }
+}
+
+function openCallModal(id){ document.getElementById('callDealId').value=id; document.getElementById('callComment').value=''; document.getElementById('callModal').classList.add('active'); }
+function closeCallModal(){ document.getElementById('callModal').classList.remove('active'); }
+async function makeCall(){
+    const id=document.getElementById('callDealId').value;
+    const c=document.getElementById('callComment').value.trim();
+    const deal=allDeals.find(d=>d.ID===id);
     document.getElementById('callModal').classList.remove('active');
     openRecordingModal();
-    logActivity(currentUser.id, 'call', dealId, `Позвонил: ${deal?.[UF.ID_OBJECT] || dealId}${comment ? ' — ' + comment : ''}`);
+    logActivity(currentUser.id,'call',id,`Позвонил: ${deal?.[UF.ID_OBJECT]||id}${c?' — '+c:''}`);
 }
 
-// ==================== MEETING ====================
-function openMeetingModal(dealId) {
-    document.getElementById('meetingDealId').value = dealId;
-    ['meetingDate','meetingTime','meetingPlace','meetingComment'].forEach(id => document.getElementById(id).value = '');
+function openMeetingModal(id){
+    document.getElementById('meetingDealId').value=id;
+    ['meetingDate','meetingTime','meetingPlace','meetingComment'].forEach(x=>document.getElementById(x).value='');
     document.getElementById('meetingModal').classList.add('active');
 }
-function closeMeetingModal() { document.getElementById('meetingModal').classList.remove('active'); }
-async function saveMeeting() {
-    const dealId  = document.getElementById('meetingDealId').value;
-    const date    = document.getElementById('meetingDate').value;
-    const time    = document.getElementById('meetingTime').value;
-    const place   = document.getElementById('meetingPlace').value.trim();
-    const comment = document.getElementById('meetingComment').value.trim();
-    if (!date || !time) { showToast('Ошибка', 'Укажите дату и время', 'error'); return; }
-    try {
-        await fetch(`${BITRIX_WEBHOOK}crm.deal.update?id=${dealId}&fields[STAGE_ID]=C8:PREPAYMENT_INVOICE`);
-        logActivity(currentUser.id, 'meeting', dealId, `Встреча ${date} ${time}${place ? ' в ' + place : ''}${comment ? ' — ' + comment : ''}`);
-        closeMeetingModal();
-        showToast('Успех!', 'Встреча назначена', 'success');
-        loadDeals();
-    } catch(e) { showToast('Ошибка', 'Не удалось сохранить', 'error'); }
+function closeMeetingModal(){ document.getElementById('meetingModal').classList.remove('active'); }
+async function saveMeeting(){
+    const id=document.getElementById('meetingDealId').value;
+    const date=document.getElementById('meetingDate').value;
+    const time=document.getElementById('meetingTime').value;
+    const place=document.getElementById('meetingPlace').value.trim();
+    const cmt=document.getElementById('meetingComment').value.trim();
+    if(!date||!time){ showToast('Ошибка','Укажите дату и время','error'); return; }
+    try{
+        await fetch(`${BITRIX_WEBHOOK}crm.deal.update?id=${id}&fields[STAGE_ID]=C8:PREPAYMENT_INVOICE`);
+        logActivity(currentUser.id,'meeting',id,`Встреча ${date} ${time}${place?' в '+place:''}${cmt?' — '+cmt:''}`);
+        closeMeetingModal(); showToast('Успех!','Встреча назначена','success'); loadDeals();
+    }catch(e){ showToast('Ошибка','Не удалось сохранить','error'); }
 }
 
-// ==================== CONTRACT ====================
-function openContractModal(dealId) {
-    document.getElementById('contractDealId').value = dealId;
-    document.getElementById('contractFile').value = '';
-    document.getElementById('fileName').style.display = 'none';
-    document.getElementById('contractComment').value = '';
+function openContractModal(id){
+    document.getElementById('contractDealId').value=id;
+    document.getElementById('contractFile').value='';
+    document.getElementById('fileName').style.display='none';
+    document.getElementById('fileNameText').textContent='';
+    document.getElementById('contractComment').value='';
+    document.getElementById('fileUploadZone').style.borderColor='#ddd';
     document.getElementById('contractModal').classList.add('active');
 }
-function closeContractModal() { document.getElementById('contractModal').classList.remove('active'); }
-function onFileSelected(input) {
-    if (input.files && input.files[0]) { document.getElementById('fileName').textContent = input.files[0].name; document.getElementById('fileName').style.display = 'block'; }
-}
-async function uploadContract() {
-    const dealId  = document.getElementById('contractDealId').value;
-    const fileInput = document.getElementById('contractFile');
-    const comment = document.getElementById('contractComment').value.trim();
-    if (!fileInput.files || !fileInput.files[0]) { showToast('Ошибка', 'Выберите PDF файл', 'error'); return; }
-    if (!confirm('Статус изменится на "Договор". Продолжить?')) return;
-    try {
-        await fetch(`${BITRIX_WEBHOOK}crm.deal.update?id=${dealId}&fields[STAGE_ID]=C8:EXECUTING`);
-        logActivity(currentUser.id, 'contract', dealId, `Договор загружен${comment ? ' — ' + comment : ''}`);
-        closeContractModal();
-        showToast('Успех!', 'Договор загружен', 'success');
-        loadDeals();
-    } catch(e) { showToast('Ошибка', 'Не удалось загрузить', 'error'); }
+function closeContractModal(){ document.getElementById('contractModal').classList.remove('active'); }
+
+function onFileSelected(input){
+    if(input.files&&input.files[0]){
+        const f=input.files[0];
+        if(f.type!=='application/pdf'){ showToast('Ошибка','Только PDF файлы','error'); input.value=''; return; }
+        if(f.size>10*1024*1024){ showToast('Ошибка','Файл слишком большой (макс 10MB)','error'); input.value=''; return; }
+        document.getElementById('fileNameText').textContent=f.name+' ('+(f.size/1024).toFixed(0)+' KB)';
+        document.getElementById('fileName').style.display='block';
+        document.getElementById('fileUploadZone').style.borderColor='#2ecc71';
+    }
 }
 
-// ==================== SOLD MODAL ====================
-function openSoldModal(dealId) {
-    const deal = allDeals.find(d => d.ID === dealId);
-    if (!deal) return;
-    document.getElementById('soldDealId').value = dealId;
-    document.getElementById('soldObjectInfo').innerHTML = `
-        <strong>ID:</strong> ${deal[UF.ID_OBJECT] || dealId}<br>
-        <strong>Район:</strong> ${deal[UF.DISTRICT] || '—'}<br>
-        <strong>Адрес:</strong> ${deal[UF.ADDRESS] || '—'}<br>
-        <strong>Площадь:</strong> ${deal[UF.AREA] || '—'} м²<br>
-        <strong>Цена:</strong> ${deal[UF.PRICE] ? formatMoney(deal[UF.PRICE]) + ' ₸' : '—'}`;
-    document.getElementById('saleAmount').value = deal[UF.PRICE] || '';
-    document.getElementById('commissionPercent').value = '2';
-    document.getElementById('soldComment').value = '';
+async function uploadContract(){
+    const id=document.getElementById('contractDealId').value;
+    const fi=document.getElementById('contractFile');
+    const cmt=document.getElementById('contractComment').value.trim();
+    if(!fi.files||!fi.files[0]){ document.getElementById('fileUploadZone').style.borderColor='#e74c3c'; showToast('Ошибка','Загрузите PDF договор — это обязательно!','error'); return; }
+    if(!confirm('Загрузить договор и перевести в статус "Договор"?')) return;
+    const file=fi.files[0];
+    showToast('Загрузка...','Отправляем файл в Битрикс24...','info',8000);
+    try{
+        const b64=await new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(r.result.split(',')[1]); r.onerror=rej; r.readAsDataURL(file); });
+        const deal=allDeals.find(d=>d.ID===id);
+        const oid=deal?.[UF.ID_OBJECT]||id;
+        await fetch(`${BITRIX_WEBHOOK}crm.deal.update?id=${id}&fields[STAGE_ID]=C8:EXECUTING`);
+        await fetch(`${BITRIX_WEBHOOK}crm.timeline.comment.add`,{
+            method:'POST',headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({fields:{ENTITY_ID:parseInt(id),ENTITY_TYPE:'deal',
+                COMMENT:`📝 ДОГОВОР ЗАГРУЖЕН\n👤 Риэлтор: ${currentUser.name}\n🏢 Объект: ${oid}${cmt?'\n💬 '+cmt:''}`,
+                FILES:[{fileData:[file.name,b64]}]}})
+        });
+        logActivity(currentUser.id,'contract',id,`Договор: ${file.name}${cmt?' — '+cmt:''}`);
+        closeContractModal();
+        showToast('✅ Успех!',`Договор "${file.name}" загружен`,'success',6000);
+        loadDeals();
+    }catch(e){ console.error(e); showToast('Ошибка','Не удалось загрузить файл','error'); }
+}
+
+function openRejectModal(id){
+    document.getElementById('rejectDealId').value=id;
+    document.getElementById('rejectReason').value='';
+    document.getElementById('rejectComment').value='';
+    document.getElementById('customReasonBlock').style.display='none';
+    document.getElementById('rejectModal').classList.add('active');
+}
+function closeRejectModal(){ document.getElementById('rejectModal').classList.remove('active'); }
+function toggleCustomReason(v){ document.getElementById('customReasonBlock').style.display=v==='Другое'?'block':'none'; }
+async function saveReject(){
+    const id=document.getElementById('rejectDealId').value;
+    const reason=document.getElementById('rejectReason').value;
+    const cmt=document.getElementById('rejectComment').value.trim();
+    if(!reason){ showToast('Ошибка','Выберите причину отказа','error'); return; }
+    if(reason==='Другое'&&!cmt){ showToast('Ошибка','Опишите причину отказа','error'); return; }
+    const full=reason==='Другое'?cmt:reason;
+    if(!confirm(`Подтвердить отказ?\nПричина: ${full}`)) return;
+    try{
+        await fetch(`${BITRIX_WEBHOOK}crm.deal.update?id=${id}&fields[STAGE_ID]=C8:LOSE&fields[${UF.REJECT}]=${encodeURIComponent(full)}`);
+        logActivity(currentUser.id,'reject',id,`Отказ: ${full}`);
+        closeRejectModal(); showToast('Зафиксировано',`Отказ: ${full}`,'warning'); loadDeals();
+    }catch(e){ showToast('Ошибка','Не удалось сохранить','error'); }
+}
+
+function openSoldModal(id){
+    const deal=allDeals.find(d=>d.ID===id); if(!deal) return;
+    document.getElementById('soldDealId').value=id;
+    document.getElementById('soldObjectInfo').innerHTML=`
+        <strong>ID:</strong> ${deal[UF.ID_OBJECT]||id}<br>
+        <strong>Район:</strong> ${deal[UF.DISTRICT]||'—'}<br>
+        <strong>Адрес:</strong> ${deal[UF.ADDRESS]||'—'}<br>
+        <strong>Площадь:</strong> ${deal[UF.AREA]||'—'} м²<br>
+        <strong>Цена:</strong> ${deal[UF.PRICE]?formatMoney(deal[UF.PRICE])+' ₸':'—'}`;
+    document.getElementById('saleAmount').value=deal[UF.PRICE]||'';
+    document.getElementById('commissionPercent').value='2';
+    document.getElementById('soldComment').value='';
     calculateCommission();
     document.getElementById('soldModal').classList.add('active');
 }
-function closeSoldModal() { document.getElementById('soldModal').classList.remove('active'); }
-function calculateCommission() {
-    const amount  = parseFloat(document.getElementById('saleAmount').value) || 0;
-    const percent = parseFloat(document.getElementById('commissionPercent').value) || 0;
-    const total   = Math.round(amount * percent / 100);
-    const company = Math.round(total / 2);
-    const agent   = total - company;
-    document.getElementById('totalCommission').textContent = formatMoney(total) + ' ₸';
-    document.getElementById('companyShare').textContent    = formatMoney(company) + ' ₸';
-    document.getElementById('agentShare').textContent      = formatMoney(agent) + ' ₸';
+function closeSoldModal(){ document.getElementById('soldModal').classList.remove('active'); }
+function calculateCommission(){
+    const a=parseFloat(document.getElementById('saleAmount').value)||0;
+    const p=parseFloat(document.getElementById('commissionPercent').value)||0;
+    const t=Math.round(a*p/100),co=Math.round(t/2),ag=t-co;
+    document.getElementById('totalCommission').textContent=formatMoney(t)+' ₸';
+    document.getElementById('companyShare').textContent=formatMoney(co)+' ₸';
+    document.getElementById('agentShare').textContent=formatMoney(ag)+' ₸';
 }
-async function confirmSale() {
-    const dealId  = document.getElementById('soldDealId').value;
-    const amount  = document.getElementById('saleAmount').value;
-    const comment = document.getElementById('soldComment').value.trim();
-    if (!amount || parseFloat(amount) <= 0) { showToast('Ошибка', 'Укажите сумму продажи', 'error'); return; }
-    if (!confirm('Подтвердить продажу? Нельзя отменить.')) return;
-    try {
-        const percent = parseFloat(document.getElementById('commissionPercent').value) || 0;
-        const total   = Math.round(parseFloat(amount) * percent / 100);
-        await fetch(`${BITRIX_WEBHOOK}crm.deal.update?id=${dealId}&fields[STAGE_ID]=C8:WON&fields[OPPORTUNITY]=${amount}`);
-        logActivity(currentUser.id, 'sold', dealId, `Продал на ${formatMoney(amount)} ₸. Комиссия: ${formatMoney(total)} ₸`);
-        closeSoldModal();
-        showToast('Поздравляем!', `Объект продан на ${formatMoney(amount)} ₸!`, 'success', 8000);
-        loadDeals();
-    } catch(e) { showToast('Ошибка', 'Не удалось подтвердить', 'error'); }
+async function confirmSale(){
+    const id=document.getElementById('soldDealId').value;
+    const amt=document.getElementById('saleAmount').value;
+    if(!amt||parseFloat(amt)<=0){ showToast('Ошибка','Укажите сумму продажи','error'); return; }
+    if(!confirm('Подтвердить продажу? Нельзя отменить.')) return;
+    try{
+        const p=parseFloat(document.getElementById('commissionPercent').value)||0;
+        const t=Math.round(parseFloat(amt)*p/100);
+        await fetch(`${BITRIX_WEBHOOK}crm.deal.update?id=${id}&fields[STAGE_ID]=C8:WON&fields[OPPORTUNITY]=${amt}`);
+        logActivity(currentUser.id,'sold',id,`Продал на ${formatMoney(amt)} ₸. Комиссия: ${formatMoney(t)} ₸`);
+        closeSoldModal(); showToast('Поздравляем!',`Объект продан на ${formatMoney(amt)} ₸!`,'success',8000); loadDeals();
+    }catch(e){ showToast('Ошибка','Не удалось подтвердить','error'); }
 }
 
-// ==================== RECORDING ====================
-let callRecordingInterval = null, callStartTime = null;
-function openRecordingModal() {
+let recInterval=null;
+function openRecordingModal(){
     document.getElementById('recordingModal').classList.add('active');
-    callStartTime = new Date();
-    document.getElementById('callDateTime').textContent = callStartTime.toLocaleString('ru-RU');
-    let seconds = 0;
-    callRecordingInterval = setInterval(() => {
-        seconds++;
-        const m = Math.floor(seconds/60).toString().padStart(2,'0');
-        const s = (seconds%60).toString().padStart(2,'0');
-        document.getElementById('callDuration').textContent = `${m}:${s}`;
-    }, 1000);
+    document.getElementById('callDateTime').textContent=new Date().toLocaleString('ru-RU');
+    let s=0;
+    recInterval=setInterval(()=>{ s++; const m=Math.floor(s/60).toString().padStart(2,'0'); const sec=(s%60).toString().padStart(2,'0'); document.getElementById('callDuration').textContent=`${m}:${sec}`; },1000);
 }
-function closeRecordingModal() {
-    document.getElementById('recordingModal').classList.remove('active');
-    if (callRecordingInterval) { clearInterval(callRecordingInterval); callRecordingInterval = null; }
-}
-function endCallRecording() {
-    const duration = document.getElementById('callDuration').textContent;
-    closeRecordingModal();
-    showToast('Звонок завершен', `Длительность: ${duration}`, 'success');
-}
+function closeRecordingModal(){ document.getElementById('recordingModal').classList.remove('active'); if(recInterval){clearInterval(recInterval);recInterval=null;} }
+function endCallRecording(){ const d=document.getElementById('callDuration').textContent; closeRecordingModal(); showToast('Звонок завершен',`Длительность: ${d}`,'success'); }
 
-// ==================== GALLERY ====================
-let currentGalleryDeal = null, currentGalleryIndex = 0;
-function openPhotoGallery(dealId) {
-    const deal = allDeals.find(d => d.ID === dealId);
-    if (!deal || !deal.photoUrls || deal.photoUrls.length === 0) return;
-    currentGalleryDeal = deal; currentGalleryIndex = 0;
-    updateGalleryView();
-    document.getElementById('galleryModal').classList.add('active');
-}
-function openPhotoGalleryAt(dealId, index) {
-    const deal = allDeals.find(d => d.ID === dealId);
-    if (!deal || !deal.photoUrls || deal.photoUrls.length === 0) return;
-    currentGalleryDeal = deal; currentGalleryIndex = index || 0;
-    updateGalleryView();
-    document.getElementById('galleryModal').classList.add('active');
-}
-function closeGalleryModal() { document.getElementById('galleryModal').classList.remove('active'); currentGalleryDeal = null; }
-function updateGalleryView() {
-    if (!currentGalleryDeal) return;
-    const photos = currentGalleryDeal.photoUrls;
-    document.getElementById('galleryMainImage').src = photos[currentGalleryIndex];
-    document.getElementById('galleryThumbnails').innerHTML = photos.map((p, i) =>
-        `<img src="${p}" class="gallery-thumbnail ${i === currentGalleryIndex ? 'active' : ''}" onclick="selectGalleryImage(${i})">`
-    ).join('');
-}
-function selectGalleryImage(i) { currentGalleryIndex = i; updateGalleryView(); }
-function prevGalleryImage() { if (!currentGalleryDeal) return; currentGalleryIndex = (currentGalleryIndex - 1 + currentGalleryDeal.photoUrls.length) % currentGalleryDeal.photoUrls.length; updateGalleryView(); }
-function nextGalleryImage() { if (!currentGalleryDeal) return; currentGalleryIndex = (currentGalleryIndex + 1) % currentGalleryDeal.photoUrls.length; updateGalleryView(); }
+let galDeal=null,galIdx=0;
+function openGallery(id){ const d=allDeals.find(x=>x.ID===id); if(!d||!d.photoUrls||!d.photoUrls.length) return; galDeal=d; galIdx=0; updateGallery(); document.getElementById('galleryModal').classList.add('active'); }
+function openGalleryAt(id,i){ const d=allDeals.find(x=>x.ID===id); if(!d||!d.photoUrls||!d.photoUrls.length) return; galDeal=d; galIdx=i||0; updateGallery(); document.getElementById('galleryModal').classList.add('active'); }
+function closeGalleryModal(){ document.getElementById('galleryModal').classList.remove('active'); galDeal=null; }
+function updateGallery(){ if(!galDeal) return; const p=galDeal.photoUrls; document.getElementById('galleryMainImage').src=p[galIdx]; document.getElementById('galleryThumbnails').innerHTML=p.map((x,i)=>`<img src="${x}" class="gallery-thumbnail ${i===galIdx?'active':''}" onclick="selectGalleryImage(${i})">`).join(''); }
+function selectGalleryImage(i){ galIdx=i; updateGallery(); }
+function prevGalleryImage(){ if(!galDeal) return; galIdx=(galIdx-1+galDeal.photoUrls.length)%galDeal.photoUrls.length; updateGallery(); }
+function nextGalleryImage(){ if(!galDeal) return; galIdx=(galIdx+1)%galDeal.photoUrls.length; updateGallery(); }
 
-// ==================== PAGE NAVIGATION ====================
-function showPage(page) {
-    currentPage = page;
-    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-    ['statsSection','filtersSection','objectsGrid','cabinetPage','agentsPage','soldPage','activityPage','emptyState'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.style.display = 'none';
-    });
-    if (page === 'objects') {
+function showPage(page){
+    currentPage=page;
+    document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
+    ['statsSection','filtersSection','objectsGrid','cabinetPage','agentsPage','soldPage','activityPage','emptyState'].forEach(id=>{ const el=document.getElementById(id); if(el) el.style.display='none'; });
+    if(page==='objects'){
         document.getElementById('navObjects').classList.add('active');
-        document.getElementById('pageTitle').textContent = 'Объекты недвижимости';
-        document.getElementById('statsSection').style.display = 'grid';
-        document.getElementById('filtersSection').style.display = 'flex';
-        document.getElementById('objectsGrid').style.display = 'grid';
+        document.getElementById('pageTitle').textContent='Объекты недвижимости';
+        document.getElementById('statsSection').style.display='grid';
+        document.getElementById('filtersSection').style.display='flex';
+        document.getElementById('objectsGrid').style.display='grid';
         filterAndRender();
-    } else if (page === 'cabinet') {
+    } else if(page==='cabinet'){
         document.getElementById('navCabinet').classList.add('active');
-        document.getElementById('pageTitle').textContent = 'Мой кабинет';
-        document.getElementById('cabinetPage').style.display = 'block';
+        document.getElementById('pageTitle').textContent='Мой кабинет';
+        document.getElementById('cabinetPage').style.display='block';
         renderCabinet();
-    } else if (page === 'agents') {
+    } else if(page==='agents'){
         document.getElementById('navAgents').classList.add('active');
-        document.getElementById('pageTitle').textContent = 'Сотрудники';
-        document.getElementById('agentsPage').style.display = 'block';
+        document.getElementById('pageTitle').textContent='Сотрудники';
+        document.getElementById('agentsPage').style.display='block';
         renderAgentsPage();
-    } else if (page === 'sold') {
+    } else if(page==='sold'){
         document.getElementById('navSold').classList.add('active');
-        document.getElementById('pageTitle').textContent = 'Проданные объекты';
-        document.getElementById('soldPage').style.display = 'block';
+        document.getElementById('pageTitle').textContent='Проданные объекты';
+        document.getElementById('soldPage').style.display='block';
         renderSoldPage();
-    } else if (page === 'activity') {
+    } else if(page==='activity'){
         document.getElementById('navActivity').classList.add('active');
-        document.getElementById('pageTitle').textContent = 'Активность сотрудников';
-        document.getElementById('activityPage').style.display = 'block';
+        document.getElementById('pageTitle').textContent='Активность сотрудников';
+        document.getElementById('activityPage').style.display='block';
         renderActivityPage();
     }
 }
 
-// ==================== SOLD PAGE ====================
-function renderSoldPage() {
-    const grid = document.getElementById('soldDealsGrid');
-    const soldDeals = allDeals.filter(d => d.STAGE_ID === 'C8:WON');
-    if (soldDeals.length === 0) {
-        grid.innerHTML = '<div class="empty-state"><i class="fas fa-trophy"></i><h3>Нет проданных объектов</h3></div>';
-        return;
-    }
-    grid.innerHTML = soldDeals.map(deal => {
-        const objectId  = deal[UF.ID_OBJECT]  || ('Сделка #' + deal.ID);
-        const district  = deal[UF.DISTRICT]   || '—';
-        const address   = deal[UF.ADDRESS]    || '—';
-        const area      = deal[UF.AREA]       || '—';
-        const rooms     = deal[UF.ROOMS]      || '—';
-        const floor     = deal[UF.FLOOR]      || '—';
-        const condition = deal[UF.CONDITION]  || '—';
-        const price     = deal[UF.PRICE]      || '0';
-        const krishaUrl = deal[UF.KRISHA_URL] || '';
-        const agentName = getUserName(deal.ASSIGNED_BY_ID);
-        const saleAmount= deal.OPPORTUNITY || price;
-        const commission= Math.round(parseFloat(saleAmount) * 2 / 100);
-        const company   = Math.round(commission / 2);
-        const agent     = commission - company;
-        const hasPhotos = deal.photoUrls && deal.photoUrls.length > 0;
-        return `
-            <div class="sold-card">
-                <div class="sold-card-header">
-                    <div>
-                        <div class="sid"><i class="fas fa-trophy"></i> ${objectId}</div>
-                        <div style="font-size:13px;margin-top:3px;opacity:0.9;">${district} — ${address}</div>
-                    </div>
-                    <div style="text-align:right;">
-                        <div style="font-size:24px;font-weight:700;">${formatMoney(saleAmount)} ₸</div>
-                        <div style="font-size:12px;opacity:0.8;">Сумма продажи</div>
-                    </div>
+function renderSoldPage(){
+    const g=document.getElementById('soldDealsGrid');
+    const sold=allDeals.filter(d=>d.STAGE_ID==='C8:WON');
+    if(sold.length===0){ g.innerHTML='<div class="empty-state"><i class="fas fa-trophy"></i><h3>Нет проданных объектов</h3></div>'; return; }
+    g.innerHTML=sold.map(deal=>{
+        const oid=deal[UF.ID_OBJECT]||('Сделка #'+deal.ID);
+        const dist=deal[UF.DISTRICT]||'—', addr=deal[UF.ADDRESS]||'—';
+        const area=deal[UF.AREA]||'—', rooms=deal[UF.ROOMS]||'—';
+        const floor=deal[UF.FLOOR]||'—', cond=deal[UF.CONDITION]||'—';
+        const price=deal[UF.PRICE]||'0', kurl=deal[UF.KRISHA_URL]||'';
+        const agent=getUserName(deal.ASSIGNED_BY_ID);
+        const sa=deal.OPPORTUNITY||price;
+        const comm=Math.round(parseFloat(sa)*2/100),co=Math.round(comm/2),ag=comm-co;
+        const hasP=deal.photoUrls&&deal.photoUrls.length>0;
+        return `<div class="sold-card">
+            <div class="sold-card-header">
+                <div><div class="sid"><i class="fas fa-trophy"></i> ${oid}</div><div style="font-size:13px;margin-top:3px;opacity:0.9;">${dist} — ${addr}</div></div>
+                <div style="text-align:right;"><div style="font-size:24px;font-weight:700;">${formatMoney(sa)} ₸</div><div style="font-size:12px;opacity:0.8;">Сумма продажи</div></div>
+            </div>
+            ${hasP?`<div class="sold-photos">${deal.photoUrls.map((u,i)=>`<img src="${u}" class="sold-photo-thumb" onclick="openGalleryAt('${deal.ID}',${i})">`).join('')}</div>`:''}
+            <div class="sold-card-body">
+                <div class="sold-section">
+                    <h4><i class="fas fa-building"></i> Объект</h4>
+                    <div class="sold-info-item"><div class="sil">Площадь</div><div class="siv">${area} м²</div></div>
+                    <div class="sold-info-item"><div class="sil">Комнаты</div><div class="siv">${rooms}</div></div>
+                    <div class="sold-info-item"><div class="sil">Этаж</div><div class="siv">${floor}</div></div>
+                    <div class="sold-info-item"><div class="sil">Состояние</div><div class="siv">${cond}</div></div>
+                    <div class="sold-info-item"><div class="sil">Цена прайс</div><div class="siv" style="color:#2ecc71;">${formatMoney(price)} ₸</div></div>
+                    ${kurl?`<a href="${kurl}" target="_blank" style="display:inline-flex;align-items:center;gap:5px;background:#e74c3c;color:white;padding:5px 12px;border-radius:8px;text-decoration:none;font-size:12px;margin-top:8px;font-weight:600;"><i class="fas fa-external-link-alt"></i> Krisha</a>`:''}
                 </div>
-                ${hasPhotos ? `<div class="sold-photos">${deal.photoUrls.map((url,i) => `<img src="${url}" class="sold-photo-thumb" onclick="openPhotoGalleryAt('${deal.ID}', ${i})">`).join('')}</div>` : ''}
-                <div class="sold-card-body">
-                    <div class="sold-section">
-                        <h4><i class="fas fa-building"></i> Объект</h4>
-                        <div class="sold-info-item"><div class="sil">Площадь</div><div class="siv">${area} м²</div></div>
-                        <div class="sold-info-item"><div class="sil">Комнаты</div><div class="siv">${rooms}</div></div>
-                        <div class="sold-info-item"><div class="sil">Этаж</div><div class="siv">${floor}</div></div>
-                        <div class="sold-info-item"><div class="sil">Состояние</div><div class="siv">${condition}</div></div>
-                        <div class="sold-info-item"><div class="sil">Цена прайс</div><div class="siv" style="color:#2ecc71;">${formatMoney(price)} ₸</div></div>
-                        ${krishaUrl ? `<a href="${krishaUrl}" target="_blank" style="display:inline-flex;align-items:center;gap:5px;background:#e74c3c;color:white;padding:5px 12px;border-radius:8px;text-decoration:none;font-size:12px;margin-top:8px;font-weight:600;"><i class="fas fa-external-link-alt"></i> Krisha</a>` : ''}
-                    </div>
-                    <div class="sold-section">
-                        <h4><i class="fas fa-user"></i> Сделка</h4>
-                        <div class="sold-info-item"><div class="sil">Риэлтор</div><div class="siv">${agentName}</div></div>
-                        <div class="sold-info-item"><div class="sil">Сумма продажи</div><div class="siv" style="color:#2ecc71;font-size:16px;">${formatMoney(saleAmount)} ₸</div></div>
-                        <div class="sold-info-item"><div class="sil">Микрорайон</div><div class="siv">${district}</div></div>
-                        <div class="sold-info-item"><div class="sil">Адрес</div><div class="siv">${address}</div></div>
-                    </div>
-                    <div class="sold-section">
-                        <h4><i class="fas fa-calculator"></i> Комиссия (2%)</h4>
-                        <div class="sold-commission-box">
-                            <div class="ci"><div class="cl">Общая комиссия</div><div class="cv">${formatMoney(commission)} ₸</div></div>
-                            <div class="ci"><div class="cl">Компания (50%)</div><div class="cv">${formatMoney(company)} ₸</div></div>
-                            <div class="ci" style="border-top:1px solid rgba(255,255,255,0.2);padding-top:8px;margin-top:4px;">
-                                <div class="cl">Риэлтору (50%)</div>
-                                <div class="cv" style="font-size:20px;">${formatMoney(agent)} ₸</div>
-                            </div>
+                <div class="sold-section">
+                    <h4><i class="fas fa-user"></i> Сделка</h4>
+                    <div class="sold-info-item"><div class="sil">Риэлтор</div><div class="siv">${agent}</div></div>
+                    <div class="sold-info-item"><div class="sil">Сумма продажи</div><div class="siv" style="color:#2ecc71;font-size:16px;">${formatMoney(sa)} ₸</div></div>
+                    <div class="sold-info-item"><div class="sil">Микрорайон</div><div class="siv">${dist}</div></div>
+                    <div class="sold-info-item"><div class="sil">Адрес</div><div class="siv">${addr}</div></div>
+                </div>
+                <div class="sold-section">
+                    <h4><i class="fas fa-calculator"></i> Комиссия (2%)</h4>
+                    <div class="sold-commission-box">
+                        <div class="ci"><div class="cl">Общая комиссия</div><div class="cv">${formatMoney(comm)} ₸</div></div>
+                        <div class="ci"><div class="cl">Компания (50%)</div><div class="cv">${formatMoney(co)} ₸</div></div>
+                        <div class="ci" style="border-top:1px solid rgba(255,255,255,0.2);padding-top:8px;margin-top:4px;">
+                            <div class="cl">Риэлтору (50%)</div><div class="cv" style="font-size:20px;">${formatMoney(ag)} ₸</div>
                         </div>
                     </div>
                 </div>
-            </div>`;
+            </div>
+        </div>`;
     }).join('');
 }
 
-// ==================== CABINET ====================
-function renderCabinet() {
-    document.getElementById('cabinetAvatar').textContent = currentUser.name.charAt(0).toUpperCase();
-    document.getElementById('cabinetName').textContent = currentUser.name;
-    document.getElementById('cabinetId').textContent = `ID: ${currentUser.id} | Тел: ${currentUser.phone || '—'}`;
-    let myDeals = [];
-    if (currentUser.id === '5969819' || currentUser.bitrixId === '10') {
-        myDeals = allDeals.filter(d => d.ASSIGNED_BY_ID === '10' || d.ASSIGNED_BY_ID === '5969819');
-    } else {
-        const myId = currentUser.bitrixId || currentUser.id;
-        myDeals = allDeals.filter(d => d.ASSIGNED_BY_ID === myId || d.ASSIGNED_BY_ID === currentUser.id);
-    }
-    const s = {
-        total:    myDeals.length,
-        work:     myDeals.filter(d => d.STAGE_ID === 'C8:PREPARATION').length,
-        meeting:  myDeals.filter(d => d.STAGE_ID === 'C8:PREPAYMENT_INVOICE').length,
-        contract: myDeals.filter(d => d.STAGE_ID === 'C8:EXECUTING').length,
-        sold:     myDeals.filter(d => d.STAGE_ID === 'C8:WON').length
-    };
-    document.getElementById('cabinetStats').innerHTML = `
+function renderCabinet(){
+    document.getElementById('cabinetAvatar').textContent=currentUser.name.charAt(0).toUpperCase();
+    document.getElementById('cabinetName').textContent=currentUser.name;
+    document.getElementById('cabinetId').textContent=`ID: ${currentUser.id} | Тел: ${currentUser.phone||'—'}`;
+    let my=[];
+    if(currentUser.id==='5969819'||currentUser.bitrixId==='10') my=allDeals.filter(d=>d.ASSIGNED_BY_ID==='10'||d.ASSIGNED_BY_ID==='5969819');
+    else{ const mid=currentUser.bitrixId||currentUser.id; my=allDeals.filter(d=>d.ASSIGNED_BY_ID===mid||d.ASSIGNED_BY_ID===currentUser.id); }
+    const s={total:my.length,work:my.filter(d=>d.STAGE_ID==='C8:PREPARATION').length,meet:my.filter(d=>d.STAGE_ID==='C8:PREPAYMENT_INVOICE').length,cont:my.filter(d=>d.STAGE_ID==='C8:EXECUTING').length,sold:my.filter(d=>d.STAGE_ID==='C8:WON').length};
+    document.getElementById('cabinetStats').innerHTML=`
         <div class="stat-card blue"><div class="icon"><i class="fas fa-building"></i></div><div class="number">${s.total}</div><div class="label">Всего</div></div>
         <div class="stat-card orange"><div class="icon"><i class="fas fa-user-clock"></i></div><div class="number">${s.work}</div><div class="label">В работе</div></div>
-        <div class="stat-card cyan"><div class="icon"><i class="fas fa-handshake"></i></div><div class="number">${s.meeting}</div><div class="label">Встречи</div></div>
-        <div class="stat-card purple"><div class="icon"><i class="fas fa-file-signature"></i></div><div class="number">${s.contract}</div><div class="label">Договоры</div></div>
+        <div class="stat-card cyan"><div class="icon"><i class="fas fa-handshake"></i></div><div class="number">${s.meet}</div><div class="label">Встречи</div></div>
+        <div class="stat-card purple"><div class="icon"><i class="fas fa-file-signature"></i></div><div class="number">${s.cont}</div><div class="label">Договоры</div></div>
         <div class="stat-card red"><div class="icon"><i class="fas fa-check-circle"></i></div><div class="number">${s.sold}</div><div class="label">Продано</div></div>`;
-    const cabinetObjects = document.getElementById('cabinetObjects');
-    cabinetObjects.innerHTML = myDeals.length === 0
-        ? '<div class="empty-state"><i class="fas fa-building"></i><h3>Нет объектов</h3></div>'
-        : myDeals.map(deal => renderCard(deal)).join('');
+    document.getElementById('cabinetObjects').innerHTML=my.length===0
+        ?'<div class="empty-state"><i class="fas fa-building"></i><h3>Нет объектов</h3></div>'
+        :my.map(d=>renderCard(d)).join('');
 }
 
-// ==================== AGENTS PAGE ====================
-let selectedAgentId = 'all';
-function renderAgentsPage() {
-    const grid = document.getElementById('agentsGrid');
-    const assignedMap = new Map();
-    allDeals.forEach(deal => {
-        if (!deal.ASSIGNED_BY_ID) return;
-        const kid = getKrishaId(deal.ASSIGNED_BY_ID);
-        if (!assignedMap.has(kid)) assignedMap.set(kid, []);
-        assignedMap.get(kid).push(deal);
-    });
-    if (assignedMap.size === 0) { grid.innerHTML = '<div class="empty-state"><i class="fas fa-users"></i><h3>Нет назначенных сотрудников</h3></div>'; return; }
-
-    let tabsHtml = `<div class="agents-list">
-        <div class="agent-tab ${selectedAgentId==='all'?'active':''}" onclick="selectAgent('all')">
-            <div class="av"><i class="fas fa-users"></i></div>
-            <div class="info"><span class="name">Все сотрудники</span><span class="count">${allDeals.filter(d=>d.ASSIGNED_BY_ID).length} объектов</span></div>
-        </div>`;
-    assignedMap.forEach((deals, kid) => {
-        const name = getUserName(kid);
-        tabsHtml += `<div class="agent-tab ${selectedAgentId===kid?'active':''}" onclick="selectAgent('${kid}')">
-            <div class="av">${name.charAt(0).toUpperCase()}</div>
-            <div class="info"><span class="name">${name}</span><span class="count">${deals.length} объектов</span></div>
-        </div>`;
-    });
-    tabsHtml += '</div>';
-
-    const objectsToShow = selectedAgentId === 'all'
-        ? allDeals.filter(d => d.ASSIGNED_BY_ID)
-        : allDeals.filter(d => getKrishaId(d.ASSIGNED_BY_ID) === selectedAgentId);
-
-    const tableHtml = `<div class="objects-table-container"><table class="objects-table">
+let selAgent='all';
+function renderAgentsPage(){
+    const g=document.getElementById('agentsGrid');
+    const map=new Map();
+    allDeals.forEach(d=>{ if(!d.ASSIGNED_BY_ID) return; const k=getKrishaId(d.ASSIGNED_BY_ID); if(!map.has(k)) map.set(k,[]); map.get(k).push(d); });
+    if(map.size===0){ g.innerHTML='<div class="empty-state"><i class="fas fa-users"></i><h3>Нет назначенных сотрудников</h3></div>'; return; }
+    let tabs=`<div class="agents-list"><div class="agent-tab ${selAgent==='all'?'active':''}" onclick="selectAgent('all')"><div class="av"><i class="fas fa-users"></i></div><div class="info"><span class="name">Все сотрудники</span><span class="count">${allDeals.filter(d=>d.ASSIGNED_BY_ID).length} объектов</span></div></div>`;
+    map.forEach((deals,k)=>{ const n=getUserName(k); tabs+=`<div class="agent-tab ${selAgent===k?'active':''}" onclick="selectAgent('${k}')"><div class="av">${n.charAt(0).toUpperCase()}</div><div class="info"><span class="name">${n}</span><span class="count">${deals.length} объектов</span></div></div>`; });
+    tabs+='</div>';
+    const list=selAgent==='all'?allDeals.filter(d=>d.ASSIGNED_BY_ID):allDeals.filter(d=>getKrishaId(d.ASSIGNED_BY_ID)===selAgent);
+    const table=`<div class="objects-table-container"><table class="objects-table">
         <thead><tr><th>ID</th><th>Риэлтор</th><th>Адрес</th><th>Район</th><th>Площадь</th><th>Комнаты</th><th>Цена</th><th>Статус</th><th>Действия</th></tr></thead>
-        <tbody>${objectsToShow.map(deal => {
-            const oid    = deal[UF.ID_OBJECT]  || ('Сделка #' + deal.ID);
-            const dist   = deal[UF.DISTRICT]   || '—';
-            const addr   = deal[UF.ADDRESS]    || '—';
-            const area   = deal[UF.AREA]       || '—';
-            const rooms  = deal[UF.ROOMS]      || '—';
-            const price  = deal[UF.PRICE]      ? formatMoney(deal[UF.PRICE]) + ' ₸' : '—';
-            const agent  = getUserName(deal.ASSIGNED_BY_ID);
-            const sc     = getStatusClass(deal.STAGE_ID);
-            const st     = getStatusText(deal.STAGE_ID);
-            const isSold = deal.STAGE_ID === 'C8:WON';
-            const canEdit = !isSold && (
-                currentUser.role === 'owner' ||
-                (currentUser.id === '5969819' && (deal.ASSIGNED_BY_ID === '10' || deal.ASSIGNED_BY_ID === '5969819')) ||
-                (currentUser.id === '127611'  && deal.ASSIGNED_BY_ID === '12') ||
-                (currentUser.id === '18616153'&& deal.ASSIGNED_BY_ID === '14') ||
-                deal.ASSIGNED_BY_ID === currentUser.id
-            );
-            return `<tr>
-                <td class="id-cell">${oid}</td><td>${agent}</td>
-                <td style="max-width:180px;">${addr}</td><td>${dist}</td>
-                <td>${area}</td><td>${rooms}</td>
-                <td style="color:#2ecc71;font-weight:600;">${price}</td>
-                <td><span class="status-badge ${sc}">${st}</span></td>
-                <td>${canEdit ? `
-                    <button class="btn-xs btn-call-xs" onclick="openCallModal('${deal.ID}')" title="Звонок"><i class="fas fa-phone"></i></button>
-                    <button class="btn-xs btn-meeting-xs" onclick="openMeetingModal('${deal.ID}')" title="Встреча"><i class="fas fa-handshake"></i></button>
-                    ${deal.STAGE_ID === 'C8:EXECUTING'
-                        ? `<button class="btn-xs btn-sold-xs" onclick="openSoldModal('${deal.ID}')" title="Продан"><i class="fas fa-check"></i></button>`
-                        : `<button class="btn-xs btn-contract-xs" onclick="openContractModal('${deal.ID}')" title="Договор"><i class="fas fa-file"></i></button>`
-                    }` : isSold ? '<span style="color:#2ecc71;font-size:11px;"><i class="fas fa-check-circle"></i> Продан</span>' : ''}
-                </td></tr>`;
-        }).join('')}</tbody>
-    </table></div>`;
-
-    grid.innerHTML = tabsHtml + tableHtml;
+        <tbody>${list.map(deal=>{
+            const oid=deal[UF.ID_OBJECT]||('Сделка #'+deal.ID);
+            const dist=deal[UF.DISTRICT]||'—',addr=deal[UF.ADDRESS]||'—';
+            const area=deal[UF.AREA]||'—',rooms=deal[UF.ROOMS]||'—';
+            const price=deal[UF.PRICE]?formatMoney(deal[UF.PRICE])+' ₸':'—';
+            const agent=getUserName(deal.ASSIGNED_BY_ID);
+            const isSold=deal.STAGE_ID==='C8:WON',isLose=deal.STAGE_ID==='C8:LOSE';
+            const canEdit=!isSold&&!isLose&&(currentUser.role==='owner'||(currentUser.id==='5969819'&&(deal.ASSIGNED_BY_ID==='10'||deal.ASSIGNED_BY_ID==='5969819'))||(currentUser.id==='127611'&&deal.ASSIGNED_BY_ID==='12')||(currentUser.id==='18616153'&&deal.ASSIGNED_BY_ID==='14')||deal.ASSIGNED_BY_ID===currentUser.id);
+            let ab='';
+            if(isSold) ab='<span style="color:#2ecc71;font-size:11px;"><i class="fas fa-check-circle"></i> Продан</span>';
+            else if(isLose) ab='<span style="color:#e74c3c;font-size:11px;"><i class="fas fa-times-circle"></i> Отказ</span>';
+            else if(canEdit){
+                if(deal.STAGE_ID==='C8:PREPAYMENT_INVOICE') ab=`<button class="btn-xs btn-call-xs" onclick="openCallModal('${deal.ID}')"><i class="fas fa-phone"></i></button><button class="btn-xs btn-contract-xs" onclick="openContractModal('${deal.ID}')"><i class="fas fa-file"></i></button><button class="btn-xs btn-reject-xs" onclick="openRejectModal('${deal.ID}')"><i class="fas fa-times"></i></button>`;
+                else if(deal.STAGE_ID==='C8:EXECUTING') ab=`<button class="btn-xs btn-call-xs" onclick="openCallModal('${deal.ID}')"><i class="fas fa-phone"></i></button><button class="btn-xs btn-sold-xs" onclick="openSoldModal('${deal.ID}')"><i class="fas fa-check"></i></button>`;
+                else ab=`<button class="btn-xs btn-call-xs" onclick="openCallModal('${deal.ID}')"><i class="fas fa-phone"></i></button><button class="btn-xs btn-meeting-xs" onclick="openMeetingModal('${deal.ID}')"><i class="fas fa-handshake"></i></button>`;
+            }
+            return `<tr><td class="id-cell">${oid}</td><td>${agent}</td><td style="max-width:180px;">${addr}</td><td>${dist}</td><td>${area}</td><td>${rooms}</td><td style="color:#2ecc71;font-weight:600;">${price}</td><td><span class="status-badge ${getStageCls(deal.STAGE_ID)}">${getStageTxt(deal.STAGE_ID)}</span></td><td>${ab}</td></tr>`;
+        }).join('')}</tbody></table></div>`;
+    g.innerHTML=tabs+table;
 }
-function selectAgent(agentId) { selectedAgentId = agentId; renderAgentsPage(); }
+function selectAgent(id){ selAgent=id; renderAgentsPage(); }
 
-// ==================== ACTIVITY ====================
-function logActivity(userId, type, dealId, description) {
-    const activity = { userId, userName: USERS[userId]?.name || 'Неизвестный', type, dealId, description, time: new Date().toISOString() };
-    activityLog.unshift(activity);
-    if (isAdminOrOwner()) localStorage.setItem('activityLog', JSON.stringify(activityLog.slice(0, 200)));
+function logActivity(uid,type,dealId,desc){
+    const a={uid,userName:USERS[uid]?.name||'Неизвестный',type,dealId,desc,time:new Date().toISOString()};
+    activityLog.unshift(a);
+    if(isAdminOrOwner()) localStorage.setItem('activityLog',JSON.stringify(activityLog.slice(0,200)));
 }
-function renderActivityPage() {
-    const list = document.getElementById('activityList');
-    const saved = localStorage.getItem('activityLog');
-    if (saved) activityLog = JSON.parse(saved);
-    if (activityLog.length === 0) { list.innerHTML = '<div class="empty-state"><i class="fas fa-history"></i><h3>Нет записей</h3></div>'; return; }
-    const icons = { take: 'hand-paper', call: 'phone', meeting: 'handshake', contract: 'file-signature', sold: 'trophy' };
-    list.innerHTML = activityLog.slice(0, 100).map(log => `
+function renderActivityPage(){
+    const l=document.getElementById('activityList');
+    const sv=localStorage.getItem('activityLog');
+    if(sv) activityLog=JSON.parse(sv);
+    if(activityLog.length===0){ l.innerHTML='<div class="empty-state"><i class="fas fa-history"></i><h3>Нет записей</h3></div>'; return; }
+    const ic={take:'hand-paper',call:'phone',meeting:'handshake',contract:'file-signature',sold:'trophy',reject:'times-circle'};
+    l.innerHTML=activityLog.slice(0,100).map(log=>`
         <div class="activity-item">
-            <div class="activity-icon ${log.type}"><i class="fas fa-${icons[log.type] || 'circle'}"></i></div>
+            <div class="activity-icon ${log.type}"><i class="fas fa-${ic[log.type]||'circle'}"></i></div>
             <div class="activity-content">
-                <div class="title">${log.userName} — ${log.description}</div>
+                <div class="title">${log.userName} — ${log.desc}</div>
                 <div class="time">${new Date(log.time).toLocaleString('ru-RU')}</div>
             </div>
         </div>`).join('');
 }
 
-// ==================== REFRESH ====================
-function filterObjects() { filterAndRender(); }
-async function refreshData() {
-    const icon = document.querySelector('.header-actions .btn i');
-    if (icon) icon.classList.add('fa-spin');
+function filterObjects(){ filterAndRender(); }
+async function refreshData(){
+    const ic=document.querySelector('.header-actions .btn i');
+    if(ic) ic.classList.add('fa-spin');
     await loadDeals();
-    if (currentPage !== 'objects') showPage(currentPage);
-    if (icon) icon.classList.remove('fa-spin');
+    if(currentPage!=='objects') showPage(currentPage);
+    if(ic) ic.classList.remove('fa-spin');
 }
-function startAutoRefresh() {
-    if (autoRefreshInterval) clearInterval(autoRefreshInterval);
-    autoRefreshInterval = setInterval(() => { if (currentPage === 'objects') checkForNewDeals(); }, 30000);
+function startAutoRefresh(){
+    if(autoRefreshInterval) clearInterval(autoRefreshInterval);
+    autoRefreshInterval=setInterval(()=>{ if(currentPage==='objects') checkNew(); },30000);
 }
-async function checkForNewDeals() {
-    try {
-        const r = await fetch(`${BITRIX_WEBHOOK}crm.deal.list?filter[CATEGORY_ID]=${CATEGORY_ID}&order[ID]=DESC&start=0`);
-        const d = await r.json();
-        if (d.result) {
-            const currentIds = new Set(allDeals.map(x => x.ID));
-            d.result.filter(nd => !currentIds.has(nd.ID)).forEach(nd => {
-                if (!notifiedDeals.has(nd.ID)) {
-                    notifiedDeals.add(nd.ID);
-                    showToast('Новый объект!', nd[UF.ID_OBJECT] || ('Сделка #' + nd.ID), 'success', 8000);
-                }
+async function checkNew(){
+    try{
+        const r=await fetch(`${BITRIX_WEBHOOK}crm.deal.list?filter[CATEGORY_ID]=${CATEGORY_ID}&order[ID]=DESC&start=0`);
+        const d=await r.json();
+        if(d.result){
+            const ids=new Set(allDeals.map(x=>x.ID));
+            d.result.filter(nd=>!ids.has(nd.ID)).forEach(nd=>{
+                if(!notifiedDeals.has(nd.ID)){ notifiedDeals.add(nd.ID); showToast('Новый объект!',nd[UF.ID_OBJECT]||('Сделка #'+nd.ID),'success',8000); }
             });
         }
-    } catch(e) {}
+    }catch(e){}
 }
 
-// ==================== LOGOUT ====================
-function logout() {
-    if (autoRefreshInterval) clearInterval(autoRefreshInterval);
+function logout(){
+    if(autoRefreshInterval) clearInterval(autoRefreshInterval);
     localStorage.removeItem('crmUser');
-    currentUser = null; allDeals = []; notifiedDeals.clear();
-    document.getElementById('dashboard').style.display = 'none';
-    document.getElementById('loginPage').style.display = 'flex';
+    currentUser=null; allDeals=[]; notifiedDeals.clear();
+    document.getElementById('dashboard').style.display='none';
+    document.getElementById('loginPage').style.display='flex';
 }
 
-// ==================== INIT ====================
-window.addEventListener('load', () => {
-    const saved = localStorage.getItem('crmUser');
-    if (saved) { currentUser = JSON.parse(saved); showDashboard(); }
+window.addEventListener('load',()=>{
+    const sv=localStorage.getItem('crmUser');
+    if(sv){ currentUser=JSON.parse(sv); showDashboard(); }
 });
-document.querySelectorAll('.modal').forEach(modal => {
-    modal.addEventListener('click', e => { if (e.target === modal) modal.classList.remove('active'); });
+
+document.querySelectorAll('.modal').forEach(m=>{
+    m.addEventListener('click',e=>{ if(e.target===m) m.classList.remove('active'); });
+});
+
+document.addEventListener('DOMContentLoaded',()=>{
+    const zone=document.getElementById('fileUploadZone');
+    if(!zone) return;
+    zone.addEventListener('dragover',e=>{ e.preventDefault(); zone.style.borderColor='#667eea'; zone.style.background='#f0f4ff'; });
+    zone.addEventListener('dragleave',()=>{ zone.style.borderColor='#ddd'; zone.style.background=''; });
+    zone.addEventListener('drop',e=>{
+        e.preventDefault(); zone.style.borderColor='#ddd'; zone.style.background='';
+        const files=e.dataTransfer.files;
+        if(files.length>0){ const inp=document.getElementById('contractFile'); const dt=new DataTransfer(); dt.items.add(files[0]); inp.files=dt.files; onFileSelected(inp); }
+    });
 });
 </script>
 </body>
