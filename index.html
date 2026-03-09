@@ -486,7 +486,7 @@ const OBJECT_AGENT_MAP = {"AL01": "10", "AL03": "10", "AL04": "10", "AL05": "10"
 
 const USERS = {
     'admin':    { id:'admin',    name:'Владелец',           role:'owner', phone:'' },
-    '5969819':  { id:'5969819',  name:'Тампиева Жанат',     role:'admin', phone:'77472713220', bitrixId:'10' },
+    '5969819':  { id:'5969819',  name:'Тампиева Жанат',     role:'admin', phone:'77072713220', bitrixId:'10' },
     '127611':   { id:'127611',   name:'Пірназарова Асель',  role:'admin', phone:'77056116160', bitrixId:'12' },
     '18616153': { id:'18616153', name:'Кадиров Нурлан',     role:'admin', phone:'77059713595', bitrixId:'14' },
     '20': { id:'20', name:'Лесбек Азамат',      role:'agent', phone:'77005545420' },
@@ -497,7 +497,7 @@ const USERS = {
     '30': { id:'30', name:'Сапбекова Акбаян',    role:'agent', phone:'77752987371' },
     '32': { id:'32', name:'Сопбекова Дина',      role:'agent', phone:'77778165029' },
     '34': { id:'34', name:'Мейрбекова Лаура',    role:'agent', phone:'77778149508' },
-    '36': { id:'36', name:'Алпамыс Ислам',       role:'agent', phone:'77053776351' }
+    '36': { id:'36', name:'Алпамыс Ислам',       role:'agent', phone:'77778149508' }
 };
 
 let currentUser=null, allDeals=[], filteredDeals=[];
@@ -1035,7 +1035,11 @@ function showPage(page){
 
 function renderSoldPage(){
     const g=document.getElementById('soldDealsGrid');
-    const sold=allDeals.filter(d=>d.STAGE_ID==='C8:WON');
+    const sold=allDeals.filter(d=>{
+        if(d.STAGE_ID!=='C8:WON') return false;
+        const oid=(d[UF.ID_OBJECT]||d.TITLE||'').trim().replace(/^А/,'A');
+        return /^AL\d+/i.test(oid);
+    });
     if(sold.length===0){ g.innerHTML='<div class="empty-state"><i class="fas fa-trophy"></i><h3>Нет проданных объектов</h3></div>'; return; }
     g.innerHTML=sold.map(deal=>{
         const oid=deal[UF.ID_OBJECT]||('Сделка #'+deal.ID);
