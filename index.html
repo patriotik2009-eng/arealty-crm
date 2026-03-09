@@ -785,7 +785,11 @@ function renderCard(deal){
                   <button class="btn-small btn-contract" onclick="openContractModal('${deal.ID}')"><i class="fas fa-file-signature"></i> Договор</button>
                   <button class="btn-small btn-reject" onclick="openRejectModal('${deal.ID}')"><i class="fas fa-times-circle"></i> Отказ</button>`;
         } else if(deal.STAGE_ID==='C8:EXECUTING'){
+            const contractBtn = isAdmin
+                ? `<button class="btn-small btn-contract" onclick="viewContract('${deal.ID}')"><i class="fas fa-file-pdf"></i> Договор PDF</button>`
+                : '';
             btns=`<button class="btn-small btn-call" onclick="openCallModal('${deal.ID}')"><i class="fas fa-phone"></i> Звонок</button>
+                  ${contractBtn}
                   <button class="btn-small btn-success" onclick="openSoldModal('${deal.ID}')" style="background:#2ecc71;color:white;"><i class="fas fa-check-circle"></i> Продан</button>`;
         }
     }
@@ -885,6 +889,26 @@ function openContractModal(id){
     document.getElementById('contractModal').classList.add('active');
 }
 function closeContractModal(){ document.getElementById('contractModal').classList.remove('active'); }
+
+async function viewContract(id){
+    // Открываем модал с договором из timeline
+    const deal = allDeals.find(d=>d.ID===id);
+    const oid = deal?.[UF.ID_OBJECT] || id;
+    try{
+        const r = await fetch(`${BITRIX_WEBHOOK}crm.timeline.comment.list?filter[ENTITY_ID]=${id}&filter[ENTITY_TYPE]=deal&order[ID]=DESC`);
+        const d = await r.json();
+        if(!d.result || !d.result.length){ showToast('Информация','Договор ещё не загружен','info'); return; }
+        // Ищем комментарий с договором
+        const contractComment = d.result.find(c => c.COMMENT && c.COMMENT.includes('ДОГОВОР ЗАГРУЖЕН'));
+        if(!contractComment){ showToast('Информация','Договор ещё не загружен','info'); return; }
+        // Открываем страницу сделки в Битрикс24
+        const bitrixUrl = `https://b24-6mcve5.bitrix24.kz/crm/deal/details/${id}/`;
+        window.open(bitrixUrl, '_blank');
+    }catch(e){
+        // Просто открываем сделку в Битрикс24
+        window.open(`https://b24-6mcve5.bitrix24.kz/crm/deal/details/${id}/`, '_blank');
+    }
+}
 
 function onFileSelected(input){
     if(input.files&&input.files[0]){
