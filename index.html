@@ -602,7 +602,7 @@ async function loadDeals(){
         const f=['ID','TITLE','STAGE_ID','ASSIGNED_BY_ID','OPPORTUNITY','AMOUNT','DATE_MODIFY',
             UF.ID_OBJECT,UF.DISTRICT,UF.ADDRESS,UF.AREA,UF.PRICE,
             UF.ROOMS,UF.FLOOR,UF.CONDITION,UF.KRISHA_URL,UF.KRISHA_ID,
-            UF.REJECT,UF.PHOTOS,UF.OWNER_PHONE
+            UF.REJECT,UF.PHOTOS,UF.OWNER_PHONE,UF.PHOTO_URLS
         ].map(x=>`select[]=${x}`).join('&');
         while(more&&start<1000){
             const r=await fetch(`${BITRIX_WEBHOOK}crm.deal.list?filter[CATEGORY_ID]=${CATEGORY_ID}&order[ID]=DESC&start=${start}&${f}`);
