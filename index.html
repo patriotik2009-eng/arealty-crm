@@ -478,6 +478,7 @@ const UF = {
     KRISHA_ID:  'UF_CRM_1772205400',
     REJECT:     'UF_CRM_1772205416',
     PHOTOS:     'UF_CRM_1772374276',
+    PHOTO_URLS: 'UF_CRM_1773062793',
     OWNER_PHONE:'UF_CRM_1772903452'
 };
 
@@ -649,6 +650,12 @@ async function loadDeals(){
 
 async function loadPhotos(deal){
     try{
+        // Новый способ: URL фото хранятся в текстовом поле через запятую
+        const urlField=deal[UF.PHOTO_URLS];
+        if(urlField && typeof urlField==='string' && urlField.trim()){
+            return urlField.split(',').map(u=>u.trim()).filter(Boolean);
+        }
+        // Старый способ: file ID
         const pf=deal[UF.PHOTOS]; if(!pf) return [];
         const photos=Array.isArray(pf)?pf:[pf]; const urls=[];
         for(const p of photos){
