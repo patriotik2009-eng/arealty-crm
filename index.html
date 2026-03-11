@@ -230,13 +230,16 @@
         .stat-card .label { color: #888; font-size: 12px; margin-top: 5px; }
 
         /* ========== ФИЛЬТРЫ ========== */
-        .filters {
-            background: white; border-radius: 16px; padding: 20px;
-            margin-bottom: 20px; display: flex; gap: 15px;
-            flex-wrap: wrap; align-items: center;
-            animation: slideDown 0.5s ease 0.2s both;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
+      .filters {
+    background: white; border-radius: 16px; padding: 20px;
+    margin-bottom: 20px; display: flex; gap: 15px;
+    flex-wrap: wrap; align-items: center;
+    animation: slideDown 0.5s ease 0.2s both;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    position: relative;
+    overflow: visible;
+    z-index: 100;
+}
         .filters select, .filters input {
             padding: 10px 15px; border: 2px solid #e0e0e0;
             border-radius: 10px; font-size: 14px;
@@ -269,7 +272,7 @@
         .location-dropdown {
             position: absolute; top: 110%; left: 0; background: white;
             border-radius: 16px; box-shadow: 0 15px 50px rgba(0,0,0,0.18);
-            z-index: 500; width: 520px; overflow: hidden; display: none;
+            z-index: 9999; width: 520px; overflow: hidden; display: none;
             animation: scaleIn 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
             transform-origin: top left;
         }
