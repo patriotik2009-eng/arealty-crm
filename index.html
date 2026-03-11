@@ -61,6 +61,45 @@
         .filters select, .filters input { padding: 10px 15px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 14px; }
         .filters select:focus, .filters input:focus { outline: none; border-color: #667eea; }
         .filters button { padding: 10px 20px; background: #667eea; color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: 500; }
+
+/* ========== НОВЫЙ ДВУХУРОВНЕВЫЙ ФИЛЬТР ========== */
+.location-filter { position: relative; }
+.location-btn {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 15px; border: 2px solid #e0e0e0; border-radius: 10px;
+    background: white; cursor: pointer; font-size: 14px; color: #333;
+    transition: all 0.3s;
+}
+.location-btn:hover { border-color: #667eea; }
+.location-dropdown {
+    position: absolute; top: 110%; left: 0; background: white;
+    border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    z-index: 500; width: 520px; overflow: hidden; display: none;
+}
+.location-columns { display: grid; grid-template-columns: 1fr 1fr; }
+.location-col { padding: 10px 0; }
+.location-col-title {
+    padding: 10px 15px; font-size: 11px; font-weight: 700;
+    color: #888; text-transform: uppercase; letter-spacing: 1px;
+    border-bottom: 1px solid #eee; margin-bottom: 5px;
+}
+.district-col { border-right: 1px solid #eee; }
+.location-item {
+    padding: 10px 15px; cursor: pointer; font-size: 13px; color: #333;
+    transition: all 0.2s;
+}
+.location-item:hover { background: #f5f7ff; color: #667eea; }
+.location-item.selected { background: #667eea; color: white; font-weight: 600; }
+.location-item.active-district { background: #f0f0f0; font-weight: 600; }
+.mkr-col { max-height: 320px; overflow-y: auto; }
+.location-footer { padding: 15px; border-top: 1px solid #eee; text-align: right; }
+.location-apply {
+    background: linear-gradient(135deg, #667eea, #764ba2); color: white;
+    border: none; border-radius: 10px; padding: 10px 25px;
+    cursor: pointer; font-weight: 600; font-size: 14px;
+}
+/* ============================================== */
+
         .objects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 20px; }
         .object-card { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.05); transition: all 0.3s; }
         .object-card:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
@@ -262,6 +301,7 @@
             <div class="stat-card purple"><div class="icon"><i class="fas fa-file-signature"></i></div><div class="number" id="statContract">0</div><div class="label">Договоры</div></div>
             <div class="stat-card red"><div class="icon"><i class="fas fa-check-circle"></i></div><div class="number" id="statSold">0</div><div class="label">Продано</div></div>
         </div>
+
         <div class="filters" id="filtersSection">
             <select id="filterStatus" onchange="filterObjects()">
                 <option value="">Все статусы</option>
@@ -272,23 +312,49 @@
                 <option value="WON">Продан</option>
                 <option value="LOSE">Отказ</option>
             </select>
-            <select id="filterDistrict" onchange="filterObjects()">
-                <option value="">Все микрорайоны</option>
-                <option value="Ғажайып">Ғажайып</option>
-                <option value="Акбулак">Акбулак</option>
-                <option value="Нуркент">Нуркент</option>
-                <option value="Саялы">Саялы</option>
-                <option value="20-й Микрорайон">20-й Микрорайон</option>
-                <option value="Улжан-1">Улжан-1</option>
-                <option value="Улжан-2">Улжан-2</option>
-                <option value="Алгабас">Алгабас</option>
-                <option value="Мадениет">Мадениет</option>
-                <option value="Зердели">Зердели</option>
-                <option value="Дарабоз">Дарабоз</option>
-            </select>
+
+<!-- ========== НОВЫЙ ФИЛЬТР ВМЕСТО СТАРОГО СЕЛЕКТА ========== -->
+<div class="location-filter" id="locationFilter">
+    <button class="location-btn" onclick="toggleLocationFilter()">
+        <i class="fas fa-map-marker-alt"></i>
+        <span id="locationBtnText">Алатауский р-н</span>
+        <i class="fas fa-chevron-down"></i>
+    </button>
+    
+    <div class="location-dropdown" id="locationDropdown">
+        <div class="location-columns">
+            <div class="location-col district-col">
+                <div class="location-col-title">Район</div>
+                <div class="location-item" onclick="selectDistrict('')">Все районы</div>
+                <div class="location-item active-district" onclick="selectDistrict('Алатауский р-н')">Алатауский р-н</div>
+                <div class="location-item" onclick="selectDistrict('Алмалинский р-н')">Алмалинский р-н</div>
+                <div class="location-item" onclick="selectDistrict('Ауэзовский р-н')">Ауэзовский р-н</div>
+                <div class="location-item" onclick="selectDistrict('Бостандыкский р-н')">Бостандыкский р-н</div>
+                <div class="location-item" onclick="selectDistrict('Жетысуский р-н')">Жетысуский р-н</div>
+                <div class="location-item" onclick="selectDistrict('Медеуский р-н')">Медеуский р-н</div>
+                <div class="location-item" onclick="selectDistrict('Наурызбайский р-н')">Наурызбайский р-н</div>
+                <div class="location-item" onclick="selectDistrict('Турксибский р-н')">Турксибский р-н</div>
+            </div>
+            
+            <div class="location-col mkr-col">
+                <div class="location-col-title">Микрорайон</div>
+                <div id="mkrList"></div>
+            </div>
+        </div>
+        
+        <div class="location-footer">
+            <button class="location-apply" onclick="applyLocation()">
+                <i class="fas fa-check"></i> Выбрать
+            </button>
+        </div>
+    </div>
+</div>
+<!-- ===================================================== -->
+
             <input type="text" id="filterSearch" placeholder="Поиск по адресу..." oninput="filterObjects()">
             <button onclick="filterObjects()"><i class="fas fa-search"></i> Применить</button>
         </div>
+
         <div class="loading" id="loading"><div class="spinner"></div><p>Загрузка объектов из Битрикс24...</p></div>
         <div class="objects-grid" id="objectsGrid"></div>
         <div class="empty-state" id="emptyState" style="display:none;"><i class="fas fa-building"></i><h3>Нет объектов</h3></div>
@@ -304,6 +370,7 @@
     </main>
 </div>
 
+<!-- ВСЕ МОДАЛКИ ОСТАВЛЕНЫ ОДИН В ОДИН -->
 <!-- Call Modal -->
 <div class="modal" id="callModal">
     <div class="modal-content">
@@ -481,6 +548,78 @@ const UF = {
     PHOTO_URLS: 'UF_CRM_1773062793',
     OWNER_PHONE:'UF_CRM_1772903452'
 };
+
+// Справочник районов и микрорайонов
+const DISTRICTS = {
+    'Алатауский р-н': [
+        '13-й мкр', '20-й мкр', 'АДК', 'Айгерим-1', 'Айгерим-2',
+        'Акбулак', 'Аккент', 'Алгабас', 'Дарабоз', 'Зердели',
+        'Мадениет', 'Нуркент', 'Саялы', 'Улжан-1', 'Улжан-2', 'Ғажайып'
+    ],
+    'Алмалинский р-н': [],
+    'Ауэзовский р-н': [],
+    'Бостандыкский р-н': [],
+    'Жетысуский р-н': [],
+    'Медеуский р-н': [],
+    'Наурызбайский р-н': [],
+    'Турксибский р-н': []
+};
+
+let selectedDistrict = 'Алатауский р-н';
+let selectedMkr = '';
+
+// ========== Логика фильтра ==========
+function toggleLocationFilter() {
+    const dd = document.getElementById('locationDropdown');
+    dd.style.display = dd.style.display === 'none' ? 'block' : 'none';
+    if(dd.style.display === 'block') selectDistrict(selectedDistrict);
+}
+
+function selectDistrict(district) {
+    selectedDistrict = district;
+    document.querySelectorAll('.district-col .location-item').forEach(el => el.classList.remove('active-district'));
+    event.target.classList.add('active-district');
+
+    const mkrs = district ? DISTRICTS[district] : [];
+    const list = document.getElementById('mkrList');
+    
+    list.innerHTML = `
+        <div class="location-item ${!selectedMkr?'selected':''}" onclick="selectMkr('')">
+            Все микрорайоны
+        </div>
+        ${mkrs.map(m => `
+            <div class="location-item ${selectedMkr===m?'selected':''}" onclick="selectMkr('${m}')">
+                ${m}
+            </div>
+        `).join('')}
+    `;
+}
+
+function selectMkr(mkr) {
+    selectedMkr = mkr;
+    document.querySelectorAll('.mkr-col .location-item').forEach(el => el.classList.remove('selected'));
+    event.target.classList.add('selected');
+}
+
+function applyLocation() {
+    const btn = document.getElementById('locationBtnText');
+    if(selectedMkr) btn.textContent = selectedMkr;
+    else if(selectedDistrict) btn.textContent = selectedDistrict;
+    else btn.textContent = 'Все районы';
+
+    document.getElementById('locationDropdown').style.display = 'none';
+    filterObjects();
+}
+
+// Закрываем при клике снаружи
+document.addEventListener('click', (e) => {
+    const lf = document.getElementById('locationFilter');
+    if(lf && !lf.contains(e.target)) {
+        document.getElementById('locationDropdown').style.display = 'none';
+    }
+});
+// =====================================
+
 
 // Справочник объектов из таблицы Excel (ID объекта → bitrixId ответственного)
 const OBJECT_AGENT_MAP = {"AL01": "10", "AL03": "10", "AL04": "10", "AL05": "10", "AL06": "10", "AL07": "10", "AL08": "12", "AL09": "12", "AL10": "12", "AL11": "12", "AL12": "32", "AL13": "32", "AL14": "32", "AL15": "30", "AL16": "30", "AL17": "30", "AL18": "30", "AL19": "30", "AL20": "30", "AL21": "34", "AL22": "24", "AL24": "12", "AL27": "32", "AL29": "32", "AL30": "32", "AL32": "32", "AL40": "32", "AL42": "12", "AL47": "12", "AL50": "12", "AL51": "12", "AL53": "12", "AL61": "10", "AL64": "10", "AL65": "10", "AL70": "10", "AL75": "10", "AL77": "10", "AL78": "10", "AL83": "10", "AL104": "14", "AL108": "14", "AL124": "14", "AL134": "30", "AL136": "30", "AL140": "30", "AL145": "30", "AL148": "30", "AL151": "30", "AL152": "30", "AL153": "30", "AL154": "30", "AL157": "30", "AL159": "30", "AL161": "30", "AL162": "30", "AL166": "30", "AL170": "22", "AL176": "0", "AL26": "14", "AL33": "30", "AL37": "10", "AL43": "12", "AL45": "12", "AL46": "12", "AL49": "12", "AL54": "12", "AL55": "12", "AL57": "10", "AL58": "10", "AL60": "10", "AL66": "10", "AL67": "10", "AL69": "10", "AL72": "10", "AL74": "10", "AL80": "10", "AL81": "10", "AL105": "14", "AL106": "14", "AL111": "14", "AL113": "14", "AL114": "14", "AL125": "14", "AL126": "14", "AL141": "30", "AL144": "30", "AL156": "30", "AL158": "30", "AL160": "30", "AL165": "30", "AL68": "10", "AL79": "10", "AL93": "0", "AL103": "0", "AL25": "32", "AL99": "0", "AL100": "0", "AL31": "32", "AL96": "0", "AL107": "14", "AL62": "10", "AL95": "0", "AL147": "30", "AL71": "10", "AL112": "14", "AL127": "14", "AL177": "0", "AL28": "32", "AL34": "32", "AL91": "10", "AL94": "0", "AL109": "14", "AL137": "30", "AL138": "30", "AL146": "30", "AL163": "30", "AL59": "10", "AL150": "30", "AL44": "12", "AL52": "12", "AL63": "10", "AL76": "10", "AL135": "30", "AL139": "30", "AL143": "30", "AL155": "30", "AL164": "30", "AL149": "30", "AL175": "22", "AL172": "22", "AL173": "22", "AL73": "10"};
@@ -679,13 +818,20 @@ async function loadUserNames(){
 
 function filterAndRender(){
     const sf=document.getElementById('filterStatus').value;
-    const df=document.getElementById('filterDistrict').value;
     const qf=document.getElementById('filterSearch').value.toLowerCase();
     let vis=allDeals;
     if(currentUser.role==='agent') vis=allDeals.filter(d=>d.STAGE_ID==='C8:NEW'||d.ASSIGNED_BY_ID===currentUser.id);
     filteredDeals=vis.filter(d=>{
         if(sf&&(d.STAGE_ID||'').replace('C8:','')!==sf) return false;
-        if(df&&!(d[UF.DISTRICT]||'').includes(df)) return false;
+
+        // Новый фильтр по району/микрорайону
+        if(selectedMkr) {
+            if(!(d[UF.DISTRICT]||'').includes(selectedMkr)) return false;
+        } else if(selectedDistrict) {
+            const mkrs = DISTRICTS[selectedDistrict] || [];
+            if(!mkrs.some(m => (d[UF.DISTRICT]||'').includes(m))) return false;
+        }
+
         if(qf){ const h=((d[UF.ADDRESS]||'')+(d[UF.DISTRICT]||'')+(d[UF.ID_OBJECT]||'')).toLowerCase(); if(!h.includes(qf)) return false; }
         return true;
     });
